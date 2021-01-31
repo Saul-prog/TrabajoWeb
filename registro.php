@@ -13,7 +13,7 @@
 
 <?php
         include 'funciones.php';
-      encabezado(null);
+      encabezado(2);
 
       ?>
       <Section class="formulario">
@@ -21,11 +21,11 @@
         $nombre=(isset($_POST['nombre'])?$_POST['nombre']:'Nombre');
         $apellido1=(isset($_POST['apellido1'])?$_POST['apellido1']:'Primer Apellido');
         $apellido2=(isset($_POST['apellido2'])?$_POST['apellido2']:'Segundo Apellido');
-        $nombreUsuario=(isset($_POST['nombreUsuario'])?$_POST['nombreUsuario']:'Nombre de usuario');
+        $nombreUsuario=(isset($_POST['nombreUsuario'])?$_POST['nombreUsuario']:'usuario');
         $contrasena1=(isset($_POST['contrasena1'])?$_POST['contrasena1']:'Contraseña');
         $contrasena2=(isset($_POST['contrasena2'])?$_POST['contrasena2']:'Contraseña');
-        $email1=(isset($_POST['email1'])?$_POST['email1']:'Email');
-        $email2=(isset($_POST['email2'])?$_POST['email2']:'Email');
+        $email1=(isset($_POST['email1'])?$_POST['email1']:'correo@dominio.es');
+        $email2=(isset($_POST['email2'])?$_POST['email2']:'correo@dominio.es');
         $fechanac=(isset($_POST['fechanac'])?$_POST['fechanac']: null);
         
    echo   '<form action="registro.php" method="post">
@@ -33,8 +33,8 @@
 		<p>Nombre: <br><input type="text" name="nombre" value="'.$nombre.'"></p>
 		<p>Primer apellido: <br><input type="text" name="apellido1" value="'.$apellido1.'" ><br>Segundo apellido<br><input type="text" name="apellido2" value="'.$apellido2.'"></p>
 		<p>Nombre de usuario: <br><input type="text" name="nombreUsuario" value="'.$nombreUsuario.'"></p>
-		<p>Contraseña: <br><input type="password" name="contrasena1"></p>
-		<p>Repetir contraseña: <br><input type="password" name="contrasena2"></p>
+		<p>Contraseña: <br><input type="password" name="contrasena1" value="'.$contrasena1.'"></p>
+		<p>Repetir contraseña: <br><input type="password" name="contrasena2" value="'.$contrasena2.'"></p>
 		<p>Correo electrónico: <br><input type="email" name="email1" value="'.$email1.'"></p>
 		<p>Repetir correo electrónico: <br><input type="email" name="email2" value="'.$email2.'"></p>
 		<p>Fecha de nacimiento: <br><input type="date" name="fechanac" value="'.$fechanac.'"></p>
