@@ -5,15 +5,17 @@
         <meta name="author" content= "Celia Torres Montero" />
         <meta name="description" content="" />
         <meta charset="utf-8">
-        <title>Iniciación Saúl</title>
+        <title>Fm-cia</title>
         <link rel="stylesheet" href="inicializador.css">
         <link rel="stylesheet" href="index.css">
+        <link rel="icon" type="image/jpeg" href="imagenes/Iconos/FermioP.jpeg">
     </head>
 <body>
 
 <?php
         include 'funciones.php';
-      encabezado(2);
+        $tipo_user= (isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
+        encabezado($tipo_user);
 
       ?>
       <Section class="formulario">
@@ -53,6 +55,8 @@
                                 
                                 $con=conectar();
                                 nuevoUsuario($con,$nombre,$apellido1,$apellido2,$nombreUsuario,$contrasena1,$email1,$fechanac);
+
+                                $con->close();
                             }else{
                                 echo '<p>Seleccione fecha de nacimiento</p>';
                             }
@@ -74,15 +78,9 @@
     }else{
         echo '<p>Escriba su nombre</p>';
     }  
-        
-        
-
-
-
-
     ?>
     </Section>
-    
+    <?php pie();?>
 </body>
 
 </html>

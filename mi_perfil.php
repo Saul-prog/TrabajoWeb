@@ -5,16 +5,17 @@
         <meta name="author" content= "Celia Torres Montero" />
         <meta name="description" content="" />
         <meta charset="utf-8">
-        <title>Iniciación Saúl</title>
+        <title>Fm-cia</title>
         <link rel="stylesheet" href="inicializador.css">
         <link rel="stylesheet" href="index.css">
+        <link rel="icon" type="image/jpeg" href="imagenes/Iconos/FermioP.jpeg">
     </head>
 <body>
 
 <?php
         include 'funciones.php';
-      encabezado(2);
-
+        $tipo_user= (isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
+        encabezado($tipo_user);
       ?>
       <Section class="formulario">
       <?php
@@ -29,16 +30,17 @@
         $fechanac=(isset($_POST['fechanac'])?$_POST['fechanac']: null);
         
    echo   '<form action="registro.php" method="post">
-		<h2>Introduzca sus datos</h2>
+		<h2>Información personal</h2>
 		<p>Nombre: <br><input type="text" name="nombre" value="'.$nombre.'"></p>
-		<p>Primer apellido: <br><input type="text" name="apellido1" value="'.$apellido1.'" ><br>Segundo apellido<br><input type="text" name="apellido2" value="'.$apellido2.'"></p>
+        <p>Primer apellido: <br><input type="text" name="apellido1" value="'.$apellido1.'" >
+        <br>Segundo apellido<br><input type="text" name="apellido2" value="'.$apellido2.'"></p>
 		<p>Nombre de usuario: <br><input type="text" name="nombreUsuario" value="'.$nombreUsuario.'"></p>
 		<p>Contraseña: <br><input type="password" name="contrasena1" value="'.$contrasena1.'"></p>
 		<p>Repetir contraseña: <br><input type="password" name="contrasena2" value="'.$contrasena2.'"></p>
 		<p>Correo electrónico: <br><input type="email" name="email1" value="'.$email1.'"></p>
 		<p>Repetir correo electrónico: <br><input type="email" name="email2" value="'.$email2.'"></p>
 		<p>Fecha de nacimiento: <br><input type="date" name="fechanac" value="'.$fechanac.'"></p>
-		<p class="check"><input type="checkbox">He leído y acepto los <a href="terminos_condiciones.html" target="_blank">Términos y Condiciones de Fm-cia</a>.</p>
+		
 		<p><input type="checkbox">Quiero recibir correos electrónicos publicitarios de Fm-cia.</p>
         <p class="guardar"><input type="submit" value="Crear cuenta"></p>
         </form>';
@@ -53,6 +55,8 @@
                                 
                                 $con=conectar();
                                 nuevoUsuario($con,$nombre,$apellido1,$apellido2,$nombreUsuario,$contrasena1,$email1,$fechanac);
+
+                                $con->close();
                             }else{
                                 echo '<p>Seleccione fecha de nacimiento</p>';
                             }
@@ -74,14 +78,9 @@
     }else{
         echo '<p>Escriba su nombre</p>';
     }  
-        
-        
-
-
-
-
     ?>
     </Section>
+    <?php pie();?>
     
 </body>
 

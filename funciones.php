@@ -25,7 +25,7 @@ function pie(){
 }
 
 function encabezado($administrador){
-	if($administrador==2){
+	if($administrador==2){ //no registrado
         ?>
         	<header>
 		<a href="index.php">
@@ -70,7 +70,7 @@ function encabezado($administrador){
     </header>
         <?php
     }
-    if($administrador==0){
+    if($administrador==0){ //registrado
         ?>
         <header>
 		<a href="index_registrado.php">
@@ -103,7 +103,7 @@ function encabezado($administrador){
     </header>
     <?php
     }
-    if($administrador==1){
+    if($administrador==1){ //administrador
         ?>
         <header>
 		<a href="index_administrador.php">
@@ -143,7 +143,38 @@ function encabezado($administrador){
     }
 }
 
+function iniciarSesion($con,$contrasena,$email){
+	$peticion=$con->prepare("SELECT * FROM usuario WHERE CorreoElectronico LIKE ?");
 
+	$peticion->bind_param("s",$email);
+
+	if($peticion->execute()){
+		$rs= $peticion->get_result();
+		if($rs)
+		{
+			$fila= $rs->fetch_assoc();
+	
+			if($fila['contrasena']==$contrasena)
+			{
+				$autor= $fila['Nombre'].' '.$fila['Apellido1'].' '.$fila['Apellido2'];
+
+				$_SESSION['autor']= $autor;
+
+				echo 'Bienvenido de nuevo, '.$_SESSION['autor'];
+
+				$tipo_user= $fila['administrador'];
+				
+				$_SESSION['tipo_usuario']=$tipo_user;
+
+				$user= $fila['NombreUsuario'];
+				
+				$_SESSION['usuario']=$user;
+			}
+		}
+	}else{
+		echo '<p>ERROR: '.$con->error.'</p>';
+	}
+}
 
 
 function nuevoUsuario($con,$nombre,$apellido1,$apellido2,$nombreUsuario,$contrasena1,$email1,$fechanac){
