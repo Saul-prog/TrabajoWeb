@@ -14,16 +14,38 @@
 include "funciones.php";
 $usuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:2);
 encabezado($usuario);
-
-if($_POST['enviarAr']){
+$error='';
+$boton=(isset($_POST['enviarAr'])?$_POST['enviarAr']:false);
+$titulo=(isset($_POST['titulo'])?$_POST['titulo']:false);
+$resumen=(isset($_POST['resumen'])?$_POST['resumen']:false);
+if($boton){
     if(isset($_POST['titulo'])){
         if(isset($_POST['resumen'])){
-            if(isset($_POST['archivo'])){
             
-            }else{
-                $error='<p>Falta un archivo<p>';
-            formularioEnviarAr($error);
-            }
+                $nombre=( isset($_FILES['archivo']['name'])?$_FILES['archivo']['name']:null);
+                $guardar=( isset($_FILES['archivo']['tmp_name'])?$_FILES['archivo']['tmp_name']:null);
+                $dir_subida='articulos/';
+                if(!file_exists('articulos')){
+                    mkdir('articulos',0777,true);
+                    if(file_exists('articulos')){
+                        if(move_uploaded_file($_FILES['archivo']['tmp_name'],'articulos/'.basename($_FILES['archivo']['name']))){
+                            $error= "El archivo se ha guardado correctamente";
+                            formularioEnviarAr($error);
+                        }else{
+                            $error= "El archivo no se ha guardado correctamente";
+                            formularioEnviarAr($error);
+                        }
+                    }
+                }else{
+                    if(move_uploaded_file($_FILES['archivo']['tmp_name'],'articulos/'.basename($_FILES['archivo']['name']))){
+                        $error= "Archivo guardado correctamente";
+
+                        formularioEnviarAr($error);
+                    }else{
+                        $error= "El archivo no se ha guardado correctamente";
+                        formularioEnviarAr($error);
+                    }
+                }
         }else{
             $error='<p>Falta un resumen<p>';
         formularioEnviarAr($error);
@@ -35,7 +57,7 @@ if($_POST['enviarAr']){
 }else{
 
 
-formularioEnviarAr()
+formularioEnviarAr($error);
     
 }
 
