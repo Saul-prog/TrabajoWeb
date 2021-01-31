@@ -168,19 +168,30 @@ function nuevoUsuario($con,$nombre,$apellido1,$apellido2,$nombreUsuario,$contras
 	}
 
 }
+function nuevoArtRevision($con,$autor,$titulo,$resumen,$observaciones,$PDF){
+	$peticion=$con->prepare("INSERT INTO articulorevision (autor,Titulo,Observaciones,Resumen,PDF) VALUES (?,?,?,?,?)");
+	
+	$peticion->bind_param("sssss",$autor,$titulo,$observaciones,$resumen,$PDF);
 
+	if($peticion->execute()){
+		echo '<p>Datos Creados</p>';
+		$_SESSION['usuario']=1;
+		header('refresh:1;url=index.php');
+	}else{
+		echo '<p>ERROR: '.$con->error.'</p>';
+	}
+}
 
 function formularioEnviarAr($error){
 	?>
 	<section class="comentario">
   		<h2 class="comentario">Enviar artículo</h2>
         <article class="comentario">
-            <form action="subido.php" method="post" enctype="multipart/form-data">
+            <form action="enviarArticulo.php" method="post" enctype="multipart/form-data">
                 <h3 class="comentario">&nbsp;</h3>
-                <p>Título: <input type="text" name="titulo" placeholder="Titulo"></p>
-                <p>Artículo u observaciones: <input class="comentario" type="text" name="observaciones" placeholder="Artículo a enviar">
-                <p>Resumen: <input class="comentario" type="text" name="resumen" placeholder="Resumen">
-				
+                <p>Título: <input type="text"  name="titulo" placeholder="Titulo"></p>
+                <p>Artículo u observaciones: <input  type="text" rows="20" cols="100" name="observaciones" placeholder="Artículo a enviar">
+                <p>Resumen:<textarea name="resumen" rows="5" cols="60"></textarea>				
 				<p class="guardar"><input type="file" name="archivo"></p>
 				<p class="guardar"><input type="submit" name="enviarAr" value="Enviar"></p>
 				<p><?php echo $error;?></p>
