@@ -100,7 +100,7 @@ function encabezado($administrador){
 						<li><a href="biotecnologia_registrado.html">Biotecnología</a></li>
                     </ul>
                 <li>|</li>
-				<li><a href="enviar_articulo.html">Enviar artículo</a></li>
+				<li><a href="enviarArticulo.php">Enviar artículo</a></li>
 			</ul>
 		</nav>
 
@@ -175,12 +175,13 @@ function formularioEnviarAr($error){
 	<section class="comentario">
   		<h2 class="comentario">Enviar artículo</h2>
         <article class="comentario">
-            <form action="enviarArticulo.php" method="post">
+            <form action="subido.php" method="post" enctype="multipart/form-data">
                 <h3 class="comentario">&nbsp;</h3>
                 <p>Título: <input type="text" name="titulo" placeholder="Titulo"></p>
                 <p>Artículo u observaciones: <input class="comentario" type="text" name="observaciones" placeholder="Artículo a enviar">
                 <p>Resumen: <input class="comentario" type="text" name="resumen" placeholder="Resumen">
-                <p class="guardar"><input type="file" name="archivo"></p>
+				
+				<p class="guardar"><input type="file" name="archivo"></p>
 				<p class="guardar"><input type="submit" name="enviarAr" value="Enviar"></p>
 				<p><?php echo $error;?></p>
             </form>

@@ -13,6 +13,7 @@
 <?php
 include "funciones.php";
 $usuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:2);
+$usuario=0;
 encabezado($usuario);
 ?>
 
