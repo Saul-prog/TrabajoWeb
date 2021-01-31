@@ -180,7 +180,7 @@ function formularioEnviarAr($error){
                 <p>Título: <input type="text" name="titulo" placeholder="Titulo"></p>
                 <p>Artículo u observaciones: <input class="comentario" type="text" name="observaciones" placeholder="Artículo a enviar">
                 <p>Resumen: <input class="comentario" type="text" name="resumen" placeholder="Resumen">
-                <p class="guardar"><input type="file"></p>
+                <p class="guardar"><input type="file" name="archivo"></p>
 				<p class="guardar"><input type="submit" name="enviarAr" value="Enviar"></p>
 				<p><?php echo $error;?></p>
             </form>
