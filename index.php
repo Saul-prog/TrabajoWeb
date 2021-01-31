@@ -9,8 +9,20 @@
         <link rel="stylesheet" href="inicializador.css">
         <link rel="stylesheet" href="index.css">
     </head>
+<body>
 <?php
 include "funciones.php";
-encabezado($administrador);
+$usuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:2);
+encabezado($usuario);
 ?>
+
+
+
+
+
+
+<?php
+pie();
+?>
+</body>
 </html>

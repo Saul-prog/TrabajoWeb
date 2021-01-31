@@ -12,6 +12,17 @@ function conectar(){
 	
 }
 
+function pie(){
+	?>
+	<footer>
+		<img src="imagenes/Iconos/fm_grande.png" alt="icono de la página"/>
+		<p class="fot">SOBRE NOSOTROS</p>
+		<p>Somos un portal de noticias científicas y tecnológicas. 
+		Fm-cia fue fundada en el año <strong>2020</strong> con el objetivo de informar y entretener a las mentes más curiosas.</p>
+		<p><strong class="fot">CURIOSIDAD:</strong> nuestro nombre viene del elemento químico número 100, el Fermio; por lo que vendría a significar: <strong>100-cia</strong>, o lo que es lo mismo, ciencia.</p>
+	</footer>
+	<?php
+}
 
 
 
@@ -156,4 +167,24 @@ function nuevoUsuario($con,$nombre,$apellido1,$apellido2,$nombreUsuario,$contras
 		echo '<p>ERROR: '.$con->error.'</p>';
 	}
 
+}
+
+
+function formularioEnviarAr($error){
+	?>
+	<section class="comentario">
+  		<h2 class="comentario">Enviar artículo</h2>
+        <article class="comentario">
+            <form action="enviarArticulo.php" method="post">
+                <h3 class="comentario">&nbsp;</h3>
+                <p>Título: <input type="text" name="titulo" placeholder="Titulo"></p>
+                <p>Artículo u observaciones: <input class="comentario" type="text" name="observaciones" placeholder="Artículo a enviar">
+                <p>Resumen: <input class="comentario" type="text" name="resumen" placeholder="Resumen">
+                <p class="guardar"><input type="file"></p>
+				<p class="guardar"><input type="submit" name="enviarAr" value="Enviar"></p>
+				<p><?php echo $error;?></p>
+            </form>
+		</article>
+	</section>
+	<?php
 }
