@@ -250,8 +250,7 @@ function desplegableSubCat($con){
 <?php	
 }
 
-
-function subirImagen($con,$id_art,$nombre,$guardar){
+function existeArt($con,$id_art){
 	$peticion = $con -> query ("SELECT * FROM articulorevision");
 	while ($fila = mysqli_fetch_array($peticion)) {
 		if($fila['ID_art_rev']==$id_art){
@@ -260,31 +259,36 @@ function subirImagen($con,$id_art,$nombre,$guardar){
 			$bandera=1;
 		}
 	  }
-	  if($bandera!=1){
-		  echo '<p>Articulo no encontrado</p>';
-		  exit();
-	  }
+	if($bandera!=1){
+		echo '<p>Articulo no encontrado</p>';
+		return false;
+	}
+	return true;
+}
+function subirImagen($nombre,$guardar){
+	
+	  
 	  
 	if(!file_exists('imagenes')){
 		mkdir('imagenes',0777,true);
-		if(file_exists('imagenes')){/******* */
-			if(move_uploaded_file($_FILES['imagen']['tmp_name'],'articulos/'.$nombre)){
-				$error= "El archivo se ha guardado correctamente";
+		if(file_exists('imagenes')){
+			if(move_uploaded_file($guardar,'imagenes/'.$nombre)){
+				$error= "La imagen se ha guardado correctamente";
 				
 				formularioEnviarAr($error);
 				
 			}else{
-				$error= "El archivo no se ha guardado correctamente";
+				$error= "La imagen no se ha guardado correctamente";
 				formularioEnviarAr($error);
 			}
 		}
 	}else{
-		if(move_uploaded_file($_FILES['archivo']['tmp_name'],'articulos/'.$nombre)){
-			$error= "Archivo guardado correctamente";
+		if(move_uploaded_file($guardar,'imagenes/'.$nombre)){
+			$error= "La imagen guardado correctamente";
 
 			formularioEnviarAr($error);
 		}else{
-			$error= "El archivo no se ha guardado correctamente";
+			$error= "La imagen no se ha guardado correctamente";
 			formularioEnviarAr($error);
 		}
 	}

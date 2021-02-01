@@ -44,11 +44,13 @@ $con=conectar();
 
 
 
-$boton=(isset($_POST['boton'])?$_POST['boton']:false);
+$boton=(isset($_POST['boton']));
 if($boton){
-$id_articulo=(isset($_POST['id_art'])?$_POST['id_art']:null);
-    if($id_articulo!=null){
-
+$id_art=(isset($_POST['id_art'])?$_POST['id_art']:null);
+    if(existeArt($con,$id_art)){
+        $nombre=( isset($_FILES['imagen']['name'])?$_FILES['imagen']['name']:null);
+        $guardar=( isset($_FILES['imagen']['tmp_name'])?$_FILES['imagen']['tmp_name']:null);
+        
     }else{
         echo '<p>Debe introducir un identificador</p>';
     }
