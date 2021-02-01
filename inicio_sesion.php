@@ -18,7 +18,7 @@
     error_reporting(0);
         include 'funciones.php';
     $tipo_user= (isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
-    $tipo_user= 2;
+
       encabezado($tipo_user);
 
       
@@ -33,7 +33,7 @@
         $contrasena=(isset($_POST['contrasena'])?$_POST['contrasena']:'Contraseña');
         $email=(isset($_POST['email'])?$_POST['email']:'correo@dominio.es');
         
-   echo   '<form action="inicioSesion.php" method="post">
+   echo   '<form action="inicioesion.php" method="post">
         <p>Correo electrónico: <br><input type="email" name="email" value="'.$email.'"></p>
 		<p>Contraseña: <br><input type="password" name="contrasena" value="'.$contrasena.'"></p>
 
@@ -60,7 +60,7 @@
     }
     else
     {
-        header('refresh:2;url=miperfil.php');
+        header('refresh:2;url=mi_perfil.php');
     }
     ?>
     </Section>
