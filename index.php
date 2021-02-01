@@ -3,17 +3,17 @@
     <head>
         <meta name="author" content= "Saúl Otero García" />
         <meta name="author" content= "Celia Torres Montero" />
-        <meta name="description" content="" />
+        <meta name="description" content="ciencia, revista, noticias" />
         <meta charset="utf-8">
-        <title>Iniciación Saúl</title>
+        <title>Fm-cia</title>
         <link rel="stylesheet" href="inicializador.css">
         <link rel="stylesheet" href="index.css">
+        <link rel="icon" type="image/jpeg" href="imagenes/Iconos/FermioP.jpeg">
     </head>
 <body>
 <?php
 include "funciones.php";
 $usuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:2);
-$usuario=0;
 encabezado($usuario);
 ?>
 

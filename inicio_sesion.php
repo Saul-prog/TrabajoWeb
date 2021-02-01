@@ -18,7 +18,10 @@
     error_reporting(0);
         include 'funciones.php';
     $tipo_user= (isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
+    $tipo_user= 2;
       encabezado($tipo_user);
+
+      
 
       if(($tipo_user != 0) && ($tipo_user != 1))
     {
@@ -37,19 +40,23 @@
         <p class="guardar"><input type="submit" value="Iniciar sesión"></p>
         </form>';
 
-        if($email!='correo@dominio.es'){
-            if($contrasena!='Contraseña'){                              
+    if(($email!='correo@dominio.es') && ($contrasena!='Contraseña'))
+       { if($email!=null){
+            if($contrasena!=null){                              
                 $con=conectar();
                 iniciarSesion($con,$contrasena,$email);
 
                 $con->close();
 
             }else{
-                echo '<p>Email no válido';
+                echo '<p>Contraseña no válida</p>';
             }
         }else{
-            echo '<p>Contraseña no válida</p>';
-        }
+            echo '<p>Email no válido';
+        }}
+    else{
+        echo '<p>Introduzca sus datos de inicio de sesión';
+    }
     }
     else
     {

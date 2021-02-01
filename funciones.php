@@ -73,23 +73,23 @@ function encabezado($administrador){
     if($administrador==0){ //registrado
         ?>
         <header>
-		<a href="index_registrado.php">
+		<a href="index.php">
 			<img class="icono" src="imagenes/Iconos/fm_arriba.png" alt="Fm-cia"/>
 		</a>
 
 		<nav class="navegacion">
 			<ul class="menu">
-				<li><a href="biologia_registrado.php">Biología</a></li>
+				<li><a href="biologia.php">Biología</a></li>
 				<li>|</li>
-				<li><a href="fisica_registrado.php">Física</a></li>
+				<li><a href="fisica.php">Física</a></li>
 				<li>|</li>
-				<li><a href="quimica_registrado.php">Química</a></li>
+				<li><a href="quimica.php">Química</a></li>
 				<li>|</li>
-				<li><a href="tecnologia_registrado.php">Tecnología</a>
+				<li><a href="tecnologia.php">Tecnología</a>
 					<ul class="submenu">
-						<li><a href="informatica_registrado.php">Informática</a></li>
-						<li><a href="robotica_registrado.php">Robótica</a></li>
-						<li><a href="biotecnologia_registrado.php">Biotecnología</a></li>
+						<li><a href="informatica.php">Informática</a></li>
+						<li><a href="robotica.php">Robótica</a></li>
+						<li><a href="biotecnologia.php">Biotecnología</a></li>
                     </ul>
                 <li>|</li>
 				<li><a href="enviarArticulo.php">Enviar artículo</a></li>
@@ -106,31 +106,31 @@ function encabezado($administrador){
     if($administrador==1){ //administrador
         ?>
         <header>
-		<a href="index_administrador.php">
+		<a href="index.php">
 			<img class="icono" src="imagenes/Iconos/fm_arriba.png" alt="Fm-cia"/>
 		</a>
 
         <nav class="navegacion">
 
 			<ul class="menu">
-				<li><a href="biologia_administrador.php">Biología</a></li>
+				<li><a href="biologia.php">Biología</a></li>
 				<li>|</li>
-				<li><a href="fisica_administrador.php">Física</a></li>
+				<li><a href="fisica.php">Física</a></li>
 				<li>|</li>
-				<li><a href="quimica_administrador.php">Química</a></li>
+				<li><a href="quimica.php">Química</a></li>
 				<li>|</li>
-				<li><a href="tecnologia_administrador.php">Tecnología</a>
+				<li><a href="tecnologia.php">Tecnología</a>
 					<ul class="submenu">
-						<li><a href="informatica_administrador.php">Informática</a></li>
-						<li><a href="robotica_administrador.php">Robótica</a></li>
-						<li><a href="biotecnologia_administrador.php">Biotecnología</a></li>
+						<li><a href="informatica.php">Informática</a></li>
+						<li><a href="robotica.php">Robótica</a></li>
+						<li><a href="biotecnologia.php">Biotecnología</a></li>
                     </ul>
                 <li>|</li>
-				<li><a href="publicar_articulo.php">Publicar artículo</a></li>
+				<li><a href="publicar.php">Publicar artículo</a></li>
 				<li>|</li>
-                <li><a href="eliminar_usuario.php">Eliminar usuario</a></li>
+                <li><a href="eliminar.php">Eliminar usuario</a></li>
                 <li>|</li>
-				<li><a href="modificar_categorias.php">Modificar Categorías</a></li>
+				<li><a href="modificar.php">Modificar Categorías</a></li>
 			</ul>
 		</nav>
 

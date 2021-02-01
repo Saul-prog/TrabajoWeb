@@ -3,7 +3,7 @@
     <head>
         <meta name="author" content= "Saúl Otero García" />
         <meta name="author" content= "Celia Torres Montero" />
-        <meta name="description" content="" />
+        <meta name="description" content="ciencia, revista, noticias" />
         <meta charset="utf-8">
         <title>Fm-cia</title>
         <link rel="stylesheet" href="inicializador.css">
