@@ -254,42 +254,40 @@ function existeArt($con,$id_art){
 	$peticion = $con -> query ("SELECT * FROM articulorevision");
 	while ($fila = mysqli_fetch_array($peticion)) {
 		if($fila['ID_art_rev']==$id_art){
-			$id_correcto=$fila['ID_art_rev'];
-			
-			$bandera=1;
+			return $fila;
 		}
 	  }
-	if($bandera!=1){
+	
 		echo '<p>Articulo no encontrado</p>';
 		return false;
-	}
-	return true;
+	
+	
 }
 function subirImagen($nombre,$guardar){
-	
-	  
-	  
+ 
 	if(!file_exists('imagenes')){
 		mkdir('imagenes',0777,true);
 		if(file_exists('imagenes')){
 			if(move_uploaded_file($guardar,'imagenes/'.$nombre)){
-				$error= "La imagen se ha guardado correctamente";
+				echo "La imagen se ha guardado correctamente";
 				
-				formularioEnviarAr($error);
 				
 			}else{
-				$error= "La imagen no se ha guardado correctamente";
-				formularioEnviarAr($error);
+				echo "La imagen no se ha guardado correctamente";
+				
 			}
 		}
 	}else{
 		if(move_uploaded_file($guardar,'imagenes/'.$nombre)){
-			$error= "La imagen guardado correctamente";
+			echo"La imagen guardado correctamente";
 
-			formularioEnviarAr($error);
+			
 		}else{
-			$error= "La imagen no se ha guardado correctamente";
-			formularioEnviarAr($error);
+			echo "La imagen no se ha guardado correctamente";
+			
 		}
 	}
+}
+function publicar($con,$fila){
+	
 }
