@@ -271,24 +271,55 @@ function subirImagen($nombre,$guardar){
 		if(file_exists('imagenes')){
 			if(move_uploaded_file($guardar,'imagenes/'.$nombre)){
 				echo "La imagen se ha guardado correctamente";
-				
+				$vale='ok';
+				return $vale;
 				
 			}else{
 				echo "La imagen no se ha guardado correctamente";
-				
+				$vale='nook';
+				return $vale;
 			}
 		}
 	}else{
 		if(move_uploaded_file($guardar,'imagenes/'.$nombre)){
 			echo"La imagen guardado correctamente";
-
+			$vale='ok';
+			return $vale;
 			
 		}else{
 			echo "La imagen no se ha guardado correctamente";
-			
+			$vale='nook';
+			return $vale;
 		}
 	}
 }
-function publicar($con,$fila){
+function publicar($con,$fila,$categoria,$subCategoria,$imagen){
+	$peticion=$con->prepare("INSERT INTO articulopublicado (autor,Titulo,Observaciones,Resumen,PDF,Categoria,subCategoria,imagen) VALUES (?,?,?,?,?,?,?,?)");
+	
+	$peticion->bind_param("ssssssss",$fila['autor'],$fila['Titulo'],$fila['Observaciones'],$fila['Resumen'],$fila['PDF'],$categoria,$subCategoria,$imagen);
+	
+	if($peticion->execute()){
+		echo '<p>Datos Creados</p>';
+		
+	}else{
+		echo '<p>ERROR: '.$con->error.'</p>';
+	}
+}
+function comprobarContrasena($con,$contrasena,$usuario){
+	$peticion = $con -> query ("SELECT * FROM usuario WHERE NombreUsuario LIKE ?");
+	$peticion->bind_param("s", $usuario);
+	if($peticion->execute()){
+		$rs= $peticion->get_result();
+  		if ($rs) {
+				$fila= $rs->fetch_assoc();
+				if($fila['contrasena']==$contrasena){
+					$rs->free();
+					return true;
+				}
+				$rs->free();
+		  }
+	}
+	return false;
+		
 	
 }

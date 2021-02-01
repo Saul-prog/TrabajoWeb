@@ -21,7 +21,7 @@ if($tipo_usuario!=1)
     header('refresh:0;url=index.php');
 
 encabezado($tipo_usuario);
-/*$usuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:null);
+/*$usuario=(isset($_SESSION['autor'])?$_SESSION['usuario']:null);
 if($usuario==null)
     header('refresh:0;url=index.php');*/
 $con=conectar();
@@ -33,9 +33,9 @@ $con=conectar();
       <form action="subir.php" method="psot" enctype="multipart/form-data">
       <p>Identificador: <br><input type="text" name="id_art" placeholder="Identificador del artículo"><br></p>
       <p>Categoria: <br><?php desplegableCat($con);?><br></p>
-      <p>Categoria: <br><?php desplegableSubCat($con);?><br></p>
+      <p>Subcategoria: <br><?php desplegableSubCat($con);?><br></p>
       <p>Imagen: <br><input type="file" name="imagen"></p>
-      <p>Contraseña del administrador <br><input type="password" placeholder="Contraseña del administrador"><br></p>
+      <p>Contraseña del administrador <br><input type="password" name="contrasena" placeholder="Contraseña del administrador"><br></p>
       <p class="guardar"><input type="submit" id="boton" value="Publicar"></p>
       </form>
 </article>
@@ -47,15 +47,23 @@ $con=conectar();
 $boton=(isset($_POST['boton']));
 if($boton){
 $id_art=(isset($_POST['id_art'])?$_POST['id_art']:null);
-$fila=existeArt($con,$id_art)
+$categoria=(isset($_POST['categoria'])?$_POST['categoria']:null);
+$contrasena=(isset($_POST['contrasena'])?$_POST['contrasena']:null);
+$subcategoria=$_POST['subcategoria'];
+$fila=existeArt($con,$id_art);
+if(comprobarContrasena($con,$contrasena,$usuario)){
     if($fila!=false){
         $nombre=( isset($_FILES['imagen']['name'])?$_FILES['imagen']['name']:null);
         $guardar=( isset($_FILES['imagen']['tmp_name'])?$_FILES['imagen']['tmp_name']:null);
-        subirImagen($nombre,$guardar);
-        publicar($con,$fila);
+        $subida=subirImagen($nombre,$guardar);
+        if($subida=='ok'){
+        publicar($con,$fila,$categoria,$subcategoria,$nombre);
+        }
     }else{
         echo '<p>Debe introducir un identificador</p>';
     }
+}else{
+    echo '<p>Contraseña erronea</p>';
 }
 pie();
 ?>
