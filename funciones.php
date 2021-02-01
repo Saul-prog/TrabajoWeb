@@ -177,15 +177,16 @@ function iniciarSesion($con,$contrasena,$email){
 }
 
 
-function nuevoUsuario($con,$nombre,$apellido1,$apellido2,$nombreUsuario,$contrasena1,$email1,$fechanac){
-	$peticion=$con->prepare("INSERT INTO usuario (NombreUsuario,contrasena,Nombre,Apellido1,Apellido2,CorreoElectronico,Fechanac) VALUES (?,?,?,?,?,?,?)");
+function nuevoUsuario($con,$nombre,$apellido1,$apellido2,$nombreUsuario,$contrasena1,$email1,$fechanac,$promo){
+	$peticion=$con->prepare("INSERT INTO usuario (NombreUsuario,contrasena,Nombre,Apellido1,Apellido2,CorreoElectronico,Fechanac,promo) VALUES (?,?,?,?,?,?,?,?)");
 	
-	$peticion->bind_param("sssssss",$nombreUsuario,$contrasena1,$nombre,$apellido1,$apellido2,$email1,$fechanac);
+	$peticion->bind_param("sssssssi",$nombreUsuario,$contrasena1,$nombre,$apellido1,$apellido2,$email1,$fechanac,$promo);
 
 	if($peticion->execute()){
-		echo '<p>Datos Creados</p>';
+		echo '<p>Se ha creado su cuenta correctamente, '.$nombreUsuario.'</p>';
+
 		$_SESSION['usuario']=1;
-		header('refresh:1;url=index.php');
+		header('refresh:2;url=inicio_sesion.php');
 	}else{
 		echo '<p>ERROR: '.$con->error.'</p>';
 	}

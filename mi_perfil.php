@@ -42,8 +42,16 @@
 		<p>Fecha de nacimiento: <br><input type="date" name="fechanac" value="'.$fechanac.'"></p>
 		
 		<p><input type="checkbox">Quiero recibir correos electrónicos publicitarios de Fm-cia.</p>
-        <p class="guardar"><input type="submit" value="Crear cuenta"></p>
-        </form>';
+        <p class="guardar"><input type="submit" value="Guardar cambios"></p>
+        </form>
+        
+        <details class="vacio2">
+			<summary>Eliminar cuenta</summary>
+			<h3 class="comentario">¿Está seguro de eliminar esta cuenta?</h3>
+			<input type="submit" value="Eliminar">
+		</details>
+		<p>Si tiene una cuenta en esta página está aceptando nuestros <a href="terminos_condiciones.html" target="_blank">Términos y Condiciones Fm-cia</a>.</p>
+	</Section>';
 
     if($nombre!='Nombre'){
         if($apellido1!='Primer Apellido'){
