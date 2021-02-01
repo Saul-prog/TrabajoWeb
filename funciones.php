@@ -219,3 +219,73 @@ function formularioEnviarAr($error){
 	
 	<?php
 }
+function desplegableCat($con){
+	?>
+	<select>
+        
+        <?php
+          $peticion = $con -> query ("SELECT * FROM categorias");
+         	while ($fila = mysqli_fetch_array($peticion)) {
+			  	if($fila['subcategoria']==0){
+            		echo '<option name="categoria" value="'.$fila['categoria'].'">'.$fila['categoria'].'</option>';
+			  	}
+			}
+        ?>
+	  </select>
+<?php	
+}
+function desplegableSubCat($con){
+	?>
+	<select>
+        <option name="categoria" value="">Ninguna</option>
+        <?php
+          $peticion = $con -> query ("SELECT * FROM categorias");
+         	while ($fila = mysqli_fetch_array($peticion)) {
+			  	if($fila['subcategoria']==1){
+            		echo '<option name="subcategoria" value="'.$fila['categoria'].'">'.$fila['categoria'].'</option>';
+			  	}
+			}
+        ?>
+	  </select>
+<?php	
+}
+
+
+function subirImagen($con,$id_art,$nombre,$guardar){
+	$peticion = $con -> query ("SELECT * FROM articulorevision");
+	while ($fila = mysqli_fetch_array($peticion)) {
+		if($fila['ID_art_rev']==$id_art){
+			$id_correcto=$fila['ID_art_rev'];
+			
+			$bandera=1;
+		}
+	  }
+	  if($bandera!=1){
+		  echo '<p>Articulo no encontrado</p>';
+		  exit();
+	  }
+	  
+	if(!file_exists('imagenes')){
+		mkdir('imagenes',0777,true);
+		if(file_exists('imagenes')){/******* */
+			if(move_uploaded_file($_FILES['imagen']['tmp_name'],'articulos/'.$nombre)){
+				$error= "El archivo se ha guardado correctamente";
+				
+				formularioEnviarAr($error);
+				
+			}else{
+				$error= "El archivo no se ha guardado correctamente";
+				formularioEnviarAr($error);
+			}
+		}
+	}else{
+		if(move_uploaded_file($_FILES['archivo']['tmp_name'],'articulos/'.$nombre)){
+			$error= "Archivo guardado correctamente";
+
+			formularioEnviarAr($error);
+		}else{
+			$error= "El archivo no se ha guardado correctamente";
+			formularioEnviarAr($error);
+		}
+	}
+}

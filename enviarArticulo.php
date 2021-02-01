@@ -34,7 +34,7 @@ if($boton!=null){
                             nuevoArtRevision($con,$autor,$titulo,$resumen,$observaciones,$nombre);
                             $con->close();
                 
-                $dir_subida='articulos/';
+                
                 if(!file_exists('articulos')){
                     mkdir('articulos',0777,true);
                     if(file_exists('articulos')){
