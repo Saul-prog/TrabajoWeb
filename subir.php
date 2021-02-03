@@ -15,15 +15,13 @@ include "funciones.php";
 session_start();
 
 $tipo_usuario=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
-///------------Cambiar
-$tipo_usuario=1;
-if($tipo_usuario!=1)
+
+if($tipo_usuario==2)
     header('refresh:0;url=index.php');
 
 encabezado($tipo_usuario);
-/*$usuario=(isset($_SESSION['autor'])?$_SESSION['usuario']:null);
-if($usuario==null)
-    header('refresh:0;url=index.php');*/
+
+
 $con=conectar();
 ?>
 <section class="comentario">
@@ -31,7 +29,7 @@ $con=conectar();
   <article class="comentario">
       <h3 class="comentario">&nbsp;</h3>
       <form action="subir.php" method="psot" enctype="multipart/form-data">
-      <p>Identificador: <br><input type="text" name="id_art" placeholder="Identificador del artículo"><br></p>
+      <p>Identificador der artículo: <br><input type="text" name="id_art" placeholder="Identificador del artículo"><br></p>
       <p>Categoria: <br><?php desplegableCat($con);?><br></p>
       <p>Subcategoria: <br><?php desplegableSubCat($con);?><br></p>
       <p>Imagen: <br><input type="file" name="imagen"></p>
@@ -64,6 +62,7 @@ if(comprobarContrasena($con,$contrasena,$usuario)){
     }
 }else{
     echo '<p>Contraseña erronea</p>';
+}
 }
 pie();
 ?>

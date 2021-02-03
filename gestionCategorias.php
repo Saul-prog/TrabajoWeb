@@ -12,10 +12,13 @@
 <body>
 <?php
 include "funciones.php";
-$usuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:2);
+$usuario=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
+if($usuario==2){
+    header('refresh:0;url=index.php');
+}
 encabezado($usuario);
 $con=conectar();
-$idusuario=(isset($_SESSION['idusuario'])?$_SESSION['idusuario']:null);?>
+$nombreUsuario=(isset($_SESSION['nombreUsuario'])?$_SESSION['nombreUsuario']:null);?>
 
 <section class="comentario">
 <h2 class="comentario">Crear nueva categoría</h2>
@@ -28,7 +31,7 @@ $idusuario=(isset($_SESSION['idusuario'])?$_SESSION['idusuario']:null);?>
                 echo '<p>Debe introducir un nombre</p>';
             }else{
                 $contrasena=(isset($_POST['contrasenaCre'])?$_POST['contrasenaCre']:null);
-                if(comprobarContrasena($con,$contrasena,$idusuario)){
+                if(comprobarContrasena($con,$contrasena,$nombreUsuario)){
                     $check=(isset($_POST['essub'])?$_POST['essub']:null);
                         if($check=='si'){
                             $padre=$_POST['categoria'];

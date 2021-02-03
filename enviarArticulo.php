@@ -12,7 +12,10 @@
 <body>
 <?php
 include "funciones.php";
-$usuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:2);
+$usuario=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
+if($usuario==2){
+    header('refresh:0;url=index.php');
+}
 encabezado($usuario);
 ?>
 <section class="comentario">
