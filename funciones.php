@@ -305,6 +305,22 @@ function publicar($con,$fila,$categoria,$subCategoria,$imagen){
 		echo '<p>ERROR: '.$con->error.'</p>';
 	}
 }
+
+
+/**********************************************
+ * Al introducir la base de datos, la contraseña pedida por pantalla y el usuario que la pide
+ * se comprueba que es su contraseña
+ * 
+ * @param
+ * $con: 		Base de datos
+ * $contrasena: La contraseña introducida por el usuario
+ * $usuario:    El usuario que introduce la contraseña
+ * 
+ * @return
+ * true:  si la contraseña es la correcta
+ * false: si al contraseña no es la correcta
+ * 
+ */
 function comprobarContrasena($con,$contrasena,$usuario){
 	$peticion = $con -> query ("SELECT * FROM usuario WHERE NombreUsuario LIKE ?");
 	$peticion->bind_param("s", $usuario);
@@ -322,4 +338,13 @@ function comprobarContrasena($con,$contrasena,$usuario){
 	return false;
 		
 	
+}
+
+
+function crearCategoria($con,$nombre){
+	
+}
+
+function crearSubCategoria($con,$nombre,$padre){
+
 }
