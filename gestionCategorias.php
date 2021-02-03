@@ -14,7 +14,8 @@
 include "funciones.php";
 $usuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:2);
 encabezado($usuario);
-$con=conectar();?>
+$con=conectar();
+$idusuario=(isset($_SESSION['idusuario'])?$_SESSION['idusuario']:null);?>
 
 <section class="comentario">
 <h2 class="comentario">Crear nueva categoría</h2>
@@ -26,13 +27,20 @@ $con=conectar();?>
             if($nombre==null){
                 echo '<p>Debe introducir un nombre</p>';
             }else{
-                $check=(isset($_POST['essub'])?$_POST['essub']:null);
-                if($check==null){
-                    crearCategoria($con,$nombre);
+                $contrasena=(isset($_POST['contrasenaCre'])?$_POST['contrasenaCre']:null);
+                if(comprobarContrasena($con,$contrasena,$idusuario)){
+                    $check=(isset($_POST['essub'])?$_POST['essub']:null);
+                        if($check=='si'){
+                            $padre=$_POST['categoria'];
+                            crearSubCategoria($con,$nombre,$padre);
+                            
+                        }else{
+                            crearCategoria($con,$nombre);
+                        }
                 }else{
-                    $padre=$_POST['categoria'];
-                    crearSubCategoria($con,$nombre,$padre);
+                    echo '<p>Contraseña no válida</p>';
                 }
+                
             }
         }
 
@@ -43,7 +51,7 @@ $con=conectar();?>
             
             <input type="checkbox" id="essub" name="essub" value="si"> <label for="essub">Marcar si es Subcategoría</label><br>
             <p>Si es subcategoría, indique la que corresponde<br><?php desplegableCat($con);?><p>
-            <p>Contraseña del administrador <br><input type="password" placeholder="Contraseña del administrador"></p>
+            <p>Contraseña del administrador <br><input type="password" name="contrasenaCre" placeholder="Contraseña del administrador"></p>
             
             <p class="guardar"><input type="submit" name="boton" value="Crear"></p>
         </form> 
@@ -55,11 +63,26 @@ $con=conectar();?>
 <section class="comentario">
 <h2 class="comentario">Eliminar categoría</h2>
     <article class="comentario">
+        <?php
+            if($boton=='Eliminar'){
+                $nombreElm=(isset($_POST['catEliminar'])?$_POST['catEliminar']:null);
+                if($nombre==null){
+                    echo '<p>Seleccione la Categoría a eliminar</p>';
+                }else{
+                    if(comprobarContrasena($con,$contrasena,$idusuario)){
+                        eliminarCategoria($con,$nombreElm);
+                    }else{
+                        echo '<p>Contraseña no válida</p>';
+                    }
+                }
+            }
+        ?>
         <h3 class="comentario">&nbsp;</h3>
-        <p>Categoría a eliminar: <br><input type="text" placeholder="Categoría a eliminar"></p>
-        <p>Contraseña del administrador <br><input type="password" placeholder="Contraseña del administrador"></p>
-        <p class="guardar"><input type="submit" value="Eliminar"></p>
-        <!--La fecha se coge de cuando se haya enviado-->
+        <form action="gestionCategorias.php" method="post">
+            <p>Categoría a eliminar: <br><input type="text" name="catEliminar"placeholder="Categoría a eliminar"></p>
+            <p>Contraseña del administrador <br><input type="password" name="contrasenaELM" placeholder="Contraseña del administrador"></p>
+            <p class="guardar"><input type="submit" name="boton" value="Eliminar"></p>
+        </form>
     </article>
 </section>
 <?php

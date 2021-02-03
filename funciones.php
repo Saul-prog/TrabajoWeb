@@ -342,9 +342,38 @@ function comprobarContrasena($con,$contrasena,$usuario){
 
 
 function crearCategoria($con,$nombre){
-	
+	$peticion=$con->prepare("INSERT INTO categorias(categoria,subcategoria) VALUES  (?,0)");
+
+	$peticion->bind_param("s", $nombre);
+
+	if($peticion->execute()){
+		echo '<p>Categoría Creada</p>';
+		
+	}else{
+		echo '<p>ERROR: '.$con->error.'</p>';
+	}
 }
 
 function crearSubCategoria($con,$nombre,$padre){
+	$peticion=$con->prepare("INSERT INTO categorias(categoria,subcategoria,claveCategoria) VALUES  (?,1,?)");
 
+	$peticion->bind_param("ss", $nombre,$padre);
+
+	if($peticion->execute()){
+		echo '<p>Subcategoría Creada</p>';
+		
+	}else{
+		echo '<p>ERROR: '.$con->error.'</p>';
+	}
+}
+
+function eliminarCategoria($con,$nombreElm){
+	$peticion=$con->prepare("DELETE FROM categorias WHERE categoria LIKE ?");
+	$peticion->bind_param("s",$nombreElm);
+	if($peticion->execute()){
+		echo '<p>Categoría Eliminada</p>';
+		
+	}else{
+		echo '<p>ERROR: '.$con->error.'</p>';
+	}
 }
