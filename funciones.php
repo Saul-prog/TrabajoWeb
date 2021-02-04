@@ -42,6 +42,7 @@ function desplegables($con){
 					mysqli_data_seek($peticion2, 0)?>
 					</ul></li>
 			<li>|</li>
+			
 		<?php
 		}
 	  }
@@ -51,94 +52,73 @@ function desplegables($con){
 	<?php
 }
 function encabezado($administrador,$con){
-	
-	if($administrador==2){ //no registrado
         ?>
         	<header>
 		<a href="index.php">
 			<img class="icono" src="imagenes/Iconos/fm_arriba.png" alt="Fm-cia"/>
 		</a>
-		<?php desplegables($con);?>
-		
-
-		<!--Registro y Crear cuenta con los enlaces-->
-		<article class="p1">
-			<h2 class="no"><a href="registro.php">Crear cuenta</a>  |  <a href="inicio_sesion.php">Iniciar sesión</a></h2>		</article>
-    </header>
-        <?php
-    }
-    if($administrador==0){ //registrado
-        ?>
-        <header>
-		<a href="index.php">
-			<img class="icono" src="imagenes/Iconos/fm_arriba.png" alt="Fm-cia"/>
-		</a>
-
+		<?php 
+		$peticion = $con -> query ("SELECT * FROM categorias");
+		$peticion2 = $con -> query ("SELECT * FROM categorias");?>
 		<nav class="navegacion">
-			<ul class="menu">
-				<li><a href="biologia.php">Biología</a></li>
-				<li>|</li>
-				<li><a href="fisica.php">Física</a></li>
-				<li>|</li>
-				<li><a href="quimica.php">Química</a></li>
-				<li>|</li>
-				<li><a href="tecnologia.php">Tecnología</a>
-					<ul class="submenu">
-						<li><a href="informatica.php">Informática</a></li>
-						<li><a href="robotica.php">Robótica</a></li>
-						<li><a href="biotecnologia.php">Biotecnología</a></li>
-                    </ul>
-                <li>|</li>
+				<ul class="menu"><?php
+		while ($fila = mysqli_fetch_array($peticion)) {
+			if($fila['subcategoria']==0){
+				$cat=$fila['categoria'];
+			echo '<li><a href="tablon.php?buscar='.$cat.'">'.$cat.'</a>';?>
+						<ul class="submenu"><?php
+						while ($fila2 = mysqli_fetch_array($peticion2)) {
+							if($fila2['claveCategoria']==$cat){
+								$subcategoria=$fila2['categoria'];
+								echo '<li><a href="tablon.php?buscar='.$subcategoria.'">'.$subcategoria.'</a></li>';
+							}
+						}
+						mysqli_data_seek($peticion2, 0)?>
+						</ul></li>
+						<li>|</li>
+			<?php
+			}
+		}
+		if($administrador==0){
+			?>
 				<li><a href="enviarArticulo.php">Enviar artículo</a></li>
-			</ul>
-		</nav>
-
-		<!--Mi perfil y cerrar sesion lleva a la pagina inicial en vista no registrado-->
-		<article class="p1">
-			<h2 class="no"><a href="mi_perfil.php">Mi perfil</a>  |  <a href="cerrar_sesion.php">Cerrar sesión</a></h2>
-        </article>
-    </header>
-    <?php
-    }
-    if($administrador==1){ //administrador
-        ?>
-        <header>
-		<a href="index.php">
-			<img class="icono" src="imagenes/Iconos/fm_arriba.png" alt="Fm-cia"/>
-		</a>
-
-        <nav class="navegacion">
-
-			<ul class="menu">
-				<li><a href="biologia.php">Biología</a></li>
-				<li>|</li>
-				<li><a href="fisica.php">Física</a></li>
-				<li>|</li>
-				<li><a href="quimica.php">Química</a></li>
-				<li>|</li>
-				<li><a href="tecnologia.php">Tecnología</a>
-					<ul class="submenu">
-						<li><a href="informatica.php">Informática</a></li>
-						<li><a href="robotica.php">Robótica</a></li>
-						<li><a href="biotecnologia.php">Biotecnología</a></li>
-                    </ul>
-                <li>|</li>
+		<?php
+		}
+		if($administrador==1){
+			?>
+				
 				<li><a href="publicarArticulo.php">Publicar artículo</a></li>
 				<li>|</li>
                 <li><a href="eliminar.php">Eliminar usuario</a></li>
                 <li>|</li>
 				<li><a href="gestionCategorias.php">Modificar Categorías</a></li>
-			</ul>
+		<?php	
+		}
+		?>
+			</ul>	
 		</nav>
-
-		<!--Mi perfil y cerrar sesion lleva a la pagina inicial en vista no registrado-->
+		<?php
+	if($administrador==0 || $administrador==1){
+		?>
 		<article class="p1">
 			<h2 class="no"><a href="mi_perfil.php">Mi perfil</a>  |  <a href="cerrar_sesion.php">Cerrar sesión</a></h2>
-        </article>
+		</article>
+		<?php
+	}
+	//Registro y Crear cuenta con los enlaces
+	if($administrador==2){?>
+		
+		<article class="p1">
+			<h2 class="no"><a href="registro.php">Crear cuenta</a>  |  <a href="inicio_sesion.php">Iniciar sesión</a></h2>
+		</article><?php
+	}?>
     </header>
-    <?php
-    }
-}
+        <?php
+}	
+	
+    
+   
+
 
 function iniciarSesion($con,$contrasena,$email){
 	$peticion=$con->prepare("SELECT * FROM usuario WHERE CorreoElectronico LIKE ?");
