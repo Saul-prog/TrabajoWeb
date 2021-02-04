@@ -361,7 +361,7 @@ function eliminarCategoria($con,$nombreElm){
 	}
 }
 
-function slider($con){
+/*function slider($con){
 	$peticion = $con -> query ("SELECT * FROM articulopublicado ORDER BY ID_articulo DESC LIMIT 4");
 	?>
 	<Section class="entero">
@@ -378,4 +378,4 @@ function slider($con){
 			</div>
 		</Section>
 	<?php		
-}
+}*/
