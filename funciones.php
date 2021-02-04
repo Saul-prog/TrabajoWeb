@@ -233,8 +233,12 @@ function existeArt($con,$id_art){
 	$peticion = $con -> prepare ("SELECT * FROM articulorevision WHERE ID_art_rev LIKE ? ");
 	$peticion->bind_param("i",$id_art);
 	
-		if($peticion->execute){
-			return $fila;
+		if($peticion->execute()){
+			$rs= $peticion->get_result();
+			if ($rs) {
+					$fila= $rs->fetch_assoc();
+					$rs->free();
+					return $fila;}
 		}
 	  
 	
@@ -360,8 +364,7 @@ function eliminarCategoria($con,$nombreElm){
 		echo '<p>ERROR: '.$con->error.'</p>';
 	}
 }
-
-/*function slider($con){
+function slider($con){
 	$peticion = $con -> query ("SELECT * FROM articulopublicado ORDER BY ID_articulo DESC LIMIT 4");
 	?>
 	<Section class="entero">
@@ -369,13 +372,13 @@ function eliminarCategoria($con,$nombreElm){
 			
 			<div class="slider">
 	<?php
-			while ($fila = mysqli_fetch_array($peticion)) {?>
-				
-					<ul>
+			while($fila = mysqli_fetch_array($peticion)){?>
+				<ul>
 						<li><a href="articulo.php?articulo=<?php echo $fila['ID_articulo'];?>"><img src="imagenes/fondos/<?php echo $fila['imagen'];?>" alt="Imagen demostrativa"></a><p class="pie_foto"><?php echo $fila['Titulo'];?></p></li>
 					</ul>
+					
 		<?php}?>
 			</div>
 		</Section>
 	<?php		
-}*/
+}
