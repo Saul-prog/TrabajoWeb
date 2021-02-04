@@ -17,10 +17,11 @@ $usuario=(string)(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
 if($usuario==2){
     header('refresh:0;url=index.php');
 }
-encabezado($usuario);
 $con=conectar();
+encabezado($usuario,$con);
+
 $nombreUsuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:null);
-echo $nombreUsuario.'hola';
+
 ?>
 
 <section class="comentario">
@@ -34,14 +35,20 @@ echo $nombreUsuario.'hola';
                 echo '<p>Debe introducir un nombre</p>';
             }else{
                 $contrasena=(isset($_POST['contrasenaCre'])?$_POST['contrasenaCre']:null);
-                if(comprobarContrasena($con,$contrasena,$nombreUsuario)){
+                $valido=comprobarContrasena($con,$contrasena,$nombreUsuario);
+                if($valido==true){
                     $check=(isset($_POST['essub'])?$_POST['essub']:null);
                         if($check=='si'){
-                            $padre=$_POST['categoria'];
+                            $padre=(isset($_POST['categoria'])?$_POST['categoria']:null);
+                            if($padre!=null){
                             crearSubCategoria($con,$nombre,$padre);
-                            
+                            header('refresh:0;url=gestionCategorias.php');
+                            }else{
+                                echo 'Error al crear la categoría';
+                            }
                         }else{
                             crearCategoria($con,$nombre);
+                            header('refresh:0;url=gestionCategorias.php');
                         }
                 }else{
                     echo '<p>Contraseña no válida</p>';
@@ -72,11 +79,13 @@ echo $nombreUsuario.'hola';
         <?php
             if($boton=='Eliminar'){
                 $nombreElm=(isset($_POST['catEliminar'])?$_POST['catEliminar']:null);
-                if($nombre==null){
+                if($nombreElm==null){
                     echo '<p>Seleccione la Categoría a eliminar</p>';
                 }else{
-                    if(comprobarContrasena($con,$contrasena,$idusuario)){
+                    $contrasena=(isset($_POST['contrasenaELM'])?$_POST['contrasenaELM']:null);
+                    if(comprobarContrasena($con,$contrasena,$nombreUsuario)){
                         eliminarCategoria($con,$nombreElm);
+                        header('refresh:0;url=gestionCategorias.php');
                     }else{
                         echo '<p>Contraseña no válida</p>';
                     }

@@ -23,46 +23,43 @@ function pie(){
 	</footer>
 	<?php
 }
-
-function encabezado($administrador){
+function desplegables($con){
+	$peticion = $con -> query ("SELECT * FROM categorias");
+	$peticion2 = $con -> query ("SELECT * FROM categorias");?>
+	<nav class="navegacion">
+			<ul class="menu"><?php
+	while ($fila = mysqli_fetch_array($peticion)) {
+		if($fila['subcategoria']==0){
+			$cat=$fila['categoria'];
+		echo '<li><a href="tablon.php?buscar='.$cat.'">'.$cat.'</a></li>';?>
+					<ul class="submenu"><?php
+					while ($fila2 = mysqli_fetch_array($peticion2)) {
+						if($fila2['claveCategoria']==$cat){
+							$subcategoria=$fila2['categoria'];
+							echo '<li><a href="tablon.php?buscar='.$subcategoria.'">'.$subcategoria.'</a></li>';
+						}
+					}
+					mysqli_data_seek($peticion2, 0)?>
+					</ul>
+			<li>|</li>
+		<?php
+		}
+	  }
+	  ?>
+	  		</ul>
+	</nav>
+	<?php
+}
+function encabezado($administrador,$con){
+	
 	if($administrador==2){ //no registrado
         ?>
         	<header>
 		<a href="index.php">
 			<img class="icono" src="imagenes/Iconos/fm_arriba.png" alt="Fm-cia"/>
 		</a>
-
-		<nav class="navegacion">
-			<ul class="menu">
-				<li><a href="biologia.php">Biología</a></li>
-
-				<?php
-				/*foreach categoria(acceso a table)
-					if sub ==0  (acceso a tabla)
-						escribir la categoria
-
-					foreach (acceso a tabla)
-						if sub ==1 (acceso a tabla)
-							if clave==categoria (acceso a tabla)
-
-
-				
-
-				foreach categoria (acceso a tabla) x4*/
-				?>
-				<li>|</li>
-				<li><a href="fisica.php">Física</a></li>
-				<li>|</li>
-				<li><a href="quimica.php">Química</a></li>
-				<li>|</li>
-				<li><a href="tecnologia.php">Tecnología</a>
-					<ul class="submenu">
-						<li><a href="informatica.php">Informática</a></li>
-						<li><a href="robotica.php">Robótica</a></li>
-						<li><a href="biotecnologia.php">Biotecnología</a></li>
-					</ul>
-			</ul>
-		</nav>
+		<?php desplegables($con);?>
+		
 
 		<!--Registro y Crear cuenta con los enlaces-->
 		<article class="p1">
@@ -223,7 +220,7 @@ function formularioEnviarAr($error){
 }
 function desplegableCat($con){
 	?>
-	<select>
+	<select name="categoria" value="">
         
         <?php
           $peticion = $con -> query ("SELECT * FROM categorias");
@@ -322,20 +319,22 @@ function publicar($con,$fila,$categoria,$subCategoria,$imagen){
  * false: si al contraseña no es la correcta
  * 
  */
-function comprobarContrasena($con,$contrasena,$usuario){
+function comprobarContrasena($con,$contrasena,$nombreUsuario){
 	
-	$peticion = $con -> query ("SELECT * FROM usuario WHERE NombreUsuario LIKE ",$usuario);
-	
+	$peticion = $con -> prepare ("SELECT * FROM usuario WHERE NombreUsuario LIKE (?)");
+	$peticion->bind_param("s",$nombreUsuario);
 	if($peticion->execute()){
 		$rs= $peticion->get_result();
   		if ($rs) {
 				$fila= $rs->fetch_assoc();
+				
 				if($fila['contrasena']==$contrasena){
 					$rs->free();
 					return true;
 				}
 				$rs->free();
 		  }
+		 
 	}
 	return false;
 		
