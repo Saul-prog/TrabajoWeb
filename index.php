@@ -12,6 +12,7 @@
     </head>
 <body>
 <?php
+session_start();
 include "funciones.php";
 $usuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:2);
 encabezado($usuario);

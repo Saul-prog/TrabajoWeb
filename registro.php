@@ -13,6 +13,7 @@
 <body>
 
 <?php
+session_start();
         include 'funciones.php';
         $tipo_user= (isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
         encabezado($tipo_user);

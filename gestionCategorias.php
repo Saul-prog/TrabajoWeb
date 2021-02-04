@@ -11,6 +11,7 @@
     </head>
 <body>
 <?php
+session_start();
 include "funciones.php";
 $usuario=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
 if($usuario==2){
