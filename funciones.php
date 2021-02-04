@@ -395,21 +395,19 @@ function eliminarCategoria($con,$nombreElm){
 		echo '<p>ERROR: '.$con->error.'</p>';
 	}
 }
+
 function slider($con){
-	$peticion = $con -> query ("SELECT * FROM articulopublicado ORDER BY ID_articulo DESC LIMIT 4");
-	?>
-	<Section class="entero">
-			<h2 class="no">&nbsp;</h2>
-			
-			<div class="slider">
-	<?php
-			while($fila = mysqli_fetch_array($peticion)){?>
-				<ul>
-						<li><a href="articulo.php?articulo=<?php echo $fila['ID_articulo'];?>"><img src="imagenes/fondos/<?php echo $fila['imagen'];?>" alt="Imagen demostrativa"></a><p class="pie_foto"><?php echo $fila['Titulo'];?></p></li>
-					</ul>
-					
-		<?php}?>
-			</div>
-		</Section>
-	<?php		
+	$peticion=$con->query("SELECT * FROM articulopublicado ORDER BY ID_articulo DESC LIMIT 0,4 ");
+	echo '<Section class="entero">';
+	echo '<h2 class="no">&nbsp;</h2>';
+	echo '<div class="slider">';
+			while ($fila = mysqli_fetch_array($peticion)){
+				echo '<ul>';
+				echo '<li><a href="articulo.php?articulo='.$fila['ID_articulo'].'"><img src="imagenes/fondos/'.$fila['imagen'].'" alt="Imagen demostrativa"></a><p class="pie_foto">'.$fila['Titulo'].'</p></li>';
+				echo '</ul>';		
+			}
+			echo '</div>';
+			echo '</Section>';
 }
+
+
