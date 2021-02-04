@@ -25,10 +25,10 @@ encabezado($tipo_user,$con);
         <article class="comentario">
 <?php
 $error='';
-$boton=(isset($_POST['enviarAr'])?$_POST['enviarAr']:null);
-$titulo=(isset($_POST['titulo'])?$_POST['titulo']:null);
-$resumen=(isset($_POST['resumen'])?$_POST['resumen']:null);
-$observaciones=(isset($_POST['observaciones'])?$_POST['observaciones']:'');
+$boton=(isset($_GET['enviarAr'])?$_GET['enviarAr']:null);
+$titulo=(isset($_GET['titulo'])?$_GET['titulo']:null);
+$resumen=(isset($_GET['resumen'])?$_GET['resumen']:null);
+$observaciones=(isset($_GET['observaciones'])?$_GET['observaciones']:'');
 $autor=(isset($_SESSION['autor'])?$_SESSION['autor']:'FALTA POR PONER NOMBRE DEL AUTOR');
 if($boton!=null){
     if($titulo!=null){

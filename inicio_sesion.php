@@ -30,8 +30,8 @@
       <Section class="formulario">
         <h2>Iniciar sesión</h2>
       <?php
-        $contrasena=(isset($_POST['contrasena'])?$_POST['contrasena']:'Contraseña');
-        $email=(isset($_POST['email'])?$_POST['email']:'correo@dominio.es');
+        $contrasena=(isset($_GET['contrasena'])?$_GET['contrasena']:'Contraseña');
+        $email=(isset($_GET['email'])?$_GET['email']:'correo@dominio.es');
         
    echo   '<form action="inicio_sesion.php" method="post">
         <p>Correo electrónico: <br><input type="email" name="email" value="'.$email.'"></p>

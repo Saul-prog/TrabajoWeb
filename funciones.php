@@ -169,33 +169,38 @@ function nuevoUsuario($con,$nombre,$apellido1,$apellido2,$nombreUsuario,$contras
 }
 
 function perfil($con,$nombreUsuario){
-	$consulta= "SELECT * FROM articulos WHERE id_articulo =". $nombreUsuario .";";
-        
-        $resultado= mysqli_query($con, $consulta);
-        $fila= mysqli_fetch_array($resultado);
-        $num_filas= mysqli_num_rows($resultado);
-        if(($num_filas != 0) && ($num_filas != null))
-        {
-            return $fila;
+	
+		
+
+	$peticion = $con -> prepare ("SELECT * FROM usuario WHERE NombreUsuario=?");
+	$peticion->bind_param("s",$nombreUsuario);
+	
+		if($peticion->execute()){
+			$rs= $peticion->get_result();
+			if ($rs) {
+					$fila= $rs->fetch_assoc();
+					$rs->free();
+					return $fila;
+				}
 		}
-		else
-		{
+		else{
 			echo "<br><br>No se han encontrado datos.";
 			return null;
 		}
+
 }
-function modificar_perfil($conect, $nombreUsuario, $referencia, $descripcion, $precio, $iva, $notas)
+function modificar_perfil($conect, $id, $nombre, $ap1, $ap2, $nombreUsuario, $contraseña, $correo,$fechanac,$promo)
 {
 
-	$consulta=$conect->prepare("UPDATE articulos SET referencia=?, texto=?,precio=?,iva=?,notas=? WHERE id_articulo=?;");
-	$consulta->bind_param("ssiisi",$referencia,$descripcion,$precio,$iva,$notas,$id);
+	$consulta=$conect->prepare("UPDATE usuario SET NombreUsuario,contrasena,Nombre,Apellido1,Apellido2,CorreoElectronico,Fechanac,promo WHERE ID_USUARIO=?;");
+	$consulta->bind_param("s",$id);
 	if ($consulta->execute() ) 
 	{
-		echo "<br><br>Se ha modificado el artículo $referencia correctamente.";
+		echo "<br><br>Se ha modificado su perfil correctamente.";
 	}
 	else
 	{
-		echo "<br><br>ERROR: No se ha podido modificar correctamente el artículo. $conect->error.";
+		echo "<br><br>ERROR: No se ha podido modificar correctamente el perfil. $conect->error.";
 	}
 }
 
@@ -395,7 +400,7 @@ function eliminarCategoria($con,$nombreElm){
 		echo '<p>ERROR: '.$con->error.'</p>';
 	}
 }
-function slider($con){
+/*function slider($con){
 	$peticion = $con -> query ("SELECT * FROM articulopublicado ORDER BY ID_articulo DESC LIMIT 4");
 	?>
 	<Section class="entero">
@@ -412,4 +417,4 @@ function slider($con){
 			</div>
 		</Section>
 	<?php		
-}
+}*/

@@ -19,28 +19,27 @@ session_start();
         $con=conectar();
         encabezado($tipo_user,$con);
 
-        $nombreUsuario=(isset($_SESSION['nombreUsuario'])?$_SESSION['nombreUsuario']:null);
+        $nombreUsuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:null);
     ?>
     <Section class="formulario">
     <?php
-    if($nombreUsuario!=null)
-    {                             
-        $retorno= perfil($con,$nombreUsuario);
+if($nombreUsuario!=null)
+{                             
+    $retorno= perfil($con,$nombreUsuario);
         
-        if($retorno != null)
-        {
-            $contraseña= $retorno[2];
-            $nombre= $retorno[3];
-            $ap1= $retorno[4];
-            $ap2= $retorno[5];
-            $correo= $retorno[6];
-            $fechanac= $retorno[7];
-            $promo= $retorno[9];
-        }
+    if($retorno != null)
+    {
+        $id= $retorno['ID_USUARIO'];
+        $contraseña= $retorno['contrasena'];
+        $nombre= $retorno['Nombre'];
+        $ap1= $retorno['Apellido1'];
+        $ap2= $retorno['Apellido2'];
+        $correo= $retorno['CorreoElectronico'];
+        $fechanac= $retorno['Fechanac'];
+        $promo= $retorno['promo'];
+        
 
-        $con->close();
-
-        echo '<form action="registro.php" method="post">
+        echo '<form action="mi_perfil.php" method="get">
 		<h2>Información personal</h2>
 		<p>Nombre: <br><input type="text" name="nombre" value="'.$nombre.'"></p>
         <p>Primer apellido: <br><input type="text" name="apellido1" value="'.$ap1.'" >
@@ -66,11 +65,68 @@ session_start();
 			<input type="submit" value="Eliminar">
 		</details>
 		<p>Si tiene una cuenta en esta página está aceptando nuestros <a href="terminos_condiciones.html" target="_blank">Términos y Condiciones Fm-cia</a>.</p>
-	</Section>';
-    }else
-    {
-        echo '<p>Error al buscar el usuario, vuelva a iniciar sesión.</p>';
+    </Section>';
+
+        $nombre=(isset($_GET['nombre'])?$_GET['nombre']:$retorno['Nombre']);
+        $apellido1=(isset($_GET['apellido1'])?$_GET['apellido1']:$retorno['Apellido1']);
+        $apellido2=(isset($_GET['apellido2'])?$_GET['apellido2']:$retorno['Apellido2']);
+        $nombreUsuario=(isset($_GET['nombreUsuario'])?$_GET['nombreUsuario']:$_SESSION['usuario']);
+        $contrasena1=(isset($_GET['contrasena1'])?$_GET['contrasena1']:$retorno['contrasena']);
+        $contrasena2=(isset($_GET['contrasena2'])?$_GET['contrasena2']:$retorno['contrasena']);
+        $email1=(isset($_GET['email1'])?$_GET['email1']:$retorno['CorreoElectronico']);
+        $email2=(isset($_GET['email2'])?$_GET['email2']:$retorno['CorreoElectronico']);
+        $fechanac=(isset($_GET['fechanac'])?$_GET['fechanac']: $retorno['Fechanac']);
+        $promo= (isset($_GET['promo'])? $_GET['promo'] : $retorno['promo']);
+    
+    if(($nombre!='Nombre') && ($nombre!=null)){
+        if(($apellido1!='Primer Apellido') && ($apellido1!=null)){
+            if(($apellido2!='Segundo Apellido') && ($apellido2!=null)){
+                if(($nombreUsuario!='Nombre de usuario') && ($nombreUsuario!=null)){
+                    if(($contrasena1!=null) && ($contrasena1!='Contraseña')){
+                        if($contrasena1==$contrasena2){
+                            if(($email1!=null) && ($email1!='correo@dominio.es')){
+                                if($email1==$email2){
+                                    if($fechanac!=null){              
+                                        
+                                        modificar_perfil($con,$id,$nombre,$apellido1,$apellido2,$nombreUsuario,$contrasena1,$email1,$fechanac,$promo);
+
+                                        $con->close();
+                                    }else{
+                                        echo '<p>Seleccione fecha de nacimiento</p>';
+                                    }
+                                }else{
+                                    echo '<p>Correos diferentes</p>';
+                                } 
+                            }else{
+                                echo '<p>Introduzca un correo válido</p>';
+                            }
+                        }else{
+                            echo '<p>Contraseñas diferentes</p>';
+                        }
+                    }else{
+                        echo '<p>Introduzca una contraseña no válida</p>';
+                    }
+                }else{
+                    echo '<p>Escriba su nombre de usuario</p>';
+                }
+            }else{
+                echo '<p>Escriba su segundo apellido</p>';
+            }
+        }else{
+            echo '<p>Escriba su primer apellido</p>';
+        }
+    }else{
+        echo '<p>Escriba su nombre</p>';
+    }  
+
     }
+
+    $con->close();
+
+}else
+{
+    echo '<p>Error al buscar el usuario, vuelva a iniciar sesión.</p>';
+}
 
     ?>
     </Section>

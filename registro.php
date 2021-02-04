@@ -22,17 +22,17 @@ session_start();
       ?>
       <Section class="formulario">
       <?php
-        $nombre=(isset($_POST['nombre'])?$_POST['nombre']:'Nombre');
-        $apellido1=(isset($_POST['apellido1'])?$_POST['apellido1']:'Primer Apellido');
-        $apellido2=(isset($_POST['apellido2'])?$_POST['apellido2']:'Segundo Apellido');
-        $nombreUsuario=(isset($_POST['nombreUsuario'])?$_POST['nombreUsuario']:'usuario');
-        $contrasena1=(isset($_POST['contrasena1'])?$_POST['contrasena1']:'Contraseña');
-        $contrasena2=(isset($_POST['contrasena2'])?$_POST['contrasena2']:'Contraseña');
-        $email1=(isset($_POST['email1'])?$_POST['email1']:'correo@dominio.es');
-        $email2=(isset($_POST['email2'])?$_POST['email2']:'correo@dominio.es');
-        $fechanac=(isset($_POST['fechanac'])?$_POST['fechanac']: null);
-        $boton= (isset($_POST['boton'])? $_POST['boton'] : 'no');
-        $promo= (isset($_POST['promo'])? $_POST['promo'] : 0);
+        $nombre=(isset($_GET['nombre'])?$_GET['nombre']:'Nombre');
+        $apellido1=(isset($_GET['apellido1'])?$_GET['apellido1']:'Primer Apellido');
+        $apellido2=(isset($_GET['apellido2'])?$_GET['apellido2']:'Segundo Apellido');
+        $nombreUsuario=(isset($_GET['nombreUsuario'])?$_GET['nombreUsuario']:'usuario');
+        $contrasena1=(isset($_GET['contrasena1'])?$_GET['contrasena1']:'Contraseña');
+        $contrasena2=(isset($_GET['contrasena2'])?$_GET['contrasena2']:'Contraseña');
+        $email1=(isset($_GET['email1'])?$_GET['email1']:'correo@dominio.es');
+        $email2=(isset($_GET['email2'])?$_GET['email2']:'correo@dominio.es');
+        $fechanac=(isset($_GET['fechanac'])?$_GET['fechanac']: null);
+        $boton= (isset($_GET['boton'])? $_GET['boton'] : 'no');
+        $promo= (isset($_GET['promo'])? $_GET['promo'] : 0);
 
         
    echo   '<form action="registro.php" method="post">
