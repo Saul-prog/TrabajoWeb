@@ -418,3 +418,13 @@ function eliminarCategoria($con,$nombreElm){
 		</Section>
 	<?php		
 }*/
+function eliminarUsuario($con,$correo){
+	$peticion=$con->prepare("DELETE FROM usuario WHERE CorreoElectronico LIKE ?");
+	$peticion->bind_param("s",$correo);
+	if($peticion->execute()){
+		echo '<p>Usuario Eliminada</p>';
+		
+	}else{
+		echo '<p>ERROR: '.$con->error.'</p>';
+	}
+}
