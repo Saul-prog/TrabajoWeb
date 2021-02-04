@@ -98,7 +98,7 @@ function encabezado($administrador){
 
 		<!--Mi perfil y cerrar sesion lleva a la pagina inicial en vista no registrado-->
 		<article class="p1">
-			<h2 class="no"><a href="mi_perfil.php">Mi perfil</a>  |  <a href="../index.php">Cerrar sesión</a></h2>
+			<h2 class="no"><a href="mi_perfil.php">Mi perfil</a>  |  <a href="cerrar_sesion.php">Cerrar sesión</a></h2>
         </article>
     </header>
     <?php
@@ -126,17 +126,17 @@ function encabezado($administrador){
 						<li><a href="biotecnologia.php">Biotecnología</a></li>
                     </ul>
                 <li>|</li>
-				<li><a href="publicar.php">Publicar artículo</a></li>
+				<li><a href="publicarArticulo.php">Publicar artículo</a></li>
 				<li>|</li>
                 <li><a href="eliminar.php">Eliminar usuario</a></li>
                 <li>|</li>
-				<li><a href="modificar.php">Modificar Categorías</a></li>
+				<li><a href="gestionCategorias.php">Modificar Categorías</a></li>
 			</ul>
 		</nav>
 
 		<!--Mi perfil y cerrar sesion lleva a la pagina inicial en vista no registrado-->
 		<article class="p1">
-			<h2 class="no"><a href="mi_perfil.php">Mi perfil</a>  |  <a href="../index.php">Cerrar sesión</a></h2>
+			<h2 class="no"><a href="mi_perfil.php">Mi perfil</a>  |  <a href="cerrar_sesion.php">Cerrar sesión</a></h2>
         </article>
     </header>
     <?php
@@ -169,6 +169,7 @@ function iniciarSesion($con,$contrasena,$email){
 				$user= $fila['NombreUsuario'];
 				
 				$_SESSION['usuario']=$user;
+				header('refresh:2;url=mi_perfil.php');
 			}
 		}
 	}else{
@@ -322,8 +323,9 @@ function publicar($con,$fila,$categoria,$subCategoria,$imagen){
  * 
  */
 function comprobarContrasena($con,$contrasena,$usuario){
-	$peticion = $con -> query ("SELECT * FROM usuario WHERE NombreUsuario LIKE ?");
-	$peticion->bind_param("s", $usuario);
+	
+	$peticion = $con -> query ("SELECT * FROM usuario WHERE NombreUsuario LIKE ",$usuario);
+	
 	if($peticion->execute()){
 		$rs= $peticion->get_result();
   		if ($rs) {

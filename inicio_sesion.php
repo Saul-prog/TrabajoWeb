@@ -33,7 +33,7 @@
         $contrasena=(isset($_POST['contrasena'])?$_POST['contrasena']:'Contraseña');
         $email=(isset($_POST['email'])?$_POST['email']:'correo@dominio.es');
         
-   echo   '<form action="inicioesion.php" method="post">
+   echo   '<form action="inicio_sesion.php" method="post">
         <p>Correo electrónico: <br><input type="email" name="email" value="'.$email.'"></p>
 		<p>Contraseña: <br><input type="password" name="contrasena" value="'.$contrasena.'"></p>
 

@@ -13,13 +13,15 @@
 <?php
 session_start();
 include "funciones.php";
-$usuario=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
+$usuario=(string)(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
 if($usuario==2){
     header('refresh:0;url=index.php');
 }
 encabezado($usuario);
 $con=conectar();
-$nombreUsuario=(isset($_SESSION['nombreUsuario'])?$_SESSION['nombreUsuario']:null);?>
+$nombreUsuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:null);
+echo $nombreUsuario.'hola';
+?>
 
 <section class="comentario">
 <h2 class="comentario">Crear nueva categoría</h2>
