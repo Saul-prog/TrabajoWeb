@@ -18,8 +18,8 @@
     error_reporting(0);
         include 'funciones.php';
     $tipo_user= (isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
-
-      encabezado($tipo_user);
+    $con=conectar();
+      encabezado($tipo_user,$con);
 
       
 

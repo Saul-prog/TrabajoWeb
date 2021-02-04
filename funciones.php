@@ -14,7 +14,7 @@ function conectar(){
 
 function pie(){
 	?>
-	<footer>
+	<footer class="peque">
 		<img src="imagenes/Iconos/fm_grande.png" alt="icono de la página"/>
 		<p class="fot">SOBRE NOSOTROS</p>
 		<p>Somos un portal de noticias científicas y tecnológicas. 
@@ -31,7 +31,7 @@ function desplegables($con){
 	while ($fila = mysqli_fetch_array($peticion)) {
 		if($fila['subcategoria']==0){
 			$cat=$fila['categoria'];
-		echo '<li><a href="tablon.php?buscar='.$cat.'">'.$cat.'</a></li>';?>
+		echo '<li><a href="tablon.php?buscar='.$cat.'">'.$cat.'</a>';?>
 					<ul class="submenu"><?php
 					while ($fila2 = mysqli_fetch_array($peticion2)) {
 						if($fila2['claveCategoria']==$cat){
@@ -40,13 +40,13 @@ function desplegables($con){
 						}
 					}
 					mysqli_data_seek($peticion2, 0)?>
-					</ul>
+					</ul></li>
 			<li>|</li>
 		<?php
 		}
 	  }
 	  ?>
-	  		</ul>
+	  	</ul>	
 	</nav>
 	<?php
 }

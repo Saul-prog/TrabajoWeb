@@ -13,11 +13,12 @@
 <?php
 session_start();
 include "funciones.php";
-$usuario=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
-if($usuario==2){
+$tipo_user=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
+if($tipo_user==2){
     header('refresh:0;url=index.php');
 }
-encabezado($usuario);
+$con=conectar();
+encabezado($tipo_user,$con);
 ?>
 <section class="comentario">
   		<h2 class="comentario">Enviar artículo</h2>
