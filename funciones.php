@@ -14,7 +14,7 @@ function conectar(){
 
 function pie(){
 	?>
-	<footer class="peque">
+	<footer>
 		<img src="imagenes/Iconos/fm_grande.png" alt="icono de la página"/>
 		<p class="fot">SOBRE NOSOTROS</p>
 		<p>Somos un portal de noticias científicas y tecnológicas. 
@@ -190,6 +190,46 @@ function nuevoUsuario($con,$nombre,$apellido1,$apellido2,$nombreUsuario,$contras
 	}
 
 }
+
+function perfil($con,$nombreUsuario){
+	$consulta= "SELECT * FROM articulos WHERE id_articulo =". $nombreUsuario .";";
+        
+        $resultado= mysqli_query($con, $consulta);
+        $fila= mysqli_fetch_array($resultado);
+        $num_filas= mysqli_num_rows($resultado);
+
+        if(($num_filas != 0) && ($num_filas != null))
+        {
+            return $fila;
+        }
+        else
+        {
+            echo "<br><br>No se han encontrado datos.";
+            return null;
+        }
+
+}
+
+function modificar_perfil($conect, $nombreUsuario, $referencia, $descripcion, $precio, $iva, $notas)
+    {
+        
+
+            $consulta=$conect->prepare("UPDATE articulos SET referencia=?, texto=?,precio=?,iva=?,notas=? WHERE id_articulo=?;");
+            $consulta->bind_param("ssiisi",$referencia,$descripcion,$precio,$iva,$notas,$id);
+
+            if ($consulta->execute() ) 
+            {
+                echo "<br><br>Se ha modificado el artículo $referencia correctamente.";
+            }
+            else
+            {
+                echo "<br><br>ERROR: No se ha podido modificar correctamente el artículo. $conect->error.";
+            }
+        
+
+    }
+
+
 function nuevoArtRevision($con,$autor,$titulo,$resumen,$observaciones,$PDF){
 	$peticion=$con->prepare("INSERT INTO articulorevision (autor,Titulo,Observaciones,Resumen,PDF) VALUES (?,?,?,?,?)");
 	

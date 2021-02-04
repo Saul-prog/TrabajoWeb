@@ -43,7 +43,6 @@
     if(($email!='correo@dominio.es') && ($contrasena!='Contraseña'))
        { if($email!=null){
             if($contrasena!=null){                              
-                $con=conectar();
                 iniciarSesion($con,$contrasena,$email);
 
                 $con->close();
