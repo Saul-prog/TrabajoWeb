@@ -23,6 +23,7 @@ function pie(){
 	</footer>
 	<?php
 }
+
 function desplegables($con){
 	$peticion = $con -> query ("SELECT * FROM categorias");
 	$peticion2 = $con -> query ("SELECT * FROM categorias");?>
@@ -51,6 +52,7 @@ function desplegables($con){
 	</nav>
 	<?php
 }
+
 function encabezado($administrador,$con){
         ?>
         	<header>
@@ -115,10 +117,6 @@ function encabezado($administrador,$con){
     </header>
         <?php
 }	
-	
-    
-   
-
 
 function iniciarSesion($con,$contrasena,$email){
 	$peticion=$con->prepare("SELECT * FROM usuario WHERE CorreoElectronico LIKE ?");
@@ -154,7 +152,6 @@ function iniciarSesion($con,$contrasena,$email){
 	}
 }
 
-
 function nuevoUsuario($con,$nombre,$apellido1,$apellido2,$nombreUsuario,$contrasena1,$email1,$fechanac,$promo){
 	$peticion=$con->prepare("INSERT INTO usuario (NombreUsuario,contrasena,Nombre,Apellido1,Apellido2,CorreoElectronico,Fechanac,promo) VALUES (?,?,?,?,?,?,?,?)");
 	
@@ -170,6 +167,7 @@ function nuevoUsuario($con,$nombre,$apellido1,$apellido2,$nombreUsuario,$contras
 	}
 
 }
+
 function nuevoArtRevision($con,$autor,$titulo,$resumen,$observaciones,$PDF){
 	$peticion=$con->prepare("INSERT INTO articulorevision (autor,Titulo,Observaciones,Resumen,PDF) VALUES (?,?,?,?,?)");
 	
@@ -198,6 +196,7 @@ function formularioEnviarAr($error){
 	
 	<?php
 }
+
 function desplegableCat($con){
 	?>
 	<select name="categoria" value="">
@@ -213,6 +212,7 @@ function desplegableCat($con){
 	  </select>
 <?php	
 }
+
 function desplegableSubCat($con){
 	?>
 	<select>
@@ -230,25 +230,28 @@ function desplegableSubCat($con){
 }
 
 function existeArt($con,$id_art){
-	$peticion = $con -> query ("SELECT * FROM articulorevision");
-	while ($fila = mysqli_fetch_array($peticion)) {
-		if($fila['ID_art_rev']==$id_art){
+	$peticion = $con -> prepare ("SELECT * FROM articulorevision WHERE ID_art_rev LIKE ? ");
+	$peticion->bind_param("i",$id_art);
+	
+		if($peticion->execute){
 			return $fila;
 		}
-	  }
+	  
 	
 		echo '<p>Articulo no encontrado</p>';
 		return false;
 	
 	
 }
+
 function subirImagen($nombre,$guardar){
  
-	if(!file_exists('imagenes')){
+	if(!file_exists('imagenes/fondos')){
 		mkdir('imagenes',0777,true);
-		if(file_exists('imagenes')){
-			if(move_uploaded_file($guardar,'imagenes/'.$nombre)){
-				echo "La imagen se ha guardado correctamente";
+		mkdir('imagenes/fondos',0777,true);
+		if(file_exists('imagenes/fondos/')){
+			if(move_uploaded_file($guardar,'imagenes/fondos/'.$nombre)){
+				
 				$vale='ok';
 				return $vale;
 				
@@ -259,8 +262,8 @@ function subirImagen($nombre,$guardar){
 			}
 		}
 	}else{
-		if(move_uploaded_file($guardar,'imagenes/'.$nombre)){
-			echo"La imagen guardado correctamente";
+		if(move_uploaded_file($guardar,'imagenes/fondos/'.$nombre)){
+			
 			$vale='ok';
 			return $vale;
 			
@@ -271,6 +274,7 @@ function subirImagen($nombre,$guardar){
 		}
 	}
 }
+
 function publicar($con,$fila,$categoria,$subCategoria,$imagen){
 	$peticion=$con->prepare("INSERT INTO articulopublicado (autor,Titulo,Observaciones,Resumen,PDF,Categoria,subCategoria,imagen) VALUES (?,?,?,?,?,?,?,?)");
 	
@@ -283,7 +287,6 @@ function publicar($con,$fila,$categoria,$subCategoria,$imagen){
 		echo '<p>ERROR: '.$con->error.'</p>';
 	}
 }
-
 
 /**********************************************
  * Al introducir la base de datos, la contraseña pedida por pantalla y el usuario que la pide
@@ -321,7 +324,6 @@ function comprobarContrasena($con,$contrasena,$nombreUsuario){
 	
 }
 
-
 function crearCategoria($con,$nombre){
 	$peticion=$con->prepare("INSERT INTO categorias(categoria,subcategoria) VALUES  (?,0)");
 
@@ -357,4 +359,23 @@ function eliminarCategoria($con,$nombreElm){
 	}else{
 		echo '<p>ERROR: '.$con->error.'</p>';
 	}
+}
+
+function slider($con){
+	$peticion = $con -> query ("SELECT * FROM articulopublicado ORDER BY ID_articulo DESC LIMIT 4");
+	?>
+	<Section class="entero">
+			<h2 class="no">&nbsp;</h2>
+			
+			<div class="slider">
+	<?php
+			while ($fila = mysqli_fetch_array($peticion)) {?>
+				
+					<ul>
+						<li><a href="articulo.php?articulo=<?php echo $fila['ID_articulo'];?>"><img src="imagenes/fondos/<?php echo $fila['imagen'];?>" alt="Imagen demostrativa"></a><p class="pie_foto"><?php echo $fila['Titulo'];?></p></li>
+					</ul>
+		<?php}?>
+			</div>
+		</Section>
+	<?php		
 }

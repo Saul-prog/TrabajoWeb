@@ -33,41 +33,39 @@ if($tipo_user==2)
       <p>Imagen: <br><input type="file" name="imagen"></p>
       <p>Contraseña del administrador <br><input type="password" name="contrasena" placeholder="Contraseña del administrador"><br></p>
       <p class="guardar"><input type="submit" name="boton" value="Publicar"></p>
-      </form>
+      </form><?php
+      $boton=(isset($_POST['boton'])?$_POST['boton']:null);
+
+if($boton=='Publicar'){
+    $id_art=(isset($_POST['id_art'])?$_POST['id_art']:null);
+    $categoria=(isset($_POST['categoria'])?$_POST['categoria']:null);
+    $contrasena=(isset($_POST['contrasena'])?$_POST['contrasena']:null);
+    $subcategoria=(isset($_POST['subcategoria'])?$_POST['subcategoria']:null);
+    $fila=existeArt($con,$id_art);
+        if(comprobarContrasena($con,$contrasena,$usuario)){
+            if($fila!=false){
+                $nombre=( isset($_FILES['imagen']['name'])?$_FILES['imagen']['name']:null);
+                $guardar=( isset($_FILES['imagen']['tmp_name'])?$_FILES['imagen']['tmp_name']:null);
+                $subida=subirImagen($nombre,$guardar);
+                    if($subida=='ok'){
+                    publicar($con,$fila,$categoria,$subcategoria,$nombre);
+                    }else{
+                        echo '<p>No se ha publicado corectamente</p>';
+                    }
+            }else{
+                echo '<p>Debe introducir un identificador</p>';
+            }
+        }else{
+            echo '<p>Contraseña erronea</p>';
+    }
+}?>
 </article>
 </section>
 <?php
 
 
 
-$boton=(isset($_POST['boton'])?$_POST['boton']:null);
-echo $boton;
-if($boton=='Publicar'){
-$id_art=(isset($_POST['id_art'])?$_POST['id_art']:null);
-$categoria=(isset($_POST['categoria'])?$_POST['categoria']:null);
-$contrasena=(isset($_POST['contrasena'])?$_POST['contrasena']:null);
-$subcategoria=(isset($_POST['subcategoria'])?$_POST['subcategoria']:null);
-$fila=existeArt($con,$id_art);
-    if(comprobarContrasena($con,$contrasena,$usuario)){
-        if($fila!=false){
-            $nombre=( isset($_FILES['imagen']['name'])?$_FILES['imagen']['name']:null);
-            $guardar=( isset($_FILES['imagen']['tmp_name'])?$_FILES['imagen']['tmp_name']:null);
-            $subida=subirImagen($nombre,$guardar);
-            echo '$subida';
-                if($subida=='ok'){
-                publicar($con,$fila,$categoria,$subcategoria,$nombre);
-                }else{
-                    echo '<p>No se ha publicado corectamente</p>';
-                }
-            }else{
-            echo '<p>Debe introducir un identificador</p>';
-            }
-        }else{
-        echo '<p>Contraseña erronea</p>';
-    }
-}else{
-    echo 'no ha entrado';
-}
+
 pie();
 ?>
 </body>
