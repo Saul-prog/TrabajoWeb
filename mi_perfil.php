@@ -56,7 +56,7 @@ if($nombreUsuario!=null)
             echo '<p><input type="checkbox" name= "promo" value="1" checked>Quiero recibir correos electrónicos publicitarios de Fm-cia.</p>';
         }
 
-	    echo '<p class="guardar"><input type="submit" value="Guardar cambios"></p>
+	    echo '<p class="guardar"><input type="submit" name="boton" value="Guardar cambios"></p>
         </form>
         
         <details class="vacio2">
@@ -77,7 +77,8 @@ if($nombreUsuario!=null)
         $email2=(isset($_GET['email2'])?$_GET['email2']:$retorno['CorreoElectronico']);
         $fechanac=(isset($_GET['fechanac'])?$_GET['fechanac']: $retorno['Fechanac']);
         $promo= (isset($_GET['promo'])? $_GET['promo'] : $retorno['promo']);
-    
+        $boton=(isset($_GET['boton'])? $_GET['boton'] : 'no');
+if($boton=='Guardar cambios'){  
     if(($nombre!='Nombre') && ($nombre!=null)){
         if(($apellido1!='Primer Apellido') && ($apellido1!=null)){
             if(($apellido2!='Segundo Apellido') && ($apellido2!=null)){
@@ -117,7 +118,7 @@ if($nombreUsuario!=null)
     }else{
         echo '<p>Escriba su nombre</p>';
     }  
-
+}
     }
 
     
