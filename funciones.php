@@ -67,7 +67,8 @@ function encabezado($administrador,$con){
 		while ($fila = mysqli_fetch_array($peticion)) {
 			if($fila['subcategoria']==0){
 				$cat=$fila['categoria'];
-			echo '<li><a href="tablon.php?buscar='.$cat.'">'.$cat.'</a>';?>
+			echo '<li>|</li>
+			<li><a href="tablon.php?buscar='.$cat.'">'.$cat.'</a>';?>
 						<ul class="submenu"><?php
 						while ($fila2 = mysqli_fetch_array($peticion2)) {
 							if($fila2['claveCategoria']==$cat){
@@ -77,25 +78,29 @@ function encabezado($administrador,$con){
 						}
 						mysqli_data_seek($peticion2, 0)?>
 						</ul></li>
-						<li>|</li>
+						
+						
 			<?php
 			}
+			
 		}
 		if($administrador==0){
 			?>
+				<li>|</li>
 				<li><a href="enviarArticulo.php">Enviar artículo</a></li>
 		<?php
 		}
 		if($administrador==1){
 			?>
-				
+				<li>|</li>
 				<li><a href="publicarArticulo.php">Publicar artículo</a></li>
 				<li>|</li>
-                <li><a href="eliminar.php">Eliminar usuario</a></li>
+                <li><a href="gestionUsuarios.php">Eliminar usuario</a></li>
                 <li>|</li>
 				<li><a href="gestionCategorias.php">Modificar Categorías</a></li>
 		<?php	
 		}
+		echo'<li>|</li>';
 		?>
 			</ul>	
 		</nav>
@@ -189,6 +194,7 @@ function perfil($con,$nombreUsuario){
 		}
 
 }
+
 function modificar_perfil($conect, $id, $nombre, $apellido1, $apellido2, $nombreUsuario, $contraseña, $correo,$fechanac,$promo){
 
 	$consulta=$conect->prepare("UPDATE usuario SET NombreUsuario=?,contrasena=?,Nombre=?,Apellido1=?,Apellido2=?,CorreoElectronico=?,Fechanac=?,promo=? WHERE ID_USUARIO=?;");
@@ -422,7 +428,7 @@ function eliminarUsuario($con,$correo){
 	$peticion=$con->prepare("DELETE FROM usuario WHERE CorreoElectronico LIKE ?");
 	$peticion->bind_param("s",$correo);
 	if($peticion->execute()){
-		echo '<p>Usuario Eliminada</p>';
+		echo '<p>Usuario eliminado correctamente</p>';
 		
 	}else{
 		echo '<p>ERROR: '.$con->error.'</p>';
