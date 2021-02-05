@@ -400,6 +400,7 @@ function eliminarCategoria($con,$nombreElm){
 		echo '<p>ERROR: '.$con->error.'</p>';
 	}
 }
+
 function slider($con){
 	$peticion = $con -> query ("SELECT * FROM articulopublicado ORDER BY ID_articulo DESC LIMIT 4");
 
