@@ -20,17 +20,7 @@ encabezado($usuario,$con);
 
 slider($con);
 ?>
-<Section class="entero">
-	<h2 class="no">&nbsp;</h2>
-	<!--Lo que se va a mostrar-->
-	<div class="slider">
-	 <ul>
-		<li><a href="articulo_ascii.html"><img src="imagenes/Fondos/codigo_difuminado.jpg" alt="Imagen de codigo"></a><p class="pie_foto">Una herramienta para verificar programas ANSI-C</p></li>
-		</ul>
-	</div>
-	<!---->
 
-</Section>
 
 
 

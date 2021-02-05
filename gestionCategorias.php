@@ -28,18 +28,18 @@ $nombreUsuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:null);
 <h2 class="comentario">Crear nueva categoría</h2>
     <article class="comentario">
         <?php
-        $boton=(isset($_GET['boton'])?$_GET['boton']:'no pulsado');
+        $boton=(isset($_POST['boton'])?$_POST['boton']:'no pulsado');
         if($boton=='Crear'){
-            $nombre=(isset($_GET['nombreCat'])?$_GET['nombreCat']:null);
+            $nombre=(isset($_POST['nombreCat'])?$_POST['nombreCat']:null);
             if($nombre==null){
                 echo '<p>Debe introducir un nombre</p>';
             }else{
-                $contrasena=(isset($_GET['contrasenaCre'])?$_GET['contrasenaCre']:null);
+                $contrasena=(isset($_POST['contrasenaCre'])?$_POST['contrasenaCre']:null);
                 $valido=comprobarContrasena($con,$contrasena,$nombreUsuario);
                 if($valido==true){
-                    $check=(isset($_GET['essub'])?$_GET['essub']:null);
+                    $check=(isset($_POST['essub'])?$_POST['essub']:null);
                         if($check=='si'){
-                            $padre=(isset($_GET['categoria'])?$_GET['categoria']:null);
+                            $padre=(isset($_POST['categoria'])?$_POST['categoria']:null);
                             if($padre!=null){
                             crearSubCategoria($con,$nombre,$padre);
                             header('refresh:0;url=gestionCategorias.php');
@@ -78,11 +78,11 @@ $nombreUsuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:null);
     <article class="comentario">
         <?php
             if($boton=='Eliminar'){
-                $nombreElm=(isset($_GET['catEliminar'])?$_GET['catEliminar']:null);
+                $nombreElm=(isset($_POST['catEliminar'])?$_POST['catEliminar']:null);
                 if($nombreElm==null){
                     echo '<p>Seleccione la Categoría a eliminar</p>';
                 }else{
-                    $contrasena=(isset($_GET['contrasenaELM'])?$_GET['contrasenaELM']:null);
+                    $contrasena=(isset($_POST['contrasenaELM'])?$_POST['contrasenaELM']:null);
                     if(comprobarContrasena($con,$contrasena,$nombreUsuario)){
                         eliminarCategoria($con,$nombreElm);
                         header('refresh:0;url=gestionCategorias.php');

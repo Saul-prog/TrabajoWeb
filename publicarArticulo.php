@@ -34,13 +34,13 @@ if($tipo_user==2)
       <p>Contraseña del administrador <br><input type="password" name="contrasena" placeholder="Contraseña del administrador"><br></p>
       <p class="guardar"><input type="submit" name="boton" value="Publicar"></p>
       </form><?php
-      $boton=(isset($_GET['boton'])?$_GET['boton']:null);
+      $boton=(isset($_POST['boton'])?$_POST['boton']:null);
 
 if($boton=='Publicar'){
-    $id_art=(isset($_GET['id_art'])?$_GET['id_art']:null);
-    $categoria=(isset($_GET['categoria'])?$_GET['categoria']:null);
-    $contrasena=(isset($_GET['contrasena'])?$_GET['contrasena']:null);
-    $subcategoria=(isset($_GET['subcategoria'])?$_GET['subcategoria']:null);
+    $id_art=(isset($_POST['id_art'])?$_POST['id_art']:null);
+    $categoria=(isset($_POST['categoria'])?$_POST['categoria']:null);
+    $contrasena=(isset($_POST['contrasena'])?$_POST['contrasena']:null);
+    $subcategoria=(isset($_POST['subcategoria'])?$_POST['subcategoria']:null);
     $fila=existeArt($con,$id_art);
         if(comprobarContrasena($con,$contrasena,$usuario)){
             if($fila!=false){

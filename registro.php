@@ -35,7 +35,7 @@ session_start();
         $promo= (isset($_GET['promo'])? $_GET['promo'] : 0);
 
         
-   echo   '<form action="registro.php" method="post">
+   echo   '<form action="registro.php" method="get">
 		<h2>Introduzca sus datos</h2>
 		<p>Nombre: <br><input type="text" name="nombre" value="'.$nombre.'"></p>
 		<p>Primer apellido: <br><input type="text" name="apellido1" value="'.$apellido1.'" ><br>Segundo apellido<br><input type="text" name="apellido2" value="'.$apellido2.'"></p>
