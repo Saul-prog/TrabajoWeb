@@ -89,6 +89,8 @@ if($nombreUsuario!=null)
                                     if($fechanac!=null){              
                                         
                                         modificar_perfil($con,$id,$nombre,$apellido1,$apellido2,$nombreUsuario,$contrasena1,$email1,$fechanac,$promo);
+
+                                        header('refresh:2;url=mi_perfil.php');
                                     }else{
                                         echo '<p>Seleccione fecha de nacimiento</p>';
                                     }
