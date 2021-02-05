@@ -67,7 +67,8 @@ function encabezado($administrador,$con){
 		while ($fila = mysqli_fetch_array($peticion)) {
 			if($fila['subcategoria']==0){
 				$cat=$fila['categoria'];
-			echo '<li><a href="tablon.php?buscar='.$cat.'">'.$cat.'</a>';?>
+			echo '<li>|</li>
+			<li><a href="tablon.php?buscar='.$cat.'">'.$cat.'</a>';?>
 						<ul class="submenu"><?php
 						while ($fila2 = mysqli_fetch_array($peticion2)) {
 							if($fila2['claveCategoria']==$cat){
@@ -77,18 +78,21 @@ function encabezado($administrador,$con){
 						}
 						mysqli_data_seek($peticion2, 0)?>
 						</ul></li>
-						<li>|</li>
+						
+						
 			<?php
 			}
+			
 		}
 		if($administrador==0){
 			?>
+				<li>|</li>
 				<li><a href="enviarArticulo.php">Enviar artículo</a></li>
 		<?php
 		}
 		if($administrador==1){
 			?>
-				
+				<li>|</li>
 				<li><a href="publicarArticulo.php">Publicar artículo</a></li>
 				<li>|</li>
                 <li><a href="eliminar.php">Eliminar usuario</a></li>
@@ -96,6 +100,7 @@ function encabezado($administrador,$con){
 				<li><a href="gestionCategorias.php">Modificar Categorías</a></li>
 		<?php	
 		}
+		echo'<li>|</li>';
 		?>
 			</ul>	
 		</nav>
