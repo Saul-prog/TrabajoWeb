@@ -189,8 +189,7 @@ function perfil($con,$nombreUsuario){
 		}
 
 }
-function modificar_perfil($conect, $id, $nombre, $ap1, $ap2, $nombreUsuario, $contraseña, $correo,$fechanac,$promo)
-{
+function modificar_perfil($conect, $id, $nombre, $ap1, $ap2, $nombreUsuario, $contraseña, $correo,$fechanac,$promo){
 
 	$consulta=$conect->prepare("UPDATE usuario SET NombreUsuario,contrasena,Nombre,Apellido1,Apellido2,CorreoElectronico,Fechanac,promo WHERE ID_USUARIO=?;");
 	$consulta->bind_param("s",$id);
