@@ -89,8 +89,6 @@ if($nombreUsuario!=null)
                                     if($fechanac!=null){              
                                         
                                         modificar_perfil($con,$id,$nombre,$apellido1,$apellido2,$nombreUsuario,$contrasena1,$email1,$fechanac,$promo);
-
-                                        $con->close();
                                     }else{
                                         echo '<p>Seleccione fecha de nacimiento</p>';
                                     }
@@ -121,13 +119,13 @@ if($nombreUsuario!=null)
 
     }
 
-    $con->close();
+    
 
 }else
 {
     echo '<p>Error al buscar el usuario, vuelva a iniciar sesión.</p>';
 }
-
+$con->close();
     ?>
     </Section>
     <?php pie();?>
