@@ -95,7 +95,7 @@ function encabezado($administrador,$con){
 				<li>|</li>
 				<li><a href="publicarArticulo.php">Publicar artículo</a></li>
 				<li>|</li>
-                <li><a href="eliminar.php">Eliminar usuario</a></li>
+                <li><a href="gestionUsuarios.php">Eliminar usuario</a></li>
                 <li>|</li>
 				<li><a href="gestionCategorias.php">Modificar Categorías</a></li>
 		<?php	
@@ -194,6 +194,7 @@ function perfil($con,$nombreUsuario){
 		}
 
 }
+
 function modificar_perfil($conect, $id, $nombre, $apellido1, $apellido2, $nombreUsuario, $contraseña, $correo,$fechanac,$promo){
 
 	$consulta=$conect->prepare("UPDATE usuario SET NombreUsuario=?,contrasena=?,Nombre=?,Apellido1=?,Apellido2=?,CorreoElectronico=?,Fechanac=?,promo=? WHERE ID_USUARIO=?;");
@@ -427,7 +428,7 @@ function eliminarUsuario($con,$correo){
 	$peticion=$con->prepare("DELETE FROM usuario WHERE CorreoElectronico LIKE ?");
 	$peticion->bind_param("s",$correo);
 	if($peticion->execute()){
-		echo '<p>Usuario Eliminada</p>';
+		echo '<p>Usuario eliminado correctamente</p>';
 		
 	}else{
 		echo '<p>ERROR: '.$con->error.'</p>';
