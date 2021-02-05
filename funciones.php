@@ -197,7 +197,7 @@ function modificar_perfil($conect, $id, $nombre, $apellido1, $apellido2, $nombre
 	{
 		echo "<br><br>Se ha modificado su perfil correctamente.";
 
-		header('refresh:2;url=mi_perfil.php');
+		header('refresh:0;url=mi_perfil.php');
 	}
 	else
 	{

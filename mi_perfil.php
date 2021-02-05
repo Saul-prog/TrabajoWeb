@@ -78,6 +78,7 @@ if($nombreUsuario!=null)
         $fechanac=(isset($_GET['fechanac'])?$_GET['fechanac']: $retorno['Fechanac']);
         $promo= (isset($_GET['promo'])? $_GET['promo'] : $retorno['promo']);
         $boton=(isset($_GET['boton'])? $_GET['boton'] : 'no');
+        
 if($boton=='Guardar cambios'){  
     if(($nombre!='Nombre') && ($nombre!=null)){
         if(($apellido1!='Primer Apellido') && ($apellido1!=null)){
