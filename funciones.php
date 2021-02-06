@@ -14,7 +14,7 @@ function conectar(){
 
 function pie(){
 	?>
-	<footer class="peque">
+	<footer>
 		<img src="imagenes/Iconos/fm_grande.png" alt="icono de la página"/>
 		<p class="fot">SOBRE NOSOTROS</p>
 		<p>Somos un portal de noticias científicas y tecnológicas. 
@@ -77,12 +77,9 @@ function encabezado($administrador,$con){
 							}
 						}
 						mysqli_data_seek($peticion2, 0)?>
-						</ul></li>
-						
-						
+						</ul></li>	
 			<?php
 			}
-			
 		}
 		if($administrador==0){
 			?>
