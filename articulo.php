@@ -48,17 +48,43 @@ $rs=$peticion22->get_result();
         
     }
 
-
+//SECCION DE COMENTARIOS
     echo '<section class="comentario">';
 	echo	'<h2 class="comentario">Comentarios</h2>';?>
-    <form action="articulo.php" method="post">
-    <textarea name="comentario" rows="5" cols="70" required></textarea>
-    </form>
+    <article class="comentario">
+        <form action="articulo.php" method="post">
+            <textarea name="comentario" rows="5" cols="70" required></textarea><br>
+            <input type="submit" value="Comentar">
+        </form>
+    </article>
+    <?php
+    $peticion=$con ->query("SELECT * FROM comentarios");
+    while($fila=mysqli_fetch_array($peticion)){
+        if($idarticulo==$fila['id_articulo']){
+            echo '<article class="comentario">';
+            if($fila['id_referencia']==NULL){
+                echo '<h3 class="comentario">'.$fila['usuario'].'</h3><p>'.$fila_['fecha'].'</p>';
+                echo '<p class="comentario">'.$fila['comentario'].'</p>';
+                $peticion_=$con->query("SELECT * FROM comentarios");
+                while($fila_=mysqli_fetch_array($peticion_)){
+                    if($fila['id_comentario']==$fila_['id_referencia']){
+                        echo '<article class="respuesta">';
+                        echo '<h3 class="respuesta">'.$fila_['usuario'].'</h3><p>'.$fila_['fecha'].'</p>';
+                        echo '<p class="comentario">'.$fila_['comentario'].'</p>';
+                        echo '</article>';
+                    }
+                }
+                mysqli_data_seek($peticion_, 0);
+            }
+            echo '</article>';
+        }
+    }
 
 
+    
 
 
-
+/*
     <?php
     $peticion = $con -> query ("SELECT * FROM categorias");
     $peticion2 = $con -> query ("SELECT * FROM categorias");?>
@@ -81,7 +107,7 @@ $rs=$peticion22->get_result();
         <?php
         }
     }
-    
+    */
 
 
 
