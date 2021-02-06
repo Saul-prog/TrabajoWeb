@@ -134,7 +134,59 @@ if($tipo_busqueda=="Contenido"){
 }
 
 
+if($tipo_busqueda=="Autor"){
+    $pagina=(isset($_GET['pagina'])?$_GET['pagina']:1);
+    $empezar=($pagina-1)*$por_pagina;
+    //Se trae toda la base de datos
+    $peticion=$con->prepare("SELECT * FROM articulopublicado WHERE autor LIKE ?");
+    $peticion->bind_param("s",$buscar);
+    $peticion->execute();
+    $rs=$peticion->get_result();
+    $total_reg=$rs->num_rows;
+    //Se cuentan todas las filas
 
+
+    if($total_reg<4){
+        $por_pagina=$total_reg;
+        
+    }
+    if($total_reg<1){
+        echo '<article><h2>No hay articulos definidos para esta búsqueda</h2>
+        <p>Por favor, pruebe con otra BÚSQUEDA</p></article>';
+        exit;
+    }
+    //Se calcula el total de páginas que existen(ceil redondea al alza)
+    $total_pag=ceil($total_reg/$por_pagina);
+
+    //Se crea la consulta
+    $peticion22=$con->prepare("SELECT * FROM articulopublicado WHERE autor LIKE ? ORDER BY ID_articulo DESC LIMIT ?,? ");
+    $peticion22->bind_param("sii",$buscar,$empezar,$por_pagina);
+    $peticion22->execute();
+    $rs=$peticion22->get_result();
+
+        if ($rs) {
+            $fila= $rs->fetch_assoc();
+            
+            if($rs->num_rows<1){
+            echo '<p>No hay artículos que coincidan con el autor=', $buscar, '</p>';
+            exit;
+            }
+            while (($fila !== false) && ($fila !== null)) {
+                echo '<article><a href="articulo.php?articulo='.$fila['ID_articulo'].'">';
+                echo '<h2>'.$fila['Titulo'].'</h2>';
+                echo '<p>'.$fila['Resumen'].'</p>';
+                echo '</article></a>';
+            
+                $fila= $rs->fetch_assoc();
+            }
+            $rs->free();
+            
+        }
+        for ($i=1; $i<=$total_pag; $i++) {
+            //En el bucle, muestra la paginación
+            echo "<a href='tablon.php?pagina=".$i."&buscar=".$buscar."'>".$i."</a> | ";
+        }; 
+}
 
 
 

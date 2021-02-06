@@ -114,6 +114,7 @@ function encabezado($administrador,$con){
 				<select name="tipo">
 					<option value="Título">Por título</option>
 					<option value="Contenido">Por contenido</option>
+					<option value="Autor">Por autor</option>
 				</select>
 				<input type="submit" value="Buscar">
 			</form>

@@ -15,12 +15,15 @@
 session_start();
 include "funciones.php";
 $tipo_user=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
+if($tipo_user==2){
+    header('refresh:0;url=index.php');
+}
 $user=(isset($_SESSION['usuario'])?$_SESSION['usuario']:null);
 $con=conectar();
 encabezado($tipo_user,$con);
 $buscar=(isset($_GET['buscar'])?$_GET['buscar']:null);
 echo'<section class="margen">
-    <h1>'.$buscar.'</h1>';
+    <h1>Mis Favoritos</h1>';
 
 $por_pagina=4;
 
