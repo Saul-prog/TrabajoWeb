@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta name="author" content= "Saúl Otero García, Celia Torres Montero" />
+	<meta name="description" content="Memoria del proyecto" />
+	<meta name="keywords" content="memoria, xml" /> 
+	<meta charset="utf-8">
+	<title>Memoria del proyecto</title>
+	<link rel="stylesheet" href="inicializador.css">
+	<link rel="stylesheet" href="memoria.css">
+</head>
+
+<body>
+	<header><h1>Memoria del proyecto</h1></header>
+<section>
+    <h2>Objetivos</h2>
+	<p>Se ha desarrollado una aplicación web cuyo finalidad es servir como <strong>portal de noticias científicas y tecnológicas. </strong>
+		El objetivo principal es visualizar noticias científicas y tecnológicas agrupadas por categorías(biología, física, química y tecnología, esta dividida a su vez en informática, robótica y biotecnología).
+		Se pretende hacer lo más sencilla posible para que sea fácil de usar por cualquier persona.
+		Los usuarios que la utilicen podrán participar activamente en la aplicación web, ya que podrán tanto enviar artículos, como leer los de otros, comentar sobre ellos y responder a otros comentarios.
+	</p>
+</section>
+<section>
+	<h2>Requisitos</h2>
+	<p>Los requisitos en los que se ha basado este portal de noticias son:</p>
+	<ul>
+		<li>Visualización de noticias en diferentes secciones.</li>
+		<li>Registro y control de acceso de usuarios en sesión.</li>
+		<li>Creación de comentarios en una noticia (usuario registrado y administrador).</li>
+		<li>Mantenimiento de noticias.</li>
+		<li>Mantenimiento de comentarios de usuarios.</li>
+		<li>Mantenimiento de categorías.</li>
+		<li>3 tipos de usuarios diferenciados (no registrado, registrado y administrador)</li>
+  </ul>
+</section>
+<section>
+	<h2>Modelo de datos</h2>
+	<p>El modelo de datos que se guardará en la base de datos será:</p>
+	<img class="diagrama" src="imagenes/ModeloDatos.png" alt="Modelo de Datos">
+	<pre class="XML">
+	&lt;usuarios&gt;
+		&lt;usuario&gt;
+			&lt;ID_USUARIO&gt;001&lt;/ID_USUARIO&gt;
+			&lt;NombreUsuario&gt;Edmund_Melson&lt;/NombreUsuario&gt;			
+			&lt;Contrasena&gt;contraseña&lt;/Csontrasena&gt;
+			&lt;Nombre&gt;Edmund&lt;/Nombre&gt;
+			&lt;Apellido1&gt;Melson&lt;/Apellido1&gt;
+			&lt;Apellido2&gt;Clarke&lt;/Apellido2&gt;
+			&lt;CorreoElectronico&gt;usuario@prueba.es&lt;/CorreoElectronico&gt;			
+			&lt;administrador&gt;0&lt;/administrador&gt;
+		&lt;/usuario&gt;
+		...	
+	&lt;/usuarios&gt;
+		</pre>
+</section>
+<section>
+	<h2>Tipos de usuarios</h2>
+	<p>Los usuarios que utilicen esta web lo harán de la siguiente forma según su tipo de usuario</p>
+    <ul>
+    <li><strong>Guest:</strong> El usuario sin registrar tendrá acceso a leer todos los artículos por categorías</li>
+		<li><strong>Registrado: </strong> A las capacidades del anterior usuario se le añade la posibilidad de crear comentarios y enviar posibles artículos</li>
+		<li><strong>Administrador: </strong> Puede ver todas las noticias, crear publicaciones nuevas, eliminar y escribir mensajes, eliminar usuarios y crear o eliminar categorias</li>
+  </ul>
+    <br>
+</section>
+<section>
+	<h2>Acciones de perfiles</h2>
+<pre>
+&lt;perfiles&gt;
+  &lt;perfil&gt;
+    &lt;idperfil&gt;1&lt;/idperfil&gt;
+    &lt;descriptor&gt;Usuario Registrado&lt;/descriptor&gt;
+    &lt;descripcion&gt;Perfil para el Usuario Registrado de la Aplicación.&lt;/descripcion&gt;
+    &lt;acciones&gt;
+      &lt;accion&gt;Comentar&lt;/accion&gt;
+      &lt;accion&gt;Eliminar comentario&lt;/accion&gt;
+      &lt;accion&gt;Enviar artículo&lt;/accion&gt;
+      &lt;accion&gt;Eliminar artículo&lt;/accion&gt;
+      &lt;accion&gt;Cerrar sesión&lt;/accion&gt;
+      &lt;accion&gt;Modificar perfil&lt;/accion&gt;
+    &lt;/acciones&gt;
+  &lt;/perfil&gt;
+  &lt;perfil&gt;
+    &lt;idperfil&gt;2&lt;/idperfil&gt;
+    &lt;descriptor&gt;Usuario Administrador&lt;/descriptor&gt;
+    &lt;descripcion&gt;Perfil para el Usuario Administrador de la Aplicación&lt;/descripcion&gt;
+    &lt;acciones&gt;
+      &lt;accion&gt;Comentar&lt;/accion&gt;
+      &lt;accion&gt;Eliminar comentarios&lt;/accion&gt;
+      &lt;accion&gt;Publicar articulo&lt;/accion&gt;
+      &lt;accion&gt;Eliminar articulos&lt;/accion&gt;
+      &lt;accion&gt;Eliminar usuarios&lt;/accion&gt;
+      &lt;accion&gt;Eliminar categoría&lt;/accion&gt;
+      &lt;accion&gt;Crear categoría&lt;/accion&gt;
+    &lt;/acciones&gt;
+  &lt;/perfil&gt;
+  &lt;perfil&gt;
+    &lt;idperfil&gt;3&lt;/idperfil&gt;
+    &lt;descriptor&gt;Usuario sin registrar&lt;/descriptor&gt;
+    &lt;acciones&gt;
+      &lt;accion&gt;Registrarse&lt;/accion&gt;
+    &lt;/acciones&gt;
+  &lt;/perfil&gt;
+&lt;/perfiles&gt;
+</pre>
+<pre>
+	
+&lt;acciones&gt;
+  &lt;accion&gt;
+    &lt;idaccion&gt;1&lt;/idaccion&gt;
+    &lt;accion&gt;Comentar&lt;/accion&gt;
+    &lt;descripcion&gt;El usuario puede comentar en un artículo o en un comentrio&lt;/descripcion&gt;
+  &lt;/accion&gt;
+  &lt;accion&gt;
+    &lt;idaccion&gt;2&lt;/idaccion&gt;
+    &lt;accion&gt;Eliminar comentario&lt;/accion&gt;
+    &lt;descripcion&gt;El usuario puede eliminar comentarios escritos por sí mismo&lt;/descripcion&gt;
+  &lt;/accion&gt;
+    &lt;accion&gt;
+    &lt;idaccion&gt;3&lt;/idaccion&gt;
+    &lt;accion&gt;Enviar artículo&lt;/accion&gt;
+    &lt;descripcion&gt;El usuario puede enviar un artículo para su publicación&lt;/descripcion&gt;
+  &lt;/accion&gt;
+    &lt;accion&gt;
+    &lt;idaccion&gt;4&lt;/idaccion&gt;
+    &lt;accion&gt;Eliminar artículo&lt;/accion&gt;
+    &lt;descripcion&gt;El usuario puede eliminar un artículo creado por el propio usuario&lt;/descripcion&gt;
+  &lt;/accion&gt;
+    &lt;accion&gt;
+    &lt;idaccion&gt;5&lt;/idaccion&gt;
+    &lt;accion&gt;Cerrar sesión&lt;/accion&gt;
+    &lt;descripcion&gt;El usuario puede cerrar su sesión&lt;/descripcion&gt;
+  &lt;/accion&gt;
+    &lt;accion&gt;
+    &lt;idaccion&gt;6&lt;/idaccion&gt;
+    &lt;accion&gt;Modificar perfil&lt;/accion&gt;
+    &lt;descripcion&gt;El usuario puede modificar su propio perfil&lt;/descripcion&gt;
+  &lt;/accion&gt;
+    &lt;accion&gt;
+    &lt;idaccion&gt;7&lt;/idaccion&gt;
+    &lt;accion&gt;Eliminar comentarios&lt;/accion&gt;
+    &lt;descripcion&gt;El usuario puede eliminar cualquier comentario&lt;/descripcion&gt;
+  &lt;/accion&gt;
+    &lt;accion&gt;
+    &lt;idaccion&gt;8&lt;/idaccion&gt;
+    &lt;accion&gt;Publicar articulo&lt;/accion&gt;
+    &lt;descripcion&gt;El usuario puede insertar un artículo en la página&lt;/descripcion&gt;
+  &lt;/accion&gt;
+    &lt;accion&gt;
+    &lt;idaccion&gt;9&lt;/idaccion&gt;
+    &lt;accion&gt;Eliminar artículos&lt;/accion&gt;
+    &lt;descripcion&gt;El usuario puede eliminar cualquier artículo&lt;/descripcion&gt;
+  &lt;/accion&gt;
+    &lt;accion&gt;
+    &lt;idaccion&gt;10&lt;/idaccion&gt;
+    &lt;accion&gt;Eliminar usuario&lt;/accion&gt;
+    &lt;descripcion&gt;El usuario puede eliminar cualquier usuario&lt;/descripcion&gt;
+  &lt;/accion&gt;
+    &lt;accion&gt;
+    &lt;idaccion&gt;11&lt;/idaccion&gt;
+    &lt;accion&gt;Eliminar categoría&lt;/accion&gt;
+    &lt;descripcion&gt;El usuario puede eliminar una categoría&lt;/descripcion&gt;
+  &lt;/accion&gt;
+    &lt;accion&gt;
+    &lt;idaccion&gt;1&lt;/idaccion&gt;
+    &lt;accion&gt;Crear categoría&lt;/accion&gt;
+    &lt;descripcion&gt;El usuario puede crear una categoría&lt;/descripcion&gt;
+  &lt;/accion&gt;
+&lt;/acciones&gt;
+</pre>
+</section>
+<section>
+	<h2>Plantilla General</h2>
+	
+	<iframe id="PlantillaG" title="PlantillaG" src="../index.html"></iframe>
+
+<pre>
+&lt;Fmciencia&gt;
+    &lt;imagen_pestaña&gt;FermioP.jpeg&lt;/imagen_pestaña&gt;
+	&lt;cabecera&gt;
+		&lt;icono&gt;fm_arriba.png&lt;/icono&gt;
+
+        &lt;categorias&gt;
+            &lt;categoria&gt;Biología&lt;/categoria&gt;
+            &lt;categoria&gt;Física&lt;/categoria&gt;
+            &lt;categoria&gt;Química&lt;/categoria&gt;
+            &lt;categoria&gt;Tecnología
+                &lt;subcategorias&gt;
+                    &lt;subcategoria&gt;Informática&lt;/subcategoria&gt;
+                    &lt;subcategoria&gt;Robótica&lt;/subcategoria&gt;
+                    &lt;subcategoria&gt;Biotecnología&lt;/subcategoria&gt;
+                &lt;/subcategorias&gt;
+            &lt;/categoria&gt;
+        &lt;/categorias&gt;
+
+        <strong>Vista no registrado:  </strong>
+            &lt;direccionador&gt;Crear cuenta&lt;/direccionador&gt;
+            &lt;direccionador&gt;Iniciar sesión&lt;/direccionador&gt;
+        <strong>Vista registrado y administrador:</strong>
+            &lt;direccionador&gt;Mi perfil&lt;/direccionador&gt;
+            &lt;direccionador&gt;Cerrar sesión:
+                lleva al index.html de usuario no registrado&lt;/direccionador&gt;	
+    &lt;/cabecera&gt;
+
+	<strong>Index:</strong>
+        &lt;sliter&gt;
+            &lt;diapositiva&gt;
+                &lt;fondo&gt;codigo_difuminado.jpg&lt;/fondo&gt;
+                &lt;titulo&gt;Una herramienta para verificar programas ANSI-C&lt;/titulo&gt;
+            &lt;/diapositiva&gt;
+            &lt;diapositiva&gt;
+                &lt;fondo&gt;carbon-nanotube-2842389_1280&lt;/fondo&gt;
+                &lt;titulo&gt;Enfriamiento radiativo del cuerpo humano...&lt;/titulo&gt;
+            &lt;/diapositiva&gt;
+            &lt;diapositiva&gt;
+                &lt;fondo&gt;carbon-nanotube-2842389_1280.jpg&lt;/fondo&gt;
+                &lt;titulo&gt;Mantenerse fresco...&lt;/titulo&gt;
+            &lt;/diapositiva&gt;
+            &lt;diapositiva&gt;
+                &lt;fondo&gt;Saharan_Silver_Ants_Erg_Chebbi_2011.jpg&lt;/fondo&gt;
+                &lt;titulo&gt;Preocupaciones por las observaciones...&lt;/titulo&gt;
+            &lt;/diapositiva&gt;
+        &lt;/sliter&gt;
+
+	<strong>Sección (categorias):</strong>
+        &lt;seccion&gt;
+            &lt;titulo_seccion&gt;Sección&lt;/titulo_seccion&gt;
+            &lt;noticias&gt;
+                &lt;noticia&gt;
+                    &lt;titulo_noticia&gt;Título&lt;/titulo_noticia&gt;
+                    &lt;resumen&gt;Resumen&lt;/resumen&gt;
+                &lt;/noticia&gt;
+                ...
+            &lt;/noticias&gt;
+        &lt;/seccion&gt;
+
+	<strong>Noticia:</strong>
+		&lt;Noticia&gt;
+			&lt;tituloNoticia&gt;Título noticia&lt;/tituloNoticia&gt;
+            &lt;autor&gt;Autor&lt;/autor&gt;
+			&lt;articulo&gt;Articulo PDF o texto&lt;/articulo&gt;
+			&lt;fecha&gt;Fecha&lt;/fecha&gt;	
+		&lt;/Noticia&gt;	
+
+        &lt;comentarios titulo="Comentarios"&gt;
+            &lt;comentario&gt;
+                &lt;usuario&gt;usuario&lt;/usuario&gt;
+                &lt;contenido&gt;texto&lt;/contenido&gt;
+				<strong>Vista para resgistrados:</strong>
+                 &lt;responder&gt;apertura de cajón de respuesta&lt;/responder&gt;
+                
+				<strong>Vista para autor del comentario:</strong>
+                 &lt;eliminarComentario&gt;apertura de cajón de eliminación
+                    &lt;pregunta&gt;¿Está seguro de la eliminación?&lt;/pregunta&gt;
+                    &lt;botoneliminar&gt;Eliminar&lt;/botoneliminar&gt;
+                &lt;/eliminarComentario&gt;
+                &lt;respuestas&gt;
+                    &lt;respuesta&gt;
+                        &lt;usuarioRespuesta&gt;usuario&lt;/usuarioRespuesta&gt;
+                        &lt;contenidoRespuesta&gt;texto&lt;/contenidoRespuesta&gt;
+                      <strong>Vista para resgistrados:</strong>
+                         &lt;responderRespuesta&gt;apertura de cajón de respuesta&lt;/responderRespuesta&gt;
+                    
+                    &lt;/respuesta&gt;
+                    ...
+                &lt;/respuestas&gt;
+            &lt;/comentario&gt;
+            ...
+             <strong>Vista para resgistrados:</strong>
+                 &lt;comentar titulo="Comentario"&gt;cajón de comentario
+                    &lt;botonEnviar&gt;Enviar&lt;/botonEnviar&gt;
+                 &lt;/comentar&gt;
+        &lt;/comentarios&gt;
+
+	<strong>Crear cuenta: (vista usuario no registrado)</strong>
+		&lt;crearCuenta titulo="Introduzca sus datos"&gt;
+			&lt;nombre&gt;Nombre&lt;/nombre&gt;
+			&lt;apellido1&gt;Apellido1&lt;/apellido1&gt;
+            &lt;apellido2&gt;Apellido2&lt;/apellido2&gt;
+            &lt;nombreusuario&gt;usuario&lt;/nombreusuario&gt;
+            &lt;contrasena&gt;contraseña&lt;/contrasena&gt;
+			&lt;repetircontrasena&gt;contraseña&lt;/repetircontrasena&gt;
+			&lt;correo&gt;correo@dominio.com&lt;/correo&gt;
+			&lt;repetircorreo&gt;correo@dominio.com&lt;/repetircorreo&gt;
+            &lt;fechanacimiento&gt;fecha&lt;/fechanacimiento&gt;
+			
+            &lt;checkboxes&gt;
+                &lt;chekbox&gt;Terminos y condiciones&lt;/chekbox&gt;
+                &lt;chekbox&gt;correo publicitarios&lt;/chekbox&gt;
+            &lt;/checkboxes&gt;
+            &lt;botoncrearcuenta&gt;Crear cuenta&lt;/botoncrearcuenta&gt;
+		&lt;/crearCuenta&gt;
+
+	<strong>Iniciar sesión: (vista usuario no registrado)</strong>
+		&lt;iniciar titulo="Iniciar sesión"&gt;
+			&lt;correousuario&gt;correo&lt;/correousuario&gt;
+			&lt;contrasenausuario&gt;contraseña&lt;/contrasenausuario&gt;
+
+            &lt;botoniniciar&gt;Iniciar&lt;/botoniniciar&gt;
+		&lt;/iniciar&gt;
+
+	<strong>Enviar Artículo: (vista usuario registrado)</strong>
+        &lt;enviarArticulo titulo="Enviar artículo"&gt;
+            &lt;tituloArticulo&gt;Título texto&lt;/tituloArticulo&gt;
+            &lt;Articulo&gt;Articulo u obsevaciones texto&lt;/Articulo&gt;
+            &lt;resumenArticulo&gt;Resumen texto&lt;/resumenArticulo&gt;
+            &lt;Archivo&gt;Seleccionar archivo&lt;/Archivo&gt;
+            &lt;botonenviar&gt;Enviar&lt;/botonenviar&gt;        
+        &lt;/enviarArticulo&gt;
+
+	<strong>Mi perfil: (vista usuario registrado y administrador)</strong>
+        &lt;perfil&gt;
+            &lt;Nombre&gt;nombre&lt;/Nombre&gt;
+			&lt;Apellido1&gt;apellido1&lt;/Apellido1&gt;
+            &lt;Apellido2&gt;apellido2&lt;/Apellido2&gt;
+            &lt;Nombreusuario&gt;usuario&lt;/Nombreusuario&gt;
+            &lt;Contrasena&gt;contraseña&lt;/Contrasena&gt;
+			&lt;repetirContrasena&gt;contraseña&lt;/repetirContrasena&gt;
+			&lt;Correo&gt;correo@dominio.com&lt;/Correo&gt;
+			&lt;repetirCorreo&gt;correo@dominio.com&lt;/repetirCorreo&gt;
+            &lt;fechaNacimiento&gt;fecha&lt;/fechaNacimiento&gt;
+			
+            &lt;botonGuardar&gt;Guardar&lt;/botonGuardar&gt;
+            &lt;eliminarCuenta&gt;apertura de cajón de eliminación
+                &lt;pregunta&gt;¿Está seguro de eliminar esta cuenta?&lt;/pregunta&gt;
+                &lt;botonEliminar&gt;Eliminar&lt;/botonEliminar&gt;
+            &lt;/eliminarCuenta&gt;
+            
+            &lt;terminos&gt;Terminos y condiciones&lt;/terminos&gt;
+        &lt;/perfil&gt;
+
+	<strong>Publicar Artículo: (vista administrador)</strong>
+        &lt;publicar titulo="Publicar articulo"&gt;
+            &lt;id_art&gt;identificador&lt;/id_art&gt;
+            &lt;contrasena_admin&gt;contraseña&lt;/contrasena_admin&gt;
+
+            &lt;botonPublicar&gt;Publicar&lt;/botonPublicar&gt;
+        &lt;/publicar&gt;
+
+	<strong>Eliminar Usuario: (vista administrador)</strong>
+        &lt;eliminarUsuario titulo="Eliminar usuario"&gt;
+            &lt;correoUsuario&gt;identificador&lt;/correoUsuario&gt;
+            &lt;contrasenaAdmin&gt;contraseña&lt;/contrasenaAdmin&gt;
+
+            &lt;botonEliminarUsuario&gt;Eliminar usuario&lt;/botonEliminarUsuario&gt;
+        &lt;/eliminarUsuario&gt;
+
+	<strong>Modificiar Categorías: (vista administrador)</strong>
+        &lt;modificar&gt;
+            &lt;crearCategoria titulo="Crear nueva categoría"&gt;
+                &lt;nuevaCategoria&gt;categoria&lt;/nuevaCategoria&gt;
+                &lt;contrasenadmin&gt;contraseña&lt;/contrasenadmin&gt;
+
+                &lt;botonCrearCategoria&gt;Crear categoria&lt;/botonCrearCategoria&gt;
+            &lt;/crearCategoria&gt;
+
+            &lt;eliminarCategoria titulo="Eliminar categoría"&gt;
+                &lt;Categoria&gt;categoria&lt;/Categoria&gt;
+                &lt;contrasena_Admin&gt;contraseña&lt;/contrasena_Admin&gt;
+
+                &lt;botonEliminarCategoria&gt;Eliminar categoria&lt;/botonEliminarCategoria&gt;
+            &lt;/eliminarCategoria&gt;
+        &lt;/modificar&gt;
+
+        &lt;footer&gt;
+            &lt;texto&gt; SOBRE NOSOTROS...&lt;/texto&gt;
+            &lt;imagen&gt;fm_grande.png&lt;/imagen&gt;
+        &lt;/footer&gt;
+	&lt;/Fmciencia&gt;
+	</pre>
+</section>
+<section>
+	<h2>Mapa de la Aplicación</h2>
+
+	<p>La aplicación web está formada de varias partes, cumpliendo la idea "Dos clicks". La aplicación consta de las siguientes partes:</p>
+  <br>
+  Usuario no registrado;
+  <ul>
+		<li>•Index</li>
+		<li>•Biología</li>
+		<li>•Física</li>
+		<li>•Química</li>
+    <li>•Tecnología
+      <ul>
+        <li>→Informática</li>
+        <li>→Robótica</li>
+        <li>→Biotecnología</li>
+      </ul>
+  </li>
+		<li>•Crear cuenta</li>
+		<li>•Iniciar sesión</li>
+  </ul>
+  <br>
+  <p>Usuario registrado</p>
+	<ul>
+		<li>•Index</li>
+		<li>•Biología</li>
+		<li>•Física</li>
+		<li>•Química</li>
+    <li>•Tecnología
+      <ul>
+        <li>→Informática</li>
+        <li>→Robótica</li>
+        <li>→Biotecnología</li>
+      </ul>
+  </li>
+		<li>•Enviar artículo</li>
+		<li>•Mi perfil</li>
+		<li>•Cerrar sesión</li></ul>
+	<p>Usuario Administrador</p>
+	<ul>
+		<li>•Index</li>
+		<li>•Biología</li>
+		<li>•Física</li>
+		<li>•Química</li>
+    <li>•Tecnología
+      <ul>
+        <li>→Informática</li>
+        <li>→Robótica</li>
+        <li>→Biotecnología</li>
+      </ul>
+  </li>
+		<li>•Publicar artículo</li>
+		<li>•Elimianr usuario</li>
+		<li>•Modificar Categorías</li>
+		<li>•Mi perfil</li>
+		<li>•Cerrar sesión</li></ul>
+  <br>
+
+	
+		<p>Para que los usuarios puedan crearse cuentas y registrarse en las existentes se han implementado dos formularios</p>
+		<img src="imagenes/crear_cuenta.PNG" alt="Imagen de la creación de cuenta">
+		<img src="imagenes/inicio_sesion.PNG" alt="Imagen del inicio de sesión">
+</section>
+<section>
+	<h2>Piezas de Contenido General</h2>
+	<p>Saltaría un mensaje de error, al intentar eliminar una categoria/noticia que no existe o añadir una ya existente.</p>
+	<p>Al eliminar cuenta o eliminar un artículo pregunta si está seguro de ello.</p>
+  <p>Si falla al introducir el usuario y/o contraseña se le notifica al usuario.</p>
+</section>
+
+<section>
+	<h2>Referencias</h2>
+	<p><strong>Autores:</strong> Edmund Clarke, Daniel Kroening, and Flavio Lerda. "A Tool for Checking ANSI-C Programs".Año 2004. SpringerLink, disponible en https://link.springer.com/chapter/10.1007/978-3-540-24730-2_15</p>
+	<p><strong>Autores:</strong> Norman Nan Shi, Cheng-Chia Tsai, Fernando Camino, Gary D. Bernard, Nanfang Yu, Rüdiger Wehner. "Keeping cool: Enhanced optical reflection and radiative heat dissipation in Saharan silver ants" 17 de Julio de 2015. Science, disponible en https://science.sciencemag.org/content/349/6245/298/tab-pdf</p>
+	<p><strong>Autores:</strong> Po-Chun Hsu, Alex Y. Song, Peter B. Catrysse, Chong Liu1, Yucan Peng, Jin Xie, Shanhui Fan, Yi Cui. "Radiative human body cooling by nanoporous polyethylene textile". Science, disponible en https://science.sciencemag.org/content/353/6303/1019/tab-pdf</p>
+	<p><strong>Autores:</strong> Stefano Gallozzi, Marco Scardia, Michele Maris. "Concerns about ground based astronomical observations: a step to safeguard the astronomical sky". Cornell University, disponible en https://arxiv.org/abs/2001.10952</p>
+	<p><strong>Autores:</strong> Bermudez, Gonzalo MA Los orígenes de la Biología como ciencia. El impacto de las teorías de evolución y las problemáticas asociadas a su enseñanza y aprendizaje. Revista Eureka sobre Enseñanza y Divulgación de las Ciencias [en linea]. 2015, 12 (1), 66-90 [fecha de Consulta 6 de Febrero de 2021]. Disponible en: https://www.redalyc.org/articulo.oa?id=92032970011</p>
+  <p><strong>Imagenes del slider:</strong> https://pixabay.com/es/</p>
+	<p><strong>Resto de imagenes:</strong> cabecera, pie de página y favicon de creación propia</p>
+</section>
+<footer>
+	<p>Grupo 7: Saúl Otero García y Celia Torres Montero - 2020</p>
+	</footer>
+</body>

@@ -70,14 +70,12 @@ if ($rs) {
       $rs->free();
      
 }
-for ($i=1; $i<=$total_pag; $i++) {
-	//En el bucle, muestra la paginación
-	echo "<a href='tablon.php?pagina=".$i."&buscar=".$buscar."'>".$i."</a> | ";
-}; 
 
-
-
-
+    echo '<center>| ';
+    for ($i=1; $i<=$total_pag; $i++) {
+        //En el bucle, muestra la paginación
+        echo "<a href='tablon.php?pagina=".$i."&buscar=".$buscar."'>".$i."</a> | </center>";
+    }; 
 
 echo '</section>';
 pie();

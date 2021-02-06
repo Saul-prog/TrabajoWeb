@@ -15,7 +15,7 @@
 session_start();
 include "funciones.php";
 $con=conectar();
-$usuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:2);
+$usuario=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
 encabezado($usuario,$con);
 
 slider($con);

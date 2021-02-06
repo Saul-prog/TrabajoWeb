@@ -28,7 +28,7 @@ if($tipo_user==2)
   <article class="comentario">
       <h3 class="comentario">&nbsp;</h3>
       <form action="publicarArticulo.php" method="post" enctype="multipart/form-data">
-      <p>Identificador der artículo: <br><input type="text" name="id_art" placeholder="Identificador del artículo"><br></p>
+      <p>Identificador del artículo: <br><input type="text" name="id_art" placeholder="Identificador del artículo"><br></p>
       <p>Categoria: <br><?php desplegableCat($con);?><br></p>
       <p>Subcategoria: <br><?php desplegableSubCat($con);?><br></p>
       <p>Imagen: <br><input type="file" name="imagen"></p>

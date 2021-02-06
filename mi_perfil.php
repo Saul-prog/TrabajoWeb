@@ -57,15 +57,16 @@ if($nombreUsuario!=null)
         }
 
 	    echo '<p class="guardar"><input type="submit" name="boton" value="Guardar cambios"></p>
-        </form>
         
-        <details class="vacio2">
-			<summary>Eliminar cuenta</summary>
-			<h3 class="comentario">¿Está seguro de eliminar esta cuenta?</h3>
-			<input type="submit" value="Eliminar">
-		</details>
-		<p>Si tiene una cuenta en esta página está aceptando nuestros <a href="terminos_condiciones.html" target="_blank">Términos y Condiciones Fm-cia</a>.</p>
-    </Section>';
+        
+            <details class="vacio2">
+                <summary>Eliminar cuenta</summary>
+                <h3 class="comentario">¿Está seguro de eliminar esta cuenta?</h3>
+                <p>Escriba CONFIRMAR:<input type="text" name="confirm"></p>
+                <input type="submit" name="elim" value="Eliminar">
+            </details>
+        </form>
+		<p>Si tiene una cuenta en esta página está aceptando nuestros <a href="terminos_condiciones.html" target="_blank">Términos y Condiciones Fm-cia</a>.</p>';
 
         $nombre=(isset($_GET['nombre'])?$_GET['nombre']:$retorno['Nombre']);
         $apellido1=(isset($_GET['apellido1'])?$_GET['apellido1']:$retorno['Apellido1']);
@@ -78,59 +79,76 @@ if($nombreUsuario!=null)
         $fechanac=(isset($_GET['fechanac'])?$_GET['fechanac']: $retorno['Fechanac']);
         $promo= (isset($_GET['promo'])? $_GET['promo'] : $retorno['promo']);
         $boton=(isset($_GET['boton'])? $_GET['boton'] : 'no');
-        
-if($boton=='Guardar cambios'){  
-    if(($nombre!='Nombre') && ($nombre!=null)){
-        if(($apellido1!='Primer Apellido') && ($apellido1!=null)){
-            if(($apellido2!='Segundo Apellido') && ($apellido2!=null)){
-                if(($nombreUsuario!='Nombre de usuario') && ($nombreUsuario!=null)){
-                    if(($contrasena1!=null) && ($contrasena1!='Contraseña')){
-                        if($contrasena1==$contrasena2){
-                            if(($email1!=null) && ($email1!='correo@dominio.es')){
-                                if($email1==$email2){
-                                    if($fechanac!=null){              
-                                        
-                                        modificar_perfil($con,$id,$nombre,$apellido1,$apellido2,$nombreUsuario,$contrasena1,$email1,$fechanac,$promo);
 
+        $confirmar=(isset($_GET['confirm'])?$_GET['confirm']:'no');
+        $elim= (isset($_GET['elim'])? $_GET['elim'] : 'no');
+
+        
+        if($elim=="Eliminar"){
+            if(($confirmar=="CONFIRMAR") ||($confirmar=="confirmar")){ 
+                if($correo!=null){
+                    eliminarUsuario($con,$correo);
+
+                    $tipo_user=2;
+                    $_SESSION['tipo_usuario']= $tipo_user;
+
+                    header('refresh:2;url=index.php');
+                }
+                else{echo'Error al encontrar el usuario a borrar.';}    
+            }
+            else{echo 'Debe confirmar que desea eliminar esta cuenta.';}
+        }
+        else{echo 'no';}
+        
+        if($boton=='Guardar cambios'){  
+            if(($nombre!='Nombre') && ($nombre!=null)){
+                if(($apellido1!='Primer Apellido') && ($apellido1!=null)){
+                    if(($apellido2!='Segundo Apellido') && ($apellido2!=null)){
+                        if(($nombreUsuario!='Nombre de usuario') && ($nombreUsuario!=null)){
+                            if(($contrasena1!=null) && ($contrasena1!='Contraseña')){
+                                if($contrasena1==$contrasena2){
+                                    if(($email1!=null) && ($email1!='correo@dominio.es')){
+                                        if($email1==$email2){
+                                            if($fechanac!=null){              
+                                                
+                                                modificar_perfil($con,$id,$nombre,$apellido1,$apellido2,$nombreUsuario,$contrasena1,$email1,$fechanac,$promo);
+
+                                            }else{
+                                                echo '<p>Seleccione fecha de nacimiento</p>';
+                                            }
+                                        }else{
+                                            echo '<p>Correos diferentes</p>';
+                                        } 
                                     }else{
-                                        echo '<p>Seleccione fecha de nacimiento</p>';
+                                        echo '<p>Introduzca un correo válido</p>';
                                     }
                                 }else{
-                                    echo '<p>Correos diferentes</p>';
-                                } 
+                                    echo '<p>Contraseñas diferentes</p>';
+                                }
                             }else{
-                                echo '<p>Introduzca un correo válido</p>';
+                                echo '<p>Introduzca una contraseña no válida</p>';
                             }
                         }else{
-                            echo '<p>Contraseñas diferentes</p>';
+                            echo '<p>Escriba su nombre de usuario</p>';
                         }
                     }else{
-                        echo '<p>Introduzca una contraseña no válida</p>';
+                        echo '<p>Escriba su segundo apellido</p>';
                     }
                 }else{
-                    echo '<p>Escriba su nombre de usuario</p>';
+                    echo '<p>Escriba su primer apellido</p>';
                 }
             }else{
-                echo '<p>Escriba su segundo apellido</p>';
-            }
-        }else{
-            echo '<p>Escriba su primer apellido</p>';
-        }
-    }else{
-        echo '<p>Escriba su nombre</p>';
-    }  
-}
+                echo '<p>Escriba su nombre</p>';
+            }  
+        }        
     }
-
-    
-
 }else
 {
     echo '<p>Error al buscar el usuario, vuelva a iniciar sesión.</p>';
 }
 $con->close();
     ?>
-    </Section>
+</Section>
     <?php pie();?>
     
 </body>

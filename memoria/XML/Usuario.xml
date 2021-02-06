@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<usuarios>
+    <usuario>
+        <ID_USUARIO>001</ID_USUARIO>
+        <NombreUsuario>Edmund_Melson</NombreUsuario>
+        <contrasena>contraseña</contrasena>
+        <Nombre>Edmund</Nombre>
+        <Apellido1>Melson</Apellido1>
+        <Apellido2>Clarke</Apellido2>
+        <CorreoElectronico>usuario@prueba.es</CorreoElectronico>
+        <administrador>0</administrador>
+    </usuario>
+...
+</usuarios>

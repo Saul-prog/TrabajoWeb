@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<acciones>
+  <accion>
+    <idaccion>1</idaccion>
+    <accion>Comentar</accion>
+    <descripcion>El usuario puede comentar en un artículo o en un comentrio</descripcion>
+  </accion>
+  <accion>
+    <idaccion>2</idaccion>
+    <accion>Eliminar comentario</accion>
+    <descripcion>El usuario puede eliminar comentarios escritos por sí mismo</descripcion>
+  </accion>
+    <accion>
+    <idaccion>3</idaccion>
+    <accion>Enviar artículo</accion>
+    <descripcion>El usuario puede enviar un artículo para su publicación</descripcion>
+  </accion>
+    <accion>
+    <idaccion>4</idaccion>
+    <accion>Eliminar artículo</accion>
+    <descripcion>El usuario puede eliminar un artículo creado por el propio usuario</descripcion>
+  </accion>
+    <accion>
+    <idaccion>5</idaccion>
+    <accion>Cerrar sesión</accion>
+    <descripcion>El usuario puede cerrar su sesión</descripcion>
+  </accion>
+    <accion>
+    <idaccion>6</idaccion>
+    <accion>Modificar perfil</accion>
+    <descripcion>El usuario puede modificar su propio perfil</descripcion>
+  </accion>
+    <accion>
+    <idaccion>7</idaccion>
+    <accion>Eliminar comentarios</accion>
+    <descripcion>El usuario puede eliminar cualquier comentario</descripcion>
+  </accion>
+    <accion>
+    <idaccion>8</idaccion>
+    <accion>Publicar articulo</accion>
+    <descripcion>El usuario puede insertar un artículo en la página</descripcion>
+  </accion>
+    <accion>
+    <idaccion>9</idaccion>
+    <accion>Eliminar artículos</accion>
+    <descripcion>El usuario puede eliminar cualquier artículo</descripcion>
+  </accion>
+    <accion>
+    <idaccion>10</idaccion>
+    <accion>Eliminar usuario</accion>
+    <descripcion>El usuario puede eliminar cualquier usuario</descripcion>
+  </accion>
+    <accion>
+    <idaccion>11</idaccion>
+    <accion>Eliminar categoría</accion>
+    <descripcion>El usuario puede eliminar una categoría</descripcion>
+  </accion>
+    <accion>
+    <idaccion>1</idaccion>
+    <accion>Crear categoría</accion>
+    <descripcion>El usuario puede crear una categoría</descripcion>
+  </accion>
+</acciones>

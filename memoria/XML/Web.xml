@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Fmciencia>
+    <imagen_pestaña>FermioP.jpeg</imagen_pestaña>
+	<cabecera>
+		<icono>fm_arriba.png</icono>
+
+        <categorias>
+            <categoria>Biología</categoria>
+            <categoria>Física</categoria>
+            <categoria>Química</categoria>
+            <categoria>Tecnología
+                <subcategorias>
+                    <subcategoria>Informática</subcategoria>
+                    <subcategoria>Robótica</subcategoria>
+                    <subcategoria>Biotecnología</subcategoria>
+                </subcategorias>
+            </categoria>
+        </categorias>
+
+        Vista no registrado:  
+            <direccionador>Crear cuenta</direccionador>
+            <direccionador>Iniciar sesión</direccionador>
+        Vista registrado y administrador:
+            <direccionador>Mi perfil</direccionador>
+            <direccionador>Cerrar sesión:
+                lleva al index.html de usuario no registrado</direccionador>	
+    </cabecera>
+
+		Index:
+        <sliter>
+            <diapositiva>
+                <fondo>codigo_difuminado.jpg</fondo>
+                <titulo>Una herramienta para verificar programas ANSI-C</titulo>
+            </diapositiva>
+            <diapositiva>
+                <fondo>carbon-nanotube-2842389_1280</fondo>
+                <titulo>Enfriamiento radiativo del cuerpo humano...</titulo>
+            </diapositiva>
+            <diapositiva>
+                <fondo>carbon-nanotube-2842389_1280.jpg</fondo>
+                <titulo>Mantenerse fresco...</titulo>
+            </diapositiva>
+            <diapositiva>
+                <fondo>Saharan_Silver_Ants_Erg_Chebbi_2011.jpg</fondo>
+                <titulo>Preocupaciones por las observaciones astronómicas terrestres...</titulo>
+            </diapositiva>
+        </sliter>
+
+        Sección (categorias):
+        <seccion>
+            <titulo_seccion>Sección</titulo_seccion>
+            <noticias>
+                <noticia>
+                    <titulo_noticia>Título</titulo_noticia>
+                    <resumen>Resumen</resumen>
+                </noticia>
+                ...
+            </noticias>
+        </seccion>
+
+        Noticia:
+		<Noticia>
+			<tituloNoticia>Título noticia</tituloNoticia>
+            <autor>Autor</autor>
+			<articulo>Articulo PDF o texto</articulo>
+			<fecha>Fecha</fecha>	
+		</Noticia>	
+
+        <comentarios titulo="Comentarios">
+            <comentario>
+                <usuario>usuario</usuario>
+                <contenido>texto</contenido>
+                 Vista para resgistrados:
+                 <responder>apertura de cajón de respuesta</responder>
+                
+                 Vista para autor del comentario:
+                 <eliminarComentario>apertura de cajón de eliminación
+                    <pregunta>¿Está seguro de la eliminación?</pregunta>
+                    <botoneliminar>Eliminar</botoneliminar>
+                </eliminarComentario>
+                <respuestas>
+                    <respuesta>
+                        <usuarioRespuesta>usuario</usuarioRespuesta>
+                        <contenidoRespuesta>texto</contenidoRespuesta>
+                         Vista para resgistrados:
+                         <responderRespuesta>apertura de cajón de respuesta</responderRespuesta>
+                    
+                    </respuesta>
+                    ...
+                </respuestas>
+            </comentario>
+            ...
+             Vista para resgistrados:
+                 <comentar titulo="Comentario">cajón de comentario
+                    <botonEnviar>Enviar</botonEnviar>
+                 </comentar>
+        </comentarios>
+
+		Crear cuenta: (vista usuario no registrado)
+		<crearCuenta titulo="Introduzca sus datos">
+			<nombre>Nombre</nombre>
+			<apellido1>Apellido1</apellido1>
+            <apellido2>Apellido2</apellido2>
+            <nombreusuario>usuario</nombreusuario>
+            <contrasena>contraseña</contrasena>
+			<repetircontrasena>contraseña</repetircontrasena>
+			<correo>correo@dominio.com</correo>
+			<repetircorreo>correo@dominio.com</repetircorreo>
+            <fechanacimiento>fecha</fechanacimiento>
+			
+            <checkboxes>
+                <chekbox>Terminos y condiciones</chekbox>
+                <chekbox>correo publicitarios</chekbox>
+            </checkboxes>
+            <botoncrearcuenta>Crear cuenta</botoncrearcuenta>
+		</crearCuenta>
+
+		Iniciar sesión: (vista usuario no registrado)
+		<iniciar titulo="Iniciar sesión">
+			<correousuario>correo</correousuario>
+			<contrasenausuario>contraseña</contrasenausuario>
+
+            <botoniniciar>Iniciar</botoniniciar>
+		</iniciar>
+
+        Enviar Artículo: (vista usuario registrado)
+        <enviarArticulo titulo="Enviar artículo">
+            <tituloArticulo>Título texto</tituloArticulo>
+            <Articulo>Articulo u obsevaciones texto</Articulo>
+            <resumenArticulo>Resumen texto</resumenArticulo>
+            <Archivo>Seleccionar archivo</Archivo>
+            <botonenviar>Enviar</botonenviar>        
+        </enviarArticulo>
+
+        Mi perfil: (vista usuario registrado y administrador)
+        <perfil>
+            <Nombre>nombre</Nombre>
+			<Apellido1>apellido1</Apellido1>
+            <Apellido2>apellido2</Apellido2>
+            <Nombreusuario>usuario</Nombreusuario>
+            <Contrasena>contraseña</Contrasena>
+			<repetirContrasena>contraseña</repetirContrasena>
+			<Correo>correo@dominio.com</Correo>
+			<repetirCorreo>correo@dominio.com</repetirCorreo>
+            <fechaNacimiento>fecha</fechaNacimiento>
+			
+            <botonGuardar>Guardar</botonGuardar>
+            <eliminarCuenta>apertura de cajón de eliminación
+                <pregunta>¿Está seguro de eliminar esta cuenta?</pregunta>
+                <botonEliminar>Eliminar</botonEliminar>
+            </eliminarCuenta>
+            
+            <terminos>Terminos y condiciones</terminos>
+        </perfil>
+
+        Publicar Artículo: (vista administrador)
+        <publicar titulo="Publicar articulo">
+            <id_art>identificador</id_art>
+            <contrasena_admin>contraseña</contrasena_admin>
+
+            <botonPublicar>Publicar</botonPublicar>
+        </publicar>
+
+        Eliminar Usuario: (vista administrador)
+        <eliminarUsuario titulo="Eliminar usuario">
+            <correoUsuario>identificador</correoUsuario>
+            <contrasenaAdmin>contraseña</contrasenaAdmin>
+
+            <botonEliminarUsuario>Eliminar usuario</botonEliminarUsuario>
+        </eliminarUsuario>
+
+        Modificiar Categorías: (vista administrador)
+        <modificar>
+            <crearCategoria titulo="Crear nueva categoría">
+                <nuevaCategoria>categoria</nuevaCategoria>
+                <contrasenadmin>contraseña</contrasenadmin>
+
+                <botonCrearCategoria>Crear categoria</botonCrearCategoria>
+            </crearCategoria>
+
+            <eliminarCategoria titulo="Eliminar categoría">
+                <Categoria>categoria</Categoria>
+                <contrasena_Admin>contraseña</contrasena_Admin>
+
+                <botonEliminarCategoria>Eliminar categoria</botonEliminarCategoria>
+            </eliminarCategoria>
+        </modificar>
+
+        <footer>
+            <texto> SOBRE NOSOTROS...</texto>
+            <imagen>fm_grande.png</imagen>
+        </footer>
+	</Fmciencia>

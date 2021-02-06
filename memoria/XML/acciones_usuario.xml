@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<perfiles>
+  <perfil>
+    <idperfil>1</idperfil>
+    <descriptor>Usuario Registrado</descriptor>
+    <descripcion>Perfil para el Usuario Registrado de la Aplicación.</descripcion>
+    <acciones>
+      <accion>Comentar</accion>
+      <accion>Eliminar comentario</accion>
+      <accion>Enviar artículo</accion>
+      <accion>Eliminar artículo</accion>
+      <accion>Cerrar sesión</accion>
+      <accion>Modificar perfil</accion>
+    </acciones>
+  </perfil>
+  <perfil>
+    <idperfil>2</idperfil>
+    <descriptor>Usuario Administrador</descriptor>
+    <descripcion>Perfil para el Usuario Administrador de la Aplicación</descripcion>
+    <acciones>
+      <accion>Comentar</accion>
+      <accion>Eliminar comentarios</accion>
+      <accion>Publicar articulo</accion>
+      <accion>Eliminar articulos</accion>
+      <accion>Eliminar usuarios</accion>
+      <accion>Eliminar categoría</accion>
+      <accion>Crear categoría</accion>
+    </acciones>
+  </perfil>
+  <perfil>
+    <idperfil>3</idperfil>
+    <descriptor>Usuario sin registrar</descriptor>
+    <acciones>
+      <accion>Registrarse</accion>
+    </acciones>
+  </perfil>
+</perfiles>
