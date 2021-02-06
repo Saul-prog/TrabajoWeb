@@ -52,16 +52,21 @@ $rs=$peticion22->get_result();
 	echo '<section class="comentario">';
     echo    '<h2 class="comentario">Comentarios</h2>';
     echo		'<article class="comentario">';
-    ?>
-    <form name="comentario" method="post">
-         <label for="textarea"></label>
+    
+    echo'<form name="comentario" method="post">';
+    echo     '<label for="textarea"></label>';
          
-         <p><textarea name="comentario"cols="80" rows="5" id="textarea" required></textarea></p>
+      echo   '<p><textarea name="comentario"cols="80" rows="5" id="textarea" required></textarea></p>';
          
-         <p><input type="submit" <?php if(isset($_GET['id_comentario'])){?> name="respuesta" <?php} else{?> name="comentar" <?php}?> value="Comentar"></p>
-     </form>
+         echo '<p><input type="submit"';
+          if(isset($_GET['id_comentario'])){
+              echo ' name="respuesta"';
+            } else{ 
+                  echo 'name="comentar"';
+            } echo 'value="Comentar"></p>';
+     echo '</form>';
 
- <?php
+
  
      if(isset($_POST['comentar'])){
          $peticion_com=$con->prepare("INSERT INTO comentarios (comentario,usuario,fecha,id_articulo) value (?,?,NOW(),?) ");
@@ -85,7 +90,7 @@ $rs=$peticion22->get_result();
      }
  echo '</article>';
  
- echo		'<article class="comentario">';
+ echo '<article class="comentario">';
 
 $comentarios=$con->query("SELECT * FROM comentarios WHERE respuesta LIKE '0' ORDER BY DESC");
         while($row=mysqli_fetch_array($comentarios){
