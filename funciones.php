@@ -84,11 +84,15 @@ function encabezado($administrador,$con){
 		if($administrador==0){
 			?>
 				<li>|</li>
+				<li><a href="misfavoritos.php">Mis Favoritos</a></li>
+				<li>|</li>
 				<li><a href="enviarArticulo.php">Enviar artículo</a></li>
 		<?php
 		}
 		if($administrador==1){
 			?>
+				<li>|</li>
+				<li><a href="misfavoritos.php">Mis Favoritos</a></li>
                 <li>|</li>
 				<li><a href="gestionCategorias.php">Modificar categorías</a></li>
 				<li>|</li>
