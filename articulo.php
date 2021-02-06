@@ -48,72 +48,51 @@ $rs=$peticion22->get_result();
         
     }
 
-    
-	echo '<section class="comentario">';
-    echo    '<h2 class="comentario">Comentarios</h2>';
-    echo		'<article class="comentario">';
-    
-    echo'<form name="comentario" method="post">';
-    echo     '<label for="textarea"></label>';
-         
-      echo   '<p><textarea name="comentario"cols="80" rows="5" id="textarea" required></textarea></p>';
-         
-         echo '<p><input type="submit"';
-          if(isset($_GET['id_comentario'])){
-              echo ' name="respuesta"';
-            } else{ 
-                  echo 'name="comentar"';
-            } echo 'value="Comentar"></p>';
-     echo '</form>';
+
+    echo '<section class="comentario">';
+	echo	'<h2 class="comentario">Comentarios</h2>';?>
+    <form action="articulo.php" method="post">
+    <textarea name="comentario" rows="5" cols="70" required></textarea>
+    </form>
 
 
- 
-     if(isset($_POST['comentar'])){
-         $peticion_com=$con->prepare("INSERT INTO comentarios (comentario,usuario,fecha,id_articulo) value (?,?,NOW(),?) ");
-         $peticion_com->bind_param("ssi",$_POST['comentario'],$user,$idarticulo);
-         if($peticion_com->execute()){
-             header('refresh:0;url=articulo.php?articulo='.$idarticulo);
-         }else{
-             echo '<p>ERROR: '.$con->error.'</p>';
-         }
-     }
- 
-    
-     if(isset($_POST['responder'])){
-         $peticion_com=$con->prepare("INSERT INTO comentarios (comentario,usuario,fecha,id_articulo,respuesta) value (?,?,NOW(),?,?) ");
-         $peticion_com->bind_param("ssi",$_POST['comentario'],$user,$idarticulo,$_GET['id_comentario']);
-         if($peticion_com->execute()){
-             header('refresh:0;url=articulo.php?articulo='.$idarticulo);
-         }else{
-             echo '<p>ERROR: '.$con->error.'</p>';
-         }
-     }
- echo '</article>';
- 
- echo '<article class="comentario">';
-
-$comentarios=$con->query("SELECT * FROM comentarios WHERE respuesta LIKE '0' ORDER BY DESC");
-        while($row=mysqli_fetch_array($comentarios){
-            
-            $usuario= $con->prepare("SELECT * FROM usuario WHERE NombreUsuario LIKE ?");
-            $usuario->bind_param("s",$row['usuario']);
 
 
-            if($peticion_com->execute()){
-            $user_=mysqli_fetch_array($usuario);
-            }else{
-                echo '<p>ERROR: '.$con->error.'</p>';
-            }
+
+    <?php
+    $peticion = $con -> query ("SELECT * FROM categorias");
+    $peticion2 = $con -> query ("SELECT * FROM categorias");?>
+    <nav class="navegacion">
+            <ul class="menu"><?php
+    while ($fila = mysqli_fetch_array($peticion)) {
+        if($fila['subcategoria']==0){
+            $cat=$fila['categoria'];
+        echo '<li>|</li>
+        <li><a href="tablon.php?buscar='.$cat.'">'.$cat.'</a>';?>
+                    <ul class="submenu"><?php
+                    while ($fila2 = mysqli_fetch_array($peticion2)) {
+                        if($fila2['claveCategoria']==$cat){
+                            $subcategoria=$fila2['categoria'];
+                            echo '<li><a href="tablon.php?buscar='.$subcategoria.'">'.$subcategoria.'</a></li>';
+                        }
+                    }
+                    mysqli_data_seek($peticion2, 0)?>
+                    </ul></li>	
+        <?php
         }
- echo '</article>';
+    }
+    
 
- echo '</section>';
+
+
+ 
+
 
 
      
      
     
-
+    echo '</section>';
 
 
 pie()
