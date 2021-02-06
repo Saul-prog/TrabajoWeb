@@ -222,7 +222,7 @@ if($boton_responder=='Responder'){
     echo '</article>';
 
     
-     
+    echo '</article>';
     
     echo '</section>';
 
