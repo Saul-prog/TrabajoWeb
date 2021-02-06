@@ -24,7 +24,7 @@ if($tipo_user==2)
     encabezado($tipo_user,$con);
 ?>
 <section class="comentario">
-<h2 class="comentario">Publicar artículo</h2>
+<h2 class="comentario">Modificar artículo</h2>
   <article class="comentario">
       <h3 class="comentario">&nbsp;</h3>
       <form action="publicarArticulo.php" method="post" enctype="multipart/form-data">
@@ -49,12 +49,12 @@ if($boton=='Publicar'){
                 $guardar=( isset($_FILES['imagen']['tmp_name'])?$_FILES['imagen']['tmp_name']:null);
                 $subida=subirImagen($nombre,$guardar);
                     if($subida=='ok'){
-                    publicar($con,$fila,$categoria,$subcategoria,$nombre);
+                    publicar($con,$fila,$categoria,$subcategoria,$nombre,$id_art);
                     }else{
                         echo '<p>No se ha publicado corectamente</p>';
                     }
             }else{
-                echo '<p>Debe introducir un identificador</p>';
+                echo '<p>Debe introducir un identificador válido</p>';
             }
         }else{
             echo '<p>Contraseña erronea</p>';
@@ -62,6 +62,37 @@ if($boton=='Publicar'){
 }?>
 </article>
 </section>
+
+<section class="comentario">
+<h2 class="comentario">Eliminar artículo</h2>
+  <article class="comentario">
+      <h3 class="comentario">&nbsp;</h3>
+      <form action="publicarArticulo.php" method="post" enctype="multipart/form-data">
+      <p>Identificador del artículo: <br><input type="text" name="id_art" placeholder="Identificador del artículo"><br></p>
+      <p>Contraseña del administrador <br><input type="password" name="contrasena" placeholder="Contraseña del administrador"><br></p>
+      <p class="guardar"><input type="submit" name="elim" value="Eliminar"></p>
+      </form><?php
+      $elim=(isset($_POST['elim'])?$_POST['elim']:null);
+
+if($elim=='Eliminar'){
+    $id_art=(isset($_POST['id_art'])?$_POST['id_art']:null);
+    $contrasena=(isset($_POST['contrasena'])?$_POST['contrasena']:null);
+    
+    $fila=existeArtPublicado($con,$id_art);
+        if(comprobarContrasena($con,$contrasena,$usuario)){
+            if($fila!=false){
+                eliminarArticuloPublicado($con,$id_art);
+                    
+            }else{
+                echo '<p>Debe introducir un identificador válido</p>';
+            }
+        }else{
+            echo '<p>Contraseña erronea</p>';
+    }
+}?>
+</article>
+</section>
+
 <?php
 
 

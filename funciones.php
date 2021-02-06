@@ -89,12 +89,12 @@ function encabezado($administrador,$con){
 		}
 		if($administrador==1){
 			?>
+                <li>|</li>
+				<li><a href="gestionCategorias.php">Modificar categorías</a></li>
 				<li>|</li>
-				<li><a href="publicarArticulo.php">Publicar artículo</a></li>
+				<li><a href="publicarArticulo.php">Modificar artículos</a></li>
 				<li>|</li>
                 <li><a href="gestionUsuarios.php">Eliminar usuario</a></li>
-                <li>|</li>
-				<li><a href="gestionCategorias.php">Modificar Categorías</a></li>
 		<?php	
 		}
 		echo'<li>|</li>';
@@ -140,6 +140,7 @@ function encabezado($administrador,$con){
 }	
 
 function iniciarSesion($con,$contrasena,$email){
+	 
 	$peticion=$con->prepare("SELECT * FROM usuario WHERE CorreoElectronico LIKE ?");
 
 	$peticion->bind_param("s",$email);
@@ -165,7 +166,11 @@ function iniciarSesion($con,$contrasena,$email){
 				$user= $fila['NombreUsuario'];
 				
 				$_SESSION['usuario']=$user;
+
 				header('refresh:2;url=mi_perfil.php');
+			}
+			else{
+				echo 'Contraseña incorrecta';
 			}
 		}
 	}else{
@@ -227,10 +232,10 @@ function modificar_perfil($conect, $id, $nombre, $apellido1, $apellido2, $nombre
 	}
 }
 
-function nuevoArtRevision($con,$autor,$titulo,$resumen,$observaciones,$PDF){
-	$peticion=$con->prepare("INSERT INTO articulorevision (autor,Titulo,Observaciones,Resumen,PDF) VALUES (?,?,?,?,?)");
+function nuevoArtRevision($con,$autor,$biografia,$titulo,$resumen,$observaciones,$PDF){
+	$peticion=$con->prepare("INSERT INTO articulorevision (autor,biografia,Titulo,Observaciones,Resumen,PDF) VALUES (?,?,?,?,?,?)");
 	
-	$peticion->bind_param("sssss",$autor,$titulo,$observaciones,$resumen,$PDF);
+	$peticion->bind_param("ssssss",$autor,$biografia,$titulo,$observaciones,$resumen,$PDF);
 	
 	if($peticion->execute()){
 		echo '<p>Datos Creados</p>';
@@ -246,8 +251,10 @@ function formularioEnviarAr($error){
             <form action="enviarArticulo.php" method="post" enctype="multipart/form-data">
                 <h3 class="comentario">&nbsp;</h3>
                 <p>Título: <input type="text"  name="titulo" placeholder="Titulo"></p>
-				<p>Artículo u observaciones: <br><textarea name="observaciones" rows="5" cols="60">Observaciones sobre el artículo.</textarea></p>
-                <p>Resumen:<br><textarea name="resumen" rows="5" cols="60">Resumen o abstract.</textarea>	</p>			
+				<p>Si hay más autores, incluir aquí: <input type="text"  name="autores"  placeholder="Más autores"></p>
+				<p>Biografía(opcional): <br><textarea name="bio" rows="5" cols="60" placeholder="Biografía del autor"></textarea></p>
+				<p>Artículo u observaciones: <br><textarea name="observaciones" rows="5" cols="60" placeholder="Observaciones sobre el artículo."></textarea></p>
+                <p>Resumen:<br><textarea name="resumen" rows="5" cols="60" placeholder="Resumen o abstract."></textarea>	</p>			
 				<p class="guardar"><input type="file" name="archivo"></p>
 				<p class="guardar"><input type="submit" name="enviarAr" value="Enviar"></p>
 				<p><?php echo $error;?></p>
@@ -264,7 +271,7 @@ function desplegableCat($con){
           $peticion = $con -> query ("SELECT * FROM categorias");
          	while ($fila = mysqli_fetch_array($peticion)) {
 			  	if($fila['subcategoria']==0){
-            		echo '<option name="categoria" value="'.$fila['categoria'].'">'.$fila['categoria'].'</option>';
+            		echo '<option value="'.$fila['categoria'].'">'.$fila['categoria'].'</option>';
 			  	}
 			}
         ?>
@@ -338,13 +345,56 @@ function subirImagen($nombre,$guardar){
 	}
 }
 
-function publicar($con,$fila,$categoria,$subCategoria,$imagen){
-	$peticion=$con->prepare("INSERT INTO articulopublicado (autor,Titulo,Observaciones,Resumen,PDF,Categoria,subCategoria,imagen) VALUES (?,?,?,?,?,?,?,?)");
+function eliminarArticuloRevision($con, $id_art){
+	$peticion=$con->prepare("DELETE FROM articulorevision WHERE ID_art_rev=?");
 	
-	$peticion->bind_param("ssssssss",$fila['autor'],$fila['Titulo'],$fila['Observaciones'],$fila['Resumen'],$fila['PDF'],$categoria,$subCategoria,$imagen);
+	$peticion->bind_param("i",$id_art);
 	
 	if($peticion->execute()){
-		echo '<p>Datos Creados</p>';
+		echo '<p>Artículo eliminado</p>';
+		
+	}else{
+		echo '<p>ERROR: '.$con->error.'</p>';
+	}
+}
+
+function publicar($con,$fila,$categoria,$subCategoria,$imagen,$id_art){
+	$peticion=$con->prepare("INSERT INTO articulopublicado (autor,biografia,Titulo,Observaciones,Resumen,PDF,Categoria,subCategoria,imagen) VALUES (?,?,?,?,?,?,?,?,?)");
+	$peticion->bind_param("sssssssss",$fila['autor'],$fila['biografia'],$fila['Titulo'],$fila['Observaciones'],$fila['Resumen'],$fila['PDF'],$categoria,$subCategoria,$imagen);
+	
+	if($peticion->execute()){
+		echo '<p>Artículo publicado</p>';
+	
+		eliminarArticuloRevision($con,$id_art);
+		
+	}else{
+		echo '<p>ERROR: '.$con->error.'</p>';
+	}
+}
+
+function existeArtPublicado($con,$id_art){
+	$peticion = $con -> prepare ("SELECT * FROM articulopublicado WHERE ID_articulo LIKE ? ");
+	$peticion->bind_param("i",$id_art);
+	
+		if($peticion->execute()){
+			$rs= $peticion->get_result();
+			if ($rs) {
+					$fila= $rs->fetch_assoc();
+					$rs->free();
+					return $fila;}
+		}
+
+		echo '<p>Articulo no encontrado</p>';
+		return false;
+}
+
+function eliminarArticuloPublicado($con, $id_art){
+	$peticion=$con->prepare("DELETE FROM articulopublicado WHERE ID_articulo= ?");
+	
+	$peticion->bind_param("i",$id_art);
+	
+	if($peticion->execute()){
+		echo '<p>Artículo eliminado</p>';
 		
 	}else{
 		echo '<p>ERROR: '.$con->error.'</p>';

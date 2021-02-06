@@ -3,11 +3,12 @@
     <head>
         <meta name="author" content= "Saúl Otero García" />
         <meta name="author" content= "Celia Torres Montero" />
-        <meta name="description" content="" />
+        <meta name="description" content="ciencia, revista, noticias" />
         <meta charset="utf-8">
-        <title>Iniciación Saúl</title>
+        <title>Fm-cia</title>
         <link rel="stylesheet" href="inicializador.css">
         <link rel="stylesheet" href="index.css">
+        <link rel="icon" type="image/jpeg" href="imagenes/Iconos/FermioP.jpeg">
     </head>
 <body>
 <?php
@@ -15,7 +16,7 @@ session_start();
 include "funciones.php";
 $tipo_user=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
 if($tipo_user==2){
-    header('refresh:0;url=index.php');
+   header('refresh:0;url=index.php');
 }
 $con=conectar();
 encabezado($tipo_user,$con);
@@ -27,16 +28,24 @@ encabezado($tipo_user,$con);
 $error='';
 $boton=(isset($_POST['enviarAr'])?$_POST['enviarAr']:null);
 $titulo=(isset($_POST['titulo'])?$_POST['titulo']:null);
+$autores=(isset($_POST['autores'])?$_POST['autores']:null);
+$biografia=(isset($_POST['bio'])?$_POST['bio']:null);
 $resumen=(isset($_POST['resumen'])?$_POST['resumen']:null);
 $observaciones=(isset($_POST['observaciones'])?$_POST['observaciones']:'');
 $autor=(isset($_SESSION['autor'])?$_SESSION['autor']:'FALTA POR PONER NOMBRE DEL AUTOR');
+
+if($autores!=null)
+{
+    $autor=$autor.', '.$autores;
+}
+
 if($boton!=null){
     if($titulo!=null){
         if($resumen!=null){
             $nombre=( isset($_FILES['archivo']['name'])?$_FILES['archivo']['name']:null);
                 $guardar=( isset($_FILES['archivo']['tmp_name'])?$_FILES['archivo']['tmp_name']:null);
                             $con=conectar();
-                            nuevoArtRevision($con,$autor,$titulo,$resumen,$observaciones,$nombre);
+                            nuevoArtRevision($con,$autor,$biografia,$titulo,$resumen,$observaciones,$nombre);
                             $con->close();
                 
                 
@@ -55,11 +64,11 @@ if($boton!=null){
                     }
                 }else{
                     if(move_uploaded_file($_FILES['archivo']['tmp_name'],'articulos/'.$nombre)){
-                        $error= "Archivo guardado correctamente";
+                        $error= "Artículo enviado correctamente";
 
                         formularioEnviarAr($error);
                     }else{
-                        $error= "El archivo no se ha guardado correctamente";
+                        $error= "El artículo no se ha enviado correctamente";
                         formularioEnviarAr($error);
                     }
                 }

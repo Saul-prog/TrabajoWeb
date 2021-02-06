@@ -18,6 +18,7 @@ $tipo_user=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
 $user=(isset($_SESSION['usuario'])?$_SESSION['usuario']:null);
 $con=conectar();
 encabezado($tipo_user,$con);
+
 $idarticulo=(isset($_GET['articulo'])?$_GET['articulo']:null);
 if($idarticulo==null){
     echo '<article class="articulo">';
@@ -39,7 +40,9 @@ $rs=$peticion22->get_result();
         while (($fila !== false) && ($fila !== null)) {
             echo '<article class="articulo">';
             echo '<h2 class="articulo">'.$fila['Titulo'].'</h2>';
-            echo '<p class="autor">Autor: '.$fila['autor'].'</p>';
+            echo '<details class="articulo">';
+            echo '<summary class="autor">Autor: '.$fila['autor'].'</summary>';
+            echo '<p>'.$fila['biografia'].'</p></details>';
             echo '<embed src="articulos/'.$fila['PDF'].'" type="application/pdf"/>';
             echo '</article> ';
             $fila= $rs->fetch_assoc();

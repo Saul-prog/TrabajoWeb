@@ -98,7 +98,6 @@ if($nombreUsuario!=null)
             }
             else{echo 'Debe confirmar que desea eliminar esta cuenta.';}
         }
-        else{echo 'no';}
         
         if($boton=='Guardar cambios'){  
             if(($nombre!='Nombre') && ($nombre!=null)){
