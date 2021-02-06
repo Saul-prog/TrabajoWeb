@@ -108,7 +108,18 @@ function encabezado($administrador,$con){
 	if($administrador==0 || $administrador==1){
 		?>
 		<article class="p1">
-			<h2 class="no"><a href="mi_perfil.php">Mi perfil</a>  |  <a href="cerrar_sesion.php">Cerrar sesión</a></h2>
+		<form action="buscador.php" method="get">
+				<input type="text" name="buscar">
+				<select name="tipo">
+					<option value="Título">Por título</option>
+					<option value="Contenido">Por contenido</option>
+				</select>
+				<input type="submit" value="Buscar">
+			</form>
+			<h2 class="no">
+			
+			<a href="mi_perfil.php">Mi perfil</a>  |  <a href="cerrar_sesion.php">Cerrar sesión</a></h2>
+			
 		</article>
 		<?php
 	}
@@ -116,7 +127,15 @@ function encabezado($administrador,$con){
 	if($administrador==2){?>
 		
 		<article class="p1">
-			<h2 class="no"><a href="registro.php">Crear cuenta</a>  |  <a href="inicio_sesion.php">Iniciar sesión</a></h2>
+			<h2 class="no"><form action="buscador.php" method="get">
+				<input type="text" name="buscar">
+				<select name="tipo">
+					<option value="Título">Por título<option>
+					<option value="Contenido">Por contenido<option>
+				</select>
+				<input type="submit" name="Buscar">
+			</form>
+			<a href="registro.php">Crear cuenta</a>  |  <a href="inicio_sesion.php">Iniciar sesión</a></h2>
 		</article><?php
 	}?>
     </header>
