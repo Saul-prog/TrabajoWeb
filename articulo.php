@@ -51,46 +51,68 @@ $rs=$peticion22->get_result();
     
 	echo '<section class="comentario">';
     echo    '<h2 class="comentario">Comentarios</h2>';
-    ?>
-       <form name="comentario" method="post">
-            <label for="textarea"></label>
-            
-            <p><textarea name="comentario"cols="80" rows="5" id="textarea" required></textarea></p>
-            <p><input type="submit" <?php if(isset($_GET['id_comentario'])){?> name="respuesta"<?php } else{?> name="comentar" <?php}?> value="Comentar"></p>
-            
-        </form>
-
-    <?php
+    echo		'<article class="comentario">';
     
-        if(isset($_POST['comentar'])){
-            $peticion_com=$con->prepare("INSERT INTO comentarios (comentario,usuario,fecha,id_articulo) value (?,?,NOW(),?) ");
-            $peticion_com->bind_param("ssi",$_POST['comentario'],$user,$idarticulo);
-            if($peticion_com->execute()){
-                header('refresh:0;url=articulo.php?articulo='.$idarticulo);
-            }else{
-                echo '<p>ERROR: '.$con->error.'</p>';
-            }
-        }
-    ?>
-    <?php
-        
-        if(isset($_POST['responder'])){
-            $peticion_com=$con->prepare("INSERT INTO comentarios (comentario,usuario,fecha,id_articulo,respuesta) value (?,?,NOW(),?,?) ");
-            $peticion_com->bind_param("ssi",$_POST['comentario'],$user,$idarticulo,$_GET['id_comentario']);
-            if($peticion_com->execute()){
-                header('refresh:0;url=articulo.php?articulo='.$idarticulo);
-            }else{
-                echo '<p>ERROR: '.$con->error.'</p>';
-            }
-        }
-    ?>
-    <?php
-	echo		'<article class="comentario">';
-	echo '</section>';
-        
-		
-       
+    echo'<form name="comentario" method="post">';
+    echo     '<label for="textarea"></label>';
+         
+      echo   '<p><textarea name="comentario"cols="80" rows="5" id="textarea" required></textarea></p>';
+         
+         echo '<p><input type="submit"';
+          if(isset($_GET['id_comentario'])){
+              echo ' name="respuesta"';
+            } else{ 
+                  echo 'name="comentar"';
+            } echo 'value="Comentar"></p>';
+     echo '</form>';
 
+
+ 
+     if(isset($_POST['comentar'])){
+         $peticion_com=$con->prepare("INSERT INTO comentarios (comentario,usuario,fecha,id_articulo) value (?,?,NOW(),?) ");
+         $peticion_com->bind_param("ssi",$_POST['comentario'],$user,$idarticulo);
+         if($peticion_com->execute()){
+             header('refresh:0;url=articulo.php?articulo='.$idarticulo);
+         }else{
+             echo '<p>ERROR: '.$con->error.'</p>';
+         }
+     }
+ 
+    
+     if(isset($_POST['responder'])){
+         $peticion_com=$con->prepare("INSERT INTO comentarios (comentario,usuario,fecha,id_articulo,respuesta) value (?,?,NOW(),?,?) ");
+         $peticion_com->bind_param("ssi",$_POST['comentario'],$user,$idarticulo,$_GET['id_comentario']);
+         if($peticion_com->execute()){
+             header('refresh:0;url=articulo.php?articulo='.$idarticulo);
+         }else{
+             echo '<p>ERROR: '.$con->error.'</p>';
+         }
+     }
+ echo '</article>';
+ 
+ echo '<article class="comentario">';
+
+$comentarios=$con->query("SELECT * FROM comentarios WHERE respuesta LIKE '0' ORDER BY DESC");
+        while($row=mysqli_fetch_array($comentarios){
+            
+            $usuario= $con->prepare("SELECT * FROM usuario WHERE NombreUsuario LIKE ?");
+            $usuario->bind_param("s",$row['usuario']);
+
+
+            if($peticion_com->execute()){
+            $user_=mysqli_fetch_array($usuario);
+            }else{
+                echo '<p>ERROR: '.$con->error.'</p>';
+            }
+        }
+ echo '</article>';
+
+ echo '</section>';
+
+
+     
+     
+    
 
 
 
