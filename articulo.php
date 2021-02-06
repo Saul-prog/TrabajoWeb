@@ -50,10 +50,11 @@ echo '<article class="articulo">';
                     $resultado=$fav->get_result();
                     
                     $fila2=$resultado->fetch_assoc();
-                    if($fila2['usuario']==$user){
-                        if($fila2['id_articulo']==$idarticulo){
+                    $cantidad2=$resultado->num_rows;
+                    
+                    if($cantidad2==1){
                             echo '<a href="articulo.php?articulo='.$idarticulo.'&favorito=pulsado"><img src="imagenes/Iconos/estrella-encendida.png" width="30" height="25"></a>';
-                        }
+                        
                     }else{
                             echo '<a href="articulo.php?articulo='.$idarticulo.'&favorito=pulsado"><img src="imagenes/Iconos/Estrella-apagada.png" width="30" height="25"></a>';
                     }
