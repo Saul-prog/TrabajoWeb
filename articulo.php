@@ -15,7 +15,7 @@
 session_start();
 include "funciones.php";
 $tipo_user=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
-$user=(isset($_SESSION['usuario'])?$_SESSION['usuario']:2);
+$user=(isset($_SESSION['usuario'])?$_SESSION['usuario']:null);
 $con=conectar();
 encabezado($tipo_user,$con);
 $idarticulo=(isset($_GET['articulo'])?$_GET['articulo']:null);
@@ -50,72 +50,100 @@ $rs=$peticion22->get_result();
 
 //SECCION DE COMENTARIOS
     echo '<section class="comentario">';
-	echo	'<h2 class="comentario">Comentarios</h2>';?>
-    <article class="comentario">
-        <form action="articulo.php" method="post">
-            <textarea name="comentario" rows="5" cols="70" required></textarea><br>
-            <input type="submit" value="Comentar">
-        </form>
-    </article>
-    <?php
+	echo	'<h2 class="comentario">Comentarios</h2>';
+if($tipo_user!=2){
+    echo '<article class="comentario">
+            <form action="articulo.php?articulo='.$idarticulo.'" method="post">
+                <textarea name="comentario" rows="5" cols="70" required></textarea><br>
+                <input type="submit" name="comentar" value="Comentar">
+            </form>
+        </article>';
+    $boton=(isset($_POST['comentar'])?$_POST['comentar']:null);
+    if($boton=='Comentar'){
+        
+        if($user!=null){
+            $inserta=$con->prepare("INSERT INTO comentarios (usuario,comentario,fecha,id_articulo) VALUES (?,?,NOW(),?)");
+            $inserta->bind_param("sss",$user,$_POST['comentario'],$idarticulo);
+            if($inserta->execute()){
+               
+            }else{
+                echo '<p>ERROR: '.$con->error.'</p>';
+            }
+        }else{
+            echo '<p>Usuario no reconocido, por favor reinicie sesión</p>';
+        }
+    }
+}
+
+$boton_eliminar=(isset($_POST['boton_eliminar'])?$_POST['boton_eliminar']:null);
+if($boton_eliminar=='Eliminar'){
+    $id_eliminar=(isset($_POST['commentario_eliminar'])?$_POST['commentario_eliminar']:NULL);
+    if($id_eliminar!=NULL){
+        $eliminar=$con->prepare("DELETE FROM comentarios WHERE id_comentario LIKE ? OR id_referencia LIKE ?");
+        $eliminar->bind_param("ii",$id_eliminar,$id_eliminar);
+        if($eliminar->execute()){
+            echo 'Comentario Eliminado';
+            
+        }else{
+            echo '<p>ERROR: '.$con->error.'</p>';
+        }
+    }
+}
     $peticion=$con ->query("SELECT * FROM comentarios");
+    echo '<article class="comentario">';
     while($fila=mysqli_fetch_array($peticion)){
         if($idarticulo==$fila['id_articulo']){
-            echo '<article class="comentario">';
+            
             if($fila['id_referencia']==NULL){
-                echo '<h3 class="comentario">'.$fila['usuario'].'</h3><p>'.$fila_['fecha'].'</p>';
+                echo '<h3 class="comentario">'.$fila['usuario'].'</h3><p>'.$fila['fecha'].'</p>';
                 echo '<p class="comentario">'.$fila['comentario'].'</p>';
+                if($tipo_user==1){
+                echo '<details class="vacio2">
+                <summary>Eliminar</summary>
+				<h3 class="comentario">¿Está seguro de la eliminación?</h3>
+                <form action="articulo.php?articulo='.$idarticulo.'" method="post">
+                <input type="hidden" name="commentario_eliminar" value="'.$fila['id_comentario'].'">
+				<input type="submit" name="boton_eliminar" value="Eliminar">
+                </form>
+			    </details>';
+                }
+                if($tipo_user==1||$tipo_user==0){
+                    echo '<details class="vacio">
+                <summary>Responder</summary>
+                <h3 class="comentario">&nbsp;</h3>
+                <form action="articulo.php?articulo='.$idarticulo.'" method="post">
+                <textarea name="respuesta" rows="5" cols="70" required></textarea><br>
+                <input type="submit" value="Enviar">
+                </form>
+                </details>';
+                }
+
                 $peticion_=$con->query("SELECT * FROM comentarios");
                 while($fila_=mysqli_fetch_array($peticion_)){
                     if($fila['id_comentario']==$fila_['id_referencia']){
                         echo '<article class="respuesta">';
                         echo '<h3 class="respuesta">'.$fila_['usuario'].'</h3><p>'.$fila_['fecha'].'</p>';
                         echo '<p class="comentario">'.$fila_['comentario'].'</p>';
+                        echo '<details class="vacio2">
+                                <summary>Eliminar</summary>
+                                <h3 class="comentario">¿Está seguro de la eliminación?</h3>
+                                <form action="articulo.php?articulo='.$idarticulo.'" method="post">
+                                <input type="hidden" name="commentario_eliminar" value="'.$fila_['id_comentario'].'">
+                                <input type="submit" name="boton_eliminar" value="Eliminar">
+                                </form>
+                                </details>';
                         echo '</article>';
+
                     }
                 }
                 mysqli_data_seek($peticion_, 0);
             }
-            echo '</article>';
+            
         }
     }
-
-
+    echo '</article>';
     
-
-
-/*
-    <?php
-    $peticion = $con -> query ("SELECT * FROM categorias");
-    $peticion2 = $con -> query ("SELECT * FROM categorias");?>
-    <nav class="navegacion">
-            <ul class="menu"><?php
-    while ($fila = mysqli_fetch_array($peticion)) {
-        if($fila['subcategoria']==0){
-            $cat=$fila['categoria'];
-        echo '<li>|</li>
-        <li><a href="tablon.php?buscar='.$cat.'">'.$cat.'</a>';?>
-                    <ul class="submenu"><?php
-                    while ($fila2 = mysqli_fetch_array($peticion2)) {
-                        if($fila2['claveCategoria']==$cat){
-                            $subcategoria=$fila2['categoria'];
-                            echo '<li><a href="tablon.php?buscar='.$subcategoria.'">'.$subcategoria.'</a></li>';
-                        }
-                    }
-                    mysqli_data_seek($peticion2, 0)?>
-                    </ul></li>	
-        <?php
-        }
-    }
-    */
-
-
-
- 
-
-
-
-     
+    
      
     
     echo '</section>';
