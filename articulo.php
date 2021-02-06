@@ -165,7 +165,7 @@ if($boton_responder=='Responder'){
     
     echo '<article class="comentario">';
     if($cantidad>1){
-        echo '<h2>Se el primero en comentar</h2>';
+        echo '<h2>Comenta</h2>';
     }
     while($fila=mysqli_fetch_array($peticion)){
         if($idarticulo==$fila['id_articulo']){ 
@@ -227,7 +227,7 @@ if($boton_responder=='Responder'){
     echo '</section>';
 
 
-pie()
+pie();
 ?>
 </body>
 </html>
