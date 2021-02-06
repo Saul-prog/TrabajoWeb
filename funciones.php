@@ -132,8 +132,9 @@ function encabezado($administrador,$con){
 			<h2 class="no"><form action="buscador.php" method="get">
 				<input type="text" name="buscar">
 				<select name="tipo">
-					<option value="Título">Por título<option>
-					<option value="Contenido">Por contenido<option>
+					<option value="Título">Por título</option>
+					<option value="Contenido">Por contenido</option>
+					<option value="Autor">Por autor</option>
 				</select>
 				<input type="submit" name="Buscar">
 			</form>
