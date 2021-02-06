@@ -28,7 +28,7 @@ $peticion22=$con->prepare("SELECT * FROM articulopublicado WHERE ID_articulo LIK
 $peticion22->bind_param("i",$idarticulo);
 $peticion22->execute();
 $rs=$peticion22->get_result();
-
+echo '<article class="articulo">';
     if ($rs) {
         $fila= $rs->fetch_assoc();
         
@@ -37,17 +37,69 @@ $rs=$peticion22->get_result();
         exit;
         }
         while (($fila !== false) && ($fila !== null)) {
-            echo '<article class="articulo">';
-            echo '<h2 class="articulo">'.$fila['Titulo'].'</h2>';
+            
+            echo '<h2 class="articulo">'.$fila['Titulo'].'  ';
+            if($tipo_user!=2){
+                $fav=$con->prepare("SELECT * FROM favorito WHERE usuario LIKE ? AND id_articulo LIKE ?");
+                $fav->bind_param("ss",$user,$idarticulo);
+                
+                
+                if($fav->execute()){
+                    
+                    $resultado=$fav->get_result();
+                    
+                    $fila2=$resultado->fetch_assoc();
+                    if($fila2['usuario']==$user){
+                        if($fila2['id_articulo']==$idarticulo){
+                            echo '<a href="articulo.php?articulo='.$idarticulo.'&favorito=pulsado"><img src="imagenes/Iconos/estrella-encendida.png" width="30" height="25"></a>';
+                        }
+                    }else{
+                            echo '<a href="articulo.php?articulo='.$idarticulo.'&favorito=pulsado"><img src="imagenes/Iconos/Estrella-apagada.png" width="30" height="25"></a>';
+                    }
+                }
+                
+            }
+            echo '</h2>';
             echo '<p class="autor">Autor: '.$fila['autor'].'</p>';
             echo '<embed src="articulos/'.$fila['PDF'].'" type="application/pdf"/>';
-            echo '</article> ';
+
+            
             $fila= $rs->fetch_assoc();
         }
         $rs->free();
         
     }
+$favorito=(isset($_GET['favorito'])?$_GET['favorito']:null);
+if($tipo_user!=2){
+    if($favorito=='pulsado'){
+        $fav2=$con->prepare("SELECT * FROM favorito WHERE usuario LIKE ? AND id_articulo LIKE ?");
+        $fav2->bind_param("ss",$user,$idarticulo);   
+        if($fav2->execute()){
+            $resultado2=$fav2->get_result();
+            $fila3=$resultado2->fetch_assoc();
+            if($fila3['usuario']==$user){
+                if($fila3['id_articulo']==$idarticulo){
+                    $eliminarfav=$con->prepare("DELETE FROM favorito WHERE usuario LIKE ? AND id_articulo LIKE ?");
+                    $eliminarfav->bind_param("ss",$user,$idarticulo);
+                    if($eliminarfav->execute()){
+                    }else{
+                        echo '<p>ERROR: '.$con->error.'</p>';
+                    }
+                }
+            }else{
+                $agregarfav=$con->prepare("INSERT INTO favorito (usuario,id_articulo) VALUES (?,?)");
+                $agregarfav->bind_param("si",$user,$idarticulo);
+                if($agregarfav->execute()){
 
+                }else{
+                    echo '<p>ERROR: '.$con->error.'</p>';
+                }
+            }
+        }
+        header('refresh:0;url=articulo.php?articulo='.$idarticulo.'');
+    }
+}
+    echo '</article> ';
 //SECCION DE COMENTARIOS
     echo '<section class="comentario">';
 	echo	'<h2 class="comentario">Comentarios</h2>';
@@ -89,14 +141,45 @@ if($boton_eliminar=='Eliminar'){
         }
     }
 }
-    $peticion=$con ->query("SELECT * FROM comentarios");
+$boton_responder=(isset($_POST['boton_responder'])?$_POST['boton_responder']:null);
+if($boton_responder=='Responder'){
+    $id_responder=(isset($_POST['commentario_responder'])?$_POST['commentario_responder']:NULL);
+    $respuesta=(isset($_POST['respuesta'])?$_POST['respuesta']:NULL);
+    if($id_responder!=NULL){
+        $responder=$con->prepare("INSERT INTO comentarios (usuario,comentario,fecha,id_articulo,id_referencia) VALUES (?,?,NOW(),?,?)");
+        $responder->bind_param("ssii",$user,$respuesta,$idarticulo,$id_responder);
+        if($responder->execute()){
+            
+            
+        }else{
+            echo '<p>ERROR: '.$con->error.'</p>';
+        }
+    }
+}
+    $peticion=$con ->query("SELECT * FROM comentarios ORDER BY id_comentario DESC");
+    $cantidad=$peticion->num_rows;
+    
     echo '<article class="comentario">';
+    if($cantidad>1){
+        echo '<h2>Se el primero en comentar</h2>';
+    }
     while($fila=mysqli_fetch_array($peticion)){
-        if($idarticulo==$fila['id_articulo']){
+        if($idarticulo==$fila['id_articulo']){ 
             
             if($fila['id_referencia']==NULL){
                 echo '<h3 class="comentario">'.$fila['usuario'].'</h3><p>'.$fila['fecha'].'</p>';
                 echo '<p class="comentario">'.$fila['comentario'].'</p>';
+                if($tipo_user==1||$tipo_user==0){
+                    echo '<details class="vacio">
+                <summary>Responder</summary>
+                <h3 class="comentario">&nbsp;</h3>
+                <form action="articulo.php?articulo='.$idarticulo.'" method="post">
+                <input type="hidden" name="commentario_responder" value="'.$fila['id_comentario'].'">
+                <textarea name="respuesta" rows="5" cols="70" required></textarea><br>
+                <input type="submit" name="boton_responder" value="Responder">
+                </form>
+                </details>';
+                }
                 if($tipo_user==1){
                 echo '<details class="vacio2">
                 <summary>Eliminar</summary>
@@ -107,16 +190,7 @@ if($boton_eliminar=='Eliminar'){
                 </form>
 			    </details>';
                 }
-                if($tipo_user==1||$tipo_user==0){
-                    echo '<details class="vacio">
-                <summary>Responder</summary>
-                <h3 class="comentario">&nbsp;</h3>
-                <form action="articulo.php?articulo='.$idarticulo.'" method="post">
-                <textarea name="respuesta" rows="5" cols="70" required></textarea><br>
-                <input type="submit" value="Enviar">
-                </form>
-                </details>';
-                }
+                
 
                 $peticion_=$con->query("SELECT * FROM comentarios");
                 while($fila_=mysqli_fetch_array($peticion_)){
@@ -142,7 +216,7 @@ if($boton_eliminar=='Eliminar'){
         }
     }
     echo '</article>';
-    
+
     
      
     
