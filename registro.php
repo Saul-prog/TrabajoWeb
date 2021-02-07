@@ -112,7 +112,7 @@ else{
 }
     ?>
     </Section>
-    <?php pie("peque");?>
+    <?php pie();?>
 </body>
 
 </html>
