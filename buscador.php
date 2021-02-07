@@ -25,6 +25,7 @@ echo'<section class="margen">
 $modulo=1;
 $principal=$buscar;
 $buscar='%'.$buscar.'%';
+echo 'tipo busqueda'.$tipo_busqueda;
 if($tipo_busqueda=="Título"){
     $pagina=(isset($_GET['pagina'])?$_GET['pagina']:1);
     $empezar=($pagina-1)*$por_pagina;
@@ -45,11 +46,12 @@ if($tipo_busqueda=="Título"){
         echo '<article><h2>No hay articulos definidos para esta búsqueda</h2>
         <p>Por favor, pruebe con otra BÚSQUEDA</p></article>';
         
-    }else{
+    }
     //Se calcula el total de páginas que existen(ceil redondea al alza)
     $total_pag=ceil($total_reg/$por_pagina);
     $modulo=($total_reg % 4);
     //Se crea la consulta
+    
     $peticion22=$con->prepare("SELECT * FROM articulopublicado WHERE Titulo LIKE ? ORDER BY ID_articulo DESC LIMIT ?,? ");
     $peticion22->bind_param("sii",$buscar,$empezar,$por_pagina);
     $peticion22->execute();
@@ -78,14 +80,14 @@ if($tipo_busqueda=="Título"){
         for ($i=1; $i<=$total_pag; $i++) {
             //En el bucle, muestra la paginación
             
-            echo "<a href='buscador.php?buscar=".$principal."&tipo=Contenido&Buscar=Enviar+consulta&pagina=".$i."'>".$i."</a> | ";
+            echo "<a href='buscador.php?buscar=".$principal."&tipo=Título&Buscar=Enviar+consulta&pagina=".$i."'>".$i."</a> | ";
             }; 
             echo '</center>';
-    } 
+     
 }
 
 if($tipo_busqueda=="Contenido"){
-    $pagina=(isset($_GET['pagina2'])?$_GET['pagina2']:1);
+    $pagina=(isset($_GET['pagina'])?$_GET['pagina']:1);
     $empezar=($pagina-1)*$por_pagina;
     //Se trae toda la base de datos
     
@@ -96,7 +98,7 @@ if($tipo_busqueda=="Contenido"){
     $total_reg1=$rs1->num_rows;
     //Se cuentan todas las filas
 
-
+    echo $empezar.'empeezar';
     if($total_reg1<4){
         $por_pagina=$total_reg1;
         
@@ -111,7 +113,7 @@ if($tipo_busqueda=="Contenido"){
     $modulo=($total_reg1 % 4);
     //Se crea la consulta
     $peticion2=$con->prepare("SELECT * FROM articulopublicado WHERE Resumen LIKE ? ORDER BY ID_articulo DESC LIMIT ?,? ");
-    $peticion2->bind_param("sii",$buscar,$empezar2,$por_pagina);
+    $peticion2->bind_param("sii",$buscar,$empezar,$por_pagina);
     $peticion2->execute();
     $rs2=$peticion2->get_result();
 
@@ -136,7 +138,8 @@ if($tipo_busqueda=="Contenido"){
     echo '<center>| ';
     for ($i=1; $i<=$total_pag2; $i++) {
     //En el bucle, muestra la paginación
-    echo "<a href='buscador.php?pagina=".$i."&buscar=".$principal."&tipo=Contenido'>".$i."</a> | ";
+    echo "<a href='buscador.php?buscar=".$principal."&tipo=Contenido&Buscar=Enviar+consulta&pagina=".$i."'>".$i."</a> | ";
+    
     }; 
     echo '</center>';
     }
@@ -145,7 +148,7 @@ if($tipo_busqueda=="Contenido"){
 
 if($tipo_busqueda=="Autor"){
     $pagina=(isset($_GET['pagina'])?$_GET['pagina']:1);
-    $empezar=($pagina-1)*$por_pagina;
+    $empezar=(($pagina-1)*$por_pagina);
     //Se trae toda la base de datos
     $peticion=$con->prepare("SELECT * FROM articulopublicado WHERE autor LIKE ?");
     $peticion->bind_param("s",$buscar);
@@ -194,7 +197,8 @@ if($tipo_busqueda=="Autor"){
         echo '<center>| ';
         for ($i=1; $i<=$total_pag; $i++) {
         //En el bucle, muestra la paginación
-        echo "<a href='buscador.php?pagina=".$i."&buscar=".$principal."&tipo=Autor'>".$i."</a> | ";
+        echo "<a href='buscador.php?buscar=".$principal."&tipo=Autor&Buscar=Enviar+consulta&pagina=".$i."'>".$i."</a> | ";
+       
         }; 
         echo '</center>';
     }
