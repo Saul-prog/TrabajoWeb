@@ -38,6 +38,7 @@ if($determinado==null){
             echo '<h2 class="articulo">'.$fila['Titulo'].'<br>  Identificador:' .$fila['ID_art_rev'].'</h2> ';
             echo '<details class="articulo">';
             echo '<summary class="autor">Autor: '.$fila['autor'].'</summary>';
+            echo '<p>'.$fila['biografia'].'</p>';
             echo '<p>'.$fila['Observaciones'].'</p></details>';
             echo '<embed src="articulos/'.$fila['PDF'].'" type="application/pdf"/>';
             echo '</article>';
