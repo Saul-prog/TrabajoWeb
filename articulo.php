@@ -18,12 +18,12 @@ $tipo_user=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
 $user=(isset($_SESSION['usuario'])?$_SESSION['usuario']:null);
 $con=conectar();
 encabezado($tipo_user,$con);
-
+$peque="";
 $idarticulo=(isset($_GET['articulo'])?$_GET['articulo']:null);
 if($idarticulo==null){
     echo '<article class="articulo">';
-    echo   '<h2 class="articulo">No se ha encontrado el artículo buscado</h2>';
-    echo '</article>';    
+        echo '<p>No ha introducido ningún identificador</p>';
+        echo '</article>';
 }
 $peticion22=$con->prepare("SELECT * FROM articulopublicado WHERE ID_articulo LIKE ? ");
 $peticion22->bind_param("i",$idarticulo);
@@ -34,8 +34,10 @@ echo '<article class="articulo">';
         $fila= $rs->fetch_assoc();
         
         if($rs->num_rows<1){
+        echo '<article class="articulo">';
         echo '<p>No hay artículos que coincidan con el identificador=', $idarticulo, '</p>';
-        exit;
+        echo '</article>';
+        $peque="peque";
         }
         while (($fila !== false) && ($fila !== null)) {
             echo '<article class="articulo">';
@@ -226,8 +228,12 @@ if($boton_responder=='Responder'){
     
     echo '</section>';
 
+if($peque=="peque"){
+    pie("peque");
+}else{
+    pie();
+}
 
-pie();
 ?>
 </body>
 </html>

@@ -32,7 +32,7 @@ $peticion->execute();
 $rs=$peticion->get_result();
 $total_reg=$rs->num_rows;
 //Se cuentan todas las filas
-
+$modulo=1;
 
 if($total_reg<4){
     $por_pagina=$total_reg;
@@ -41,10 +41,13 @@ if($total_reg<4){
 if($total_reg<1){
     echo '<article><h2>No hay articulos definidos en esta categoría</h2>
     <p>Por favor, pruebe con otra categoría</p></article>';
-    exit;
-}
+    
+}else{
 //Se calcula el total de páginas que existen(ceil redondea al alza)
+
+$modulo=($total_reg % 4);
 $total_pag=ceil($total_reg/$por_pagina);
+
 
 //Se crea la consulta
 $peticion2=$con->prepare("SELECT * FROM articulopublicado WHERE (Categoria LIKE ?) OR (subCategoria LIKE ?) ORDER BY ID_articulo DESC LIMIT ?,? ");
@@ -69,16 +72,26 @@ if ($rs) {
       }
       $rs->free();
      
-}
+    }
 
     echo '<center>| ';
+    
+
     for ($i=1; $i<=$total_pag; $i++) {
         //En el bucle, muestra la paginación
-        echo "<a href='tablon.php?pagina=".$i."&buscar=".$buscar."'>".$i."</a> | </center>";
+        echo "<a href='tablon.php?pagina=".$i."&buscar=".$buscar."'>".$i."</a> | ";
     }; 
-
+   echo '</center>';
+  
+    
+}
 echo '</section>';
-pie();
+if($modulo==2 || $modulo==1){
+    pie("peque");
+    
+}else{
+    pie();
+}
 ?>
 </body>
 </html>

@@ -98,7 +98,7 @@ if($elim=='Eliminar'){
 
 
 
-pie();
+pie("peque");
 ?>
 </body>
 </html>
