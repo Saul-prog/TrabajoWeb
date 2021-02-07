@@ -24,7 +24,7 @@ if($tipo_user==2)
     encabezado($tipo_user,$con);
 ?>
 <section class="comentario">
-<h2 class="comentario">Modificar artículo</h2>
+<h2 class="comentario">Publicar artículo</h2>
   <article class="comentario">
       <h3 class="comentario">&nbsp;</h3>
       <form action="publicarArticulo.php" method="post" enctype="multipart/form-data">
@@ -98,7 +98,7 @@ if($elim=='Eliminar'){
 
 
 
-pie("peque");
+pie();
 ?>
 </body>
 </html>
