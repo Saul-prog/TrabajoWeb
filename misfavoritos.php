@@ -46,7 +46,7 @@ if($total_reg<1){
     echo '<article><h2>No hay articulos definidos en su lista de Favoritos</h2>
     <p>Añada algún artículo a su lista de favoritos</p></article>';
     
-}
+}else{
 //Se calcula el total de páginas que existen(ceil redondea al alza)
 $total_pag=ceil($total_reg/$por_pagina);
 
@@ -79,7 +79,8 @@ if ($rs) {
     for ($i=1; $i<=$total_pag; $i++) {
         //En el bucle, muestra la paginación
         echo "<a href='misfavoritos.php?pagina=".$i."'>".$i."</a> | </center>";
-    }; 
+    }
+}
 
 echo '</section>';
 if($total_reg<3){
