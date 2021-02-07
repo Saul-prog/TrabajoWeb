@@ -90,7 +90,7 @@ if($nombreUsuario!=null)
         if($elim=="Eliminar"){
             if(($confirmar=="CONFIRMAR") ||($confirmar=="confirmar")){ 
                 if($correo!=null){
-                    eliminarUsuario($con,$correo);
+                    eliminarUsuario($con,$nombreUsuario);
 
                     $tipo_user=2;
                     $_SESSION['tipo_usuario']= $tipo_user;
