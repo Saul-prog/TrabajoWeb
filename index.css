@@ -244,6 +244,7 @@ article.articulo{
 p.articulo{
   text-align: end;
   color: #192231;
+  font-family: sans-serif;
 }
 embed{
   width: 80%;
@@ -280,6 +281,7 @@ p.comentario{
   background-color: blanchedalmond;
   padding:0.5%;
   margin: 0.5%;
+  font-family: sans-serif;
 }
 input.comentario{
   width: 100%;
@@ -303,6 +305,7 @@ p.respuesta{
   background-color: blanchedalmond;
   padding:0.5%;
   margin: 0.5%;
+  font-family: sans-serif;
 }
 /**El índice de las noticias*/
 
