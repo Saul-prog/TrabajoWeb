@@ -12,16 +12,27 @@ function conectar(){
 	
 }
 
-function pie(){
-	?>
-	<footer>
+function pie($tipo="normal"){
+	if($tipo=="normal"){
+	
+	echo '<footer>
 		<img src="imagenes/Iconos/fm_grande.png" alt="icono de la página"/>
 		<p class="fot">SOBRE NOSOTROS</p>
 		<p>Somos un portal de noticias científicas y tecnológicas. 
 		Fm-cia fue fundada en el año <strong>2020</strong> con el objetivo de informar y entretener a las mentes más curiosas.</p>
 		<p><strong class="fot">CURIOSIDAD:</strong> nuestro nombre viene del elemento químico número 100, el Fermio; por lo que vendría a significar: <strong>100-cia</strong>, o lo que es lo mismo, ciencia.</p>
-	</footer>
-	<?php
+	</footer>';
+	}
+	if($tipo=="peque"){
+	echo '<footer class="peque">
+		<img src="imagenes/Iconos/fm_grande.png" alt="icono de la página"/>
+		<p class="fot">SOBRE NOSOTROS</p>
+		<p>Somos un portal de noticias científicas y tecnológicas. 
+		Fm-cia fue fundada en el año <strong>2020</strong> con el objetivo de informar y entretener a las mentes más curiosas.</p>
+		<p><strong class="fot">CURIOSIDAD:</strong> nuestro nombre viene del elemento químico número 100, el Fermio; por lo que vendría a significar: <strong>100-cia</strong>, o lo que es lo mismo, ciencia.</p>
+		</footer>';
+	}
+
 }
 
 function desplegables($con){
@@ -500,9 +511,9 @@ function slider($con){
 		echo '</Section>';
 }
 
-function eliminarUsuario($con,$correo){
-	$peticion=$con->prepare("DELETE FROM usuario WHERE CorreoElectronico LIKE ?");
-	$peticion->bind_param("s",$correo);
+function eliminarUsuario($con,$nom){
+	$peticion=$con->prepare("DELETE FROM usuario WHERE NombreUsuario LIKE ?");
+	$peticion->bind_param("s",$nom);
 	if($peticion->execute()){
 		echo '<p>Usuario eliminado correctamente</p>';
 		

@@ -26,7 +26,7 @@ slider($con);
 
 
 <?php
-pie();
+pie("peque");
 ?>
 </body>
 </html>

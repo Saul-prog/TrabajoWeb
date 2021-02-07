@@ -45,7 +45,7 @@ if($total_reg<4){
 if($total_reg<1){
     echo '<article><h2>No hay articulos definidos en su lista de Favoritos</h2>
     <p>Añada algún artículo a su lista de favoritos</p></article>';
-    exit;
+    
 }
 //Se calcula el total de páginas que existen(ceil redondea al alza)
 $total_pag=ceil($total_reg/$por_pagina);
@@ -82,7 +82,11 @@ if ($rs) {
     }; 
 
 echo '</section>';
+if($total_reg<3){
+    pie("peque");
+}else{
 pie();
+}
 ?>
 </body>
 </html>

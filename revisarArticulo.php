@@ -23,7 +23,7 @@ if($tipo_user!=1 || $user==null){
 $con=conectar();
 encabezado($tipo_user,$con);
 $determinado=(isset($_POST['determinado'])?$_POST['determinado']:null);
-
+$peque="";
 
 if($determinado==null){
     $peticion=$con ->query("SELECT * FROM articulorevision ORDER BY ID_art_rev DESC LIMIT 1");
@@ -53,6 +53,7 @@ if($determinado==null){
             echo '<article class="articulo">';
             echo '<h2 class="articulo">No se han encontrado resultados para esa búsqueda<h2>';
             echo '</article>';
+            $peque="peque";
         }else {
        
                 
@@ -79,7 +80,13 @@ if($determinado==null){
 </form>
 </article>
 
-<?php pie();?>
+<?php 
+if($peque=="peque"){
+    pie("peque");
+}else{
+    pie(); 
+}
+?>
 </body>
 </html>
 

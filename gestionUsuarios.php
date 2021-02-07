@@ -32,22 +32,22 @@ if($nombreUsuario==null){
         <article class="comentario">
             <h3 class="comentario">&nbsp;</h3>
             <form action="gestionUsuarios.php" method="post">
-            <p>Correo del usuario: <br><input type="email" name="correo" placeholder="Correo electrónico del usuario"></p>
+            <p>Nombre de usuario: <br><input type="text" name="nombreusuario" placeholder="Nombre del usuario"></p>
             <p>Contraseña del administrador <br><input type="password" name="contrasena" placeholder="Contraseña del administrador"></p>
             <p class="guardar"><input type="submit" value="Eliminar usuario"></p>
         </form>
             <?php $contrasena=(isset($_POST['contrasena'])?$_POST['contrasena']:null);
                 $buena=comprobarContrasena($con,$contrasena,$nombreUsuario);
                 if($buena==true){
-                    $correo=(isset($_POST['correo'])?$_POST['correo']:null);
-                    eliminarUsuario($con,$correo);
+                    $nom=(isset($_POST['nombreusuario'])?$_POST['nombreusuario']:null);
+                    eliminarUsuario($con,$nom);
                 }else{
                     echo '<p>Introduzca contraseña válida.</p>';
                 }
             ?>
 		</article>
 	</section>
-<?php pie();?>
+<?php pie("peque");?>
 </body>
 
 </html>
