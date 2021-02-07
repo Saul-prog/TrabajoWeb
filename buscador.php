@@ -77,7 +77,7 @@ if($tipo_busqueda=="Título"){
         echo '<center>|';
         for ($i=1; $i<=$total_pag; $i++) {
             //En el bucle, muestra la paginación
-            echo "<a href='tablon.php?pagina=".$i."&buscar=".$principal."'>".$i."</a> | ";
+            echo "<a href='buscador.php?pagina=".$i."&buscar=".$principal."'>".$i."</a> | ";
             }; 
             echo '</center>';
     } 
@@ -135,7 +135,7 @@ if($tipo_busqueda=="Contenido"){
     echo '<center>| ';
     for ($i=1; $i<=$total_pag2; $i++) {
     //En el bucle, muestra la paginación
-    echo "<a href='tablon.php?pagina=".$i."&buscar=".$principal."'>".$i."</a> | ";
+    echo "<a href='buscador.php?pagina=".$i."&buscar=".$principal."'>".$i."</a> | ";
     }; 
     echo '</center>';
     }
@@ -193,7 +193,7 @@ if($tipo_busqueda=="Autor"){
         echo '<center>| ';
         for ($i=1; $i<=$total_pag; $i++) {
         //En el bucle, muestra la paginación
-        echo "<a href='tablon.php?pagina=".$i."&buscar=".$principal."'>".$i."</a> | ";
+        echo "<a href='buscador.php?pagina=".$i."&buscar=".$principal."'>".$i."</a> | ";
         }; 
         echo '</center>';
     }
