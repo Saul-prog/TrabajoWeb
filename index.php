@@ -19,14 +19,81 @@ $usuario=(isset($_SESSION['tipo_usuario'])?$_SESSION['tipo_usuario']:2);
 encabezado($usuario,$con);
 
 slider($con);
+
+$buscar=(isset($_GET['buscar'])?$_GET['buscar']:null);
+echo'<section class="margen">
+    <h1>Todos los artículos</h1>';
+
+$por_pagina=2;
+
+$pagina=(isset($_GET['pagina'])?$_GET['pagina']:1);
+$empezar=($pagina-1)*$por_pagina;
+//Se trae toda la base de datos
+$peticion=$con->prepare("SELECT * FROM articulopublicado");
+
+$peticion->execute();
+$rs=$peticion->get_result();
+$total_reg=$rs->num_rows;
+//Se cuentan todas las filas
+$modulo=1;
+
+if($total_reg<4){
+    $por_pagina=$total_reg;
+    
+}
+if($total_reg<1){
+    echo '<article><h2>No hay articulos definidos en esta categoría</h2>
+    <p>Por favor, pruebe con otra categoría</p></article>';
+    
+}else{
+//Se calcula el total de páginas que existen(ceil redondea al alza)
+
+$modulo=($total_reg % 4);
+$total_pag=ceil($total_reg/$por_pagina);
+
+
+//Se crea la consulta
+$peticion2=$con->prepare("SELECT * FROM articulopublicado ORDER BY ID_articulo DESC LIMIT ?,? ");
+$peticion2->bind_param("ii",$empezar,$por_pagina);
+$peticion2->execute();
+$rs=$peticion2->get_result();
+
+if ($rs) {
+    $fila= $rs->fetch_assoc();
+    
+    if($rs->num_rows<1){
+      echo '<p>No hay artículos.</p>';
+      exit;
+    }
+      while (($fila !== false) && ($fila !== null)) {
+        echo '<article><a href="articulo.php?articulo='.$fila['ID_articulo'].'">';
+        echo '<h2>'.$fila['Titulo'].'</h2>';
+        echo '<p>'.$fila['Resumen'].'</p>';
+        echo '</article></a>';
+       
+        $fila= $rs->fetch_assoc();
+      }
+      $rs->free();
+     
+    }
+
+    echo '<center>| ';
+    
+
+    for ($i=1; $i<=$total_pag; $i++) {
+        //En el bucle, muestra la paginación
+        echo "<a href='index.php?pagina=".$i."&buscar=".$buscar."'>".$i."</a> | ";
+    }; 
+   echo '</center>';
+  
+    
+}
+echo '</section>';
+
+
+    pie();
+
 ?>
 
-
-
-
-
-<?php
-pie();
-?>
 </body>
 </html>
