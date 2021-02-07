@@ -155,6 +155,7 @@ function iniciarSesion($con,$contrasena,$email){
 
 	if($peticion->execute()){
 		$rs= $peticion->get_result();
+
 		if($rs)
 		{
 			$fila= $rs->fetch_assoc();
@@ -178,9 +179,10 @@ function iniciarSesion($con,$contrasena,$email){
 				header('refresh:2;url=mi_perfil.php');
 			}
 			else{
-				echo 'Contraseña incorrecta';
+				echo 'Contraseña y/o correo incorrectos';
 			}
 		}
+	
 	}else{
 		echo '<p>ERROR: '.$con->error.'</p>';
 	}
