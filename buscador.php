@@ -23,6 +23,7 @@ $tipo_busqueda=(isset($_GET['tipo'])?$_GET['tipo']:null);
 echo'<section class="margen">
     <h1>'.$buscar.'</h1>';
 $modulo=1;
+$principal=$buscar;
 $buscar='%'.$buscar.'%';
 if($tipo_busqueda=="Título"){
     $pagina=(isset($_GET['pagina'])?$_GET['pagina']:1);
@@ -76,7 +77,7 @@ if($tipo_busqueda=="Título"){
         echo '<center>|';
         for ($i=1; $i<=$total_pag; $i++) {
             //En el bucle, muestra la paginación
-            echo "<a href='tablon.php?pagina=".$i."&buscar=".$buscar."'>".$i."</a> | ";
+            echo "<a href='tablon.php?pagina=".$i."&buscar=".$principal."'>".$i."</a> | ";
             }; 
             echo '</center>';
     } 
@@ -134,7 +135,7 @@ if($tipo_busqueda=="Contenido"){
     echo '<center>| ';
     for ($i=1; $i<=$total_pag2; $i++) {
     //En el bucle, muestra la paginación
-    echo "<a href='tablon.php?pagina=".$i."&buscar=".$buscar."'>".$i."</a> | ";
+    echo "<a href='tablon.php?pagina=".$i."&buscar=".$principal."'>".$i."</a> | ";
     }; 
     echo '</center>';
     }
@@ -192,7 +193,7 @@ if($tipo_busqueda=="Autor"){
         echo '<center>| ';
         for ($i=1; $i<=$total_pag; $i++) {
         //En el bucle, muestra la paginación
-        echo "<a href='tablon.php?pagina=".$i."&buscar=".$buscar."'>".$i."</a> | ";
+        echo "<a href='tablon.php?pagina=".$i."&buscar=".$principal."'>".$i."</a> | ";
         }; 
         echo '</center>';
     }
