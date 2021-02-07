@@ -516,8 +516,19 @@ function eliminarUsuario($con,$nom){
 	$peticion->bind_param("s",$nom);
 	if($peticion->execute()){
 		echo '<p>Usuario eliminado correctamente</p>';
-		
+		$mal=0;
 	}else{
 		echo '<p>ERROR: '.$con->error.'</p>';
+	}
+	if($mal==0){
+	$peticion2=$con->prepare("DELETE FROM favorito WHERE usuario LIKE ?");
+	$peticion->bind_param("s",$nom);
+	if($peticion->execute()){
+		echo '<p>Favoritos del usuario eliminado correctamente</p>';
+		$mal=0;
+	}else{
+		echo '<p>ERROR: '.$con->error.'</p>';
+		
+	}
 	}
 }
