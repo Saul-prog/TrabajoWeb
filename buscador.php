@@ -25,7 +25,7 @@ echo'<section class="margen">
 $modulo=1;
 $principal=$buscar;
 $buscar='%'.$buscar.'%';
-echo 'tipo busqueda'.$tipo_busqueda;
+
 if($tipo_busqueda=="Título"){
     $pagina=(isset($_GET['pagina'])?$_GET['pagina']:1);
     $empezar=($pagina-1)*$por_pagina;
@@ -98,7 +98,7 @@ if($tipo_busqueda=="Contenido"){
     $total_reg1=$rs1->num_rows;
     //Se cuentan todas las filas
 
-    echo $empezar.'empeezar';
+    
     if($total_reg1<4){
         $por_pagina=$total_reg1;
         
