@@ -286,7 +286,7 @@ function formularioEnviarAr($error){
 
 function desplegableCat($con){
 	?>
-	<select name="categoria" value="">
+	<select name="categoria">
         
         <?php
           $peticion = $con -> query ("SELECT * FROM categorias");
@@ -302,13 +302,13 @@ function desplegableCat($con){
 
 function desplegableSubCat($con){
 	?>
-	<select>
-        <option name="categoria" value="">Ninguna</option>
+	<select name="subcategoria">
+        <option >Ninguna</option>
         <?php
           $peticion = $con -> query ("SELECT * FROM categorias");
          	while ($fila = mysqli_fetch_array($peticion)) {
 			  	if($fila['subcategoria']==1){
-            		echo '<option name="subcategoria" value="'.$fila['categoria'].'">'.$fila['categoria'].'</option>';
+            		echo '<option  value="'.$fila['categoria'].'">'.$fila['categoria'].'</option>';
 			  	}
 			}
         ?>
