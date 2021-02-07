@@ -86,7 +86,7 @@ if ($rs) {
     
 }
 echo '</section>';
-if($modulo==2 || $modulo==1){
+if( $modulo==1){
     pie("peque");
     
 }else{

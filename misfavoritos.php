@@ -78,12 +78,13 @@ if ($rs) {
     echo '<center>| ';
     for ($i=1; $i<=$total_pag; $i++) {
         //En el bucle, muestra la paginación
-        echo "<a href='misfavoritos.php?pagina=".$i."'>".$i."</a> | </center>";
+        echo "<a href='misfavoritos.php?pagina=".$i."'>".$i."</a> | ";
     }
+    echo '</center>';
 }
 
 echo '</section>';
-if($total_reg<3){
+if($total_reg<2){
     pie("peque");
 }else{
 pie();
