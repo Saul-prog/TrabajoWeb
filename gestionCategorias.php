@@ -102,7 +102,7 @@ $nombreUsuario=(isset($_SESSION['usuario'])?$_SESSION['usuario']:null);
     </article>
 </section>
 <?php
-pie("peque");
+pie();
 ?>
 </body>
 </html>
