@@ -134,6 +134,7 @@ function encabezado($administrador,$con){
 				<select name="tipo">
 					<option value="Título">Por título<option>
 					<option value="Contenido">Por contenido<option>
+					<option value="Autor">Por autor</option>
 				</select>
 				<input type="submit" name="Buscar">
 			</form>
@@ -469,8 +470,8 @@ function crearSubCategoria($con,$nombre,$padre){
 }
 
 function eliminarCategoria($con,$nombreElm){
-	$peticion=$con->prepare("DELETE FROM categorias WHERE categoria LIKE ?");
-	$peticion->bind_param("s",$nombreElm);
+	$peticion=$con->prepare("DELETE FROM categorias WHERE categoria LIKE ? OR claveCategoria LIKE ?");
+	$peticion->bind_param("ss",$nombreElm,$nombreElm);
 	if($peticion->execute()){
 		echo '<p>Categoría Eliminada</p>';
 		

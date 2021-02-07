@@ -22,7 +22,7 @@ encabezado($tipo_user,$con);
 $idarticulo=(isset($_GET['articulo'])?$_GET['articulo']:null);
 if($idarticulo==null){
     echo '<article class="articulo">';
-    echo   '<h2 class="articulo"No se ha encontrado el artículo buscado</h2>';
+    echo   '<h2 class="articulo">No se ha encontrado el artículo buscado</h2>';
     echo '</article>';    
 }
 $peticion22=$con->prepare("SELECT * FROM articulopublicado WHERE ID_articulo LIKE ? ");
