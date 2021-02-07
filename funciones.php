@@ -99,6 +99,8 @@ function encabezado($administrador,$con){
 				<li><a href="publicarArticulo.php">Modificar artículos</a></li>
 				<li>|</li>
                 <li><a href="gestionUsuarios.php">Eliminar usuario</a></li>
+				<li>|</li>
+                <li><a href="revisarArticulo.php">Revisar Artículo</a></li>
 		<?php	
 		}
 		echo'<li>|</li>';
@@ -132,8 +134,8 @@ function encabezado($administrador,$con){
 			<h2 class="no"><form action="buscador.php" method="get">
 				<input type="text" name="buscar">
 				<select name="tipo">
-					<option value="Título">Por título<option>
-					<option value="Contenido">Por contenido<option>
+					<option value="Título">Por título</option>
+					<option value="Contenido">Por contenido</option>
 					<option value="Autor">Por autor</option>
 				</select>
 				<input type="submit" name="Buscar">
