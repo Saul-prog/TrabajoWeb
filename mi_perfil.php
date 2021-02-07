@@ -151,7 +151,7 @@ if($nombreUsuario!=null)
 $con->close();
     ?>
 </Section>
-    <?php pie("peque");?>
+    <?php pie();?>
     
 </body>
 

@@ -111,7 +111,7 @@ function encabezado($administrador,$con){
 				<li>|</li>
                 <li><a href="gestionUsuarios.php">Eliminar usuario</a></li>
 				<li>|</li>
-                <li><a href="revisarArticulo.php">Revisar Artículo</a></li>
+                <li><a href="revisarArticulo.php">Revisar Artículos</a></li>
 		<?php	
 		}
 		echo'<li>|</li>';

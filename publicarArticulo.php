@@ -49,7 +49,7 @@ if($boton=='Publicar'){
                 $guardar=( isset($_FILES['imagen']['tmp_name'])?$_FILES['imagen']['tmp_name']:null);
                 $subida=subirImagen($nombre,$guardar);
                     if($subida=='ok'){
-                        echo $subcategoria.'HOLAAAA';
+                     
                     publicar($con,$fila,$categoria,$subcategoria,$nombre,$id_art);
                     }else{
                         echo '<p>No se ha publicado corectamente</p>';
