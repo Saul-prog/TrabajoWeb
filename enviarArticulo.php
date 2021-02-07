@@ -89,7 +89,7 @@ formularioEnviarAr($error);
 </article>
 </section>
 <?php
-pie("peque");
+pie();
 ?>
 </body>
 </html>
