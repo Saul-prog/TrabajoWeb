@@ -149,7 +149,7 @@ function encabezado($administrador,$con){
 					<option value="Contenido">Por contenido</option>
 					<option value="Autor">Por autor</option>
 				</select>
-				<input type="submit" name="Buscar">
+				<input type="submit" value="Buscar">
 			</form>
 			<a href="registro.php">Crear cuenta</a>  |  <a href="inicio_sesion.php">Iniciar sesión</a></h2>
 		</article><?php
