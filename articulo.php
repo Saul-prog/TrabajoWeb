@@ -204,6 +204,7 @@ if($boton_responder=='Responder'){
                         echo '<article class="respuesta">';
                         echo '<h3 class="respuesta">'.$fila_['usuario'].'</h3><p>'.$fila_['fecha'].'</p>';
                         echo '<p class="comentario">'.$fila_['comentario'].'</p>';
+                        if($tipo_user==1){
                         echo '<details class="vacio2">
                                 <summary>Eliminar</summary>
                                 <h3 class="comentario">¿Está seguro de la eliminación?</h3>
@@ -211,7 +212,7 @@ if($boton_responder=='Responder'){
                                 <input type="hidden" name="commentario_eliminar" value="'.$fila_['id_comentario'].'">
                                 <input type="submit" name="boton_eliminar" value="Eliminar">
                                 </form>
-                                </details>';
+                                </details>';}
                         echo '</article>';
 
                     }
