@@ -1,0 +1,55 @@
+
+------------------------------------------------------------
+----Tabla Usuarios
+------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `usuario`(
+`ID_USUARIO` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del usuario',
+`NombreUsuario`  varchar(250) NOT NULL COMMENT 'Nombre del usuario en la web',
+`contrasena` varchar(32) NOT NULL COMMENT 'Contrasenha del usuario',
+`Nombre`  varchar(250) NOT NULL COMMENT 'Nombre del usuario',
+`Apellido1`  varchar(250) NOT NULL COMMENT 'Primer apellido del usuario',
+`Apellido2`  varchar(250) NOT NULL COMMENT 'Segundo apellido del usuario',
+`CorreoElectronico` varchar(100) NOT NULL COMMENT 'Correo electronico del usuario',
+`Fechanac` date NOT NULL COMMENT 'Fecha de nacimiento del usuario',
+`administrador` int(1) DEFAULT 0 COMMENT '0 si es usuario normal, 1 si es administrador',
+PRIMARY KEY (`ID_USUARIO`),
+UNIQUE KEY `NombreUsuario` (`NombreUsuario`),
+UNIQUE KEY `CorreoElectronico` (`CorreoElectronico`)
+    
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+------------------------------------------------------------
+----Tabla de Artículos en Revisión
+------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ArticuloRevision`(
+`ID_art_rev` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador interno del articulo en revision',
+`autor` varchar(250) NOT NULL COMMENT 'Autor del articulo',
+`Titulo` varchar(250) NOT NULL COMMENT 'Titulo del articulo',
+`Observaciones` varchar(500) COMMENT 'Observaciones sobre el articulo',
+`Resumen` varchar(1500) NOT NULL COMMENT 'Resumen o abstract del articulo',
+`PDF` varchar(250) NOT NULL COMMENT 'Nombre del PDF adjuntado',
+PRIMARY KEY (`ID_art_rev`),
+UNIQUE (`Titulo`),
+UNIQUE (`PDF`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+--------------------------------------------------------------------
+
+
+
+
+CREATE TABLE IF NOT EXISTS `ArticuloPublicado`(
+`ID_articulo` int(12) NOT NULL AUTO_INCREMENT COMMENT 'Identificador interno del articulo en revision',
+`autor` varchar(250) NOT NULL COMMENT 'Autor del articulo',
+`Titulo` varchar(250) NOT NULL COMMENT 'Titulo del articulo',
+`Observaciones` varchar(500) COMMENT 'Observaciones sobre el articulo',
+`Resumen` varchar(1500) NOT NULL COMMENT 'Resumen o abstract del articulo',
+`PDF` varchar(250) NOT NULL COMMENT 'Nombre del PDF adjuntado',
+`Categoria` varchar(50) NOT NULL COMMENT 'Categoria principal del articulo',
+`subCategoria` varchar(50)  COMMENT 'subCategoria principal del articulo',
+PRIMARY KEY (`ID_articulo`),
+UNIQUE (`Titulo`),
+UNIQUE (`PDF`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
